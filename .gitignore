@@ -1,0 +1,20 @@
+# Ignore everything
+/*
+
+!.gitignore
+
+!bin/
+
+!README
+!TODO
+
+!ToyKeeper/
+ToyKeeper/*
+!ToyKeeper/tk*.h
+!ToyKeeper/hwdef-FET_7135.h
+!ToyKeeper/hwdef-nanjg.h
+
+!ToyKeeper/crescendo/
+ToyKeeper/crescendo/*.hex
+ToyKeeper/crescendo/*.elf
+ToyKeeper/crescendo/*.o
