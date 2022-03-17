@@ -1,27 +1,27 @@
 Crescendo: A ramping UI for reverse-clicky switch lights
 --------------------------------------------------------
 
-Instead of having specific modes and mode groups, this UI works based on 
-a smooth ramp of all possible brightnesses.  It gives direct access to 
-moon and maximum, plus optional memory.  The idea is that you turn it 
+Instead of having specific modes and mode groups, this UI works based on
+a smooth ramp of all possible brightnesses.  It gives direct access to
+moon and maximum, plus optional memory.  The idea is that you turn it
 on, it ramps up, and you stop it when it reaches the desired level.
 
-The ramp follows a zigzag pattern with brief pauses at both ends.  When 
-it reaches the highest level, it also blinks very briefly since it can 
+The ramp follows a zigzag pattern with brief pauses at both ends.  When
+it reaches the highest level, it also blinks very briefly since it can
 otherwise be hard to tell when it hit maximum.
 
-No eeprom is modified while ramping, so it's safe to leave the light in 
+No eeprom is modified while ramping, so it's safe to leave the light in
 ramp mode indefinitely.
 
 
 UI terms:
 
   - Click: Fully press and release the button.  ("long press")
-    Assumes that the light was off for at least a second before 
+    Assumes that the light was off for at least a second before
     clicking.  Is the same as half-pressing for a second or more.
 
   - Tap: QUICKLY half-press and release the button.  ("short press")
-    Assumes the light was on before the tap.  Is best if you tap as 
+    Assumes the light was on before the tap.  Is best if you tap as
     quickly as possible.
 
 
@@ -33,7 +33,7 @@ From off:
   - Click:
     - Without memory: Ramp up, starting at moon.
     - With memory: 0.5s of moon, then the memorized mode and level.
-      (memory is short-cycle, so a short-press will then go back to the 
+      (memory is short-cycle, so a short-press will then go back to the
       ramp at the beginning of the mode sequence)
   - Click, tap: Go directly to moon mode.
   - Click, tap, tap: Go directly to maximum output.
@@ -58,7 +58,7 @@ From the normal "steady" mode:
 From the "turbo" mode:
 
   - Tap (immediately): Advance to the next mode.
-  - Tap (after 0.5s or longer): Go back to "steady" mode at the 
+  - Tap (after 0.5s or longer): Go back to "steady" mode at the
     previously-used level.
 
 From any other mode (all blinkies and specials):
@@ -73,17 +73,17 @@ In any mode except "off":
 Config mode
 -----------
 
-To enter config mode, quickly tap a bunch of times until the light stops 
-lighting up.  It should be 16+ times.  Then it'll scroll through the 
+To enter config mode, quickly tap a bunch of times until the light stops
+lighting up.  It should be 16+ times.  Then it'll scroll through the
 options:
 
   1. Memory toggle.  Tap during the "buzz" to turn memory on or off.
-  2. Thermal calibration.  Tap during the "buzz" to enter thermal 
+  2. Thermal calibration.  Tap during the "buzz" to enter thermal
      calibration mode.
-     - Light turns on at a low level: Tap now to set default temperature 
+     - Light turns on at a low level: Tap now to set default temperature
        limit.  Otherwise, wait.
-     - Light goes to full brightness: Tap at any time to set temperature 
-       limit to the current temperature.  Basically, wait until it feels 
+     - Light goes to full brightness: Tap at any time to set temperature
+       limit to the current temperature.  Basically, wait until it feels
        hot, then tap.
 
 So, to set a temperature limit:
@@ -107,12 +107,12 @@ Mode list
 Special modes available
 -----------------------
 
-  - Goodnight:  Slowly ramps from low to moon for an hour, then shuts 
+  - Goodnight:  Slowly ramps from low to moon for an hour, then shuts
     off.  Useful on a night stand.
 
-  - Biking:  Pulses bright once per second but otherwise stays steady.  
-    Good when you need to both see and be seen.  Comes in both medium 
-    and bright flavors.  Can be compiled for a single pulse or a 
+  - Biking:  Pulses bright once per second but otherwise stays steady.
+    Good when you need to both see and be seen.  Comes in both medium
+    and bright flavors.  Can be compiled for a single pulse or a
     stutter.
 
   - Tactical strobes:  For stunning or disorienting people.
@@ -120,11 +120,11 @@ Special modes available
     - Police: Two-speed alternating strobe.
     - Strobe: One-speed basic strobe.
 
-  - Heart beacon:  Pulses once per second in a 2-flash heartbeat 
+  - Heart beacon:  Pulses once per second in a 2-flash heartbeat
     pattern.  Can run for a long time.  Useful as a long-running beacon.
 
-  - Party strobes:  Designed to freeze motion for fun visual effects.  
-    Point it at moving water or spinning fans or dancing people, or walk 
+  - Party strobes:  Designed to freeze motion for fun visual effects.
+    Point it at moving water or spinning fans or dancing people, or walk
     around while using it to make life feel like a bad horror movie.
     - 12 Hz
     - 24 Hz
@@ -134,24 +134,24 @@ Special modes available
 
   - SOS:  Distress signal.
 
-  - Memtoggle:  Turn memory on or off.  Buzzes quickly as a warning to 
-    the user (and to help identify the mode visually), waits a second to 
-    give people some time to skip to the next mode, then buzzes again 
-    for a longer time.  To change the memory setting, turn the light off 
+  - Memtoggle:  Turn memory on or off.  Buzzes quickly as a warning to
+    the user (and to help identify the mode visually), waits a second to
+    give people some time to skip to the next mode, then buzzes again
+    for a longer time.  To change the memory setting, turn the light off
     during the longer buzz.
 
 
 Compile-time options
 --------------------
 
-There are many options which can be enabled or disabled.  It should be 
-able to run on virtually any driver, including nanjg drivers, FET+1, and 
-FET+N+1.  It does not need an offtime capacitor.  Can also be compiled 
-for attiny13, attiny25, attiny45, and attiny85 MCUs.  On attiny13 
-though, space is limited and you may not be able to enable many special 
+There are many options which can be enabled or disabled.  It should be
+able to run on virtually any driver, including nanjg drivers, FET+1, and
+FET+N+1.  It does not need an offtime capacitor.  Can also be compiled
+for attiny13, attiny25, attiny45, and attiny85 MCUs.  On attiny13
+though, space is limited and you may not be able to enable many special
 modes at the same time as memory.
 
-One of the most important parts to configure is the ramp table.  This is 
-very hardware-specific, especially on multi-channel drivers, so you 
+One of the most important parts to configure is the ramp table.  This is
+very hardware-specific, especially on multi-channel drivers, so you
 should probably generate your own ramp with bin/level_calc.py .
 
