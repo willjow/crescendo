@@ -13,6 +13,7 @@ ToyKeeper/*
 !ToyKeeper/tk*.h
 !ToyKeeper/hwdef-FET_7135.h
 !ToyKeeper/hwdef-nanjg.h
+!ToyKeeper/hwdef-Tripledown.h
 
 !ToyKeeper/crescendo/
 ToyKeeper/crescendo/*.hex
