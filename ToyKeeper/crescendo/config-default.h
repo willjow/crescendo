@@ -39,7 +39,7 @@
 
 // How many ms should it take to ramp all the way up?
 // (recommended values 2000 to 5000 depending on personal preference)
-#define RAMP_TIME  3000
+#define RAMP_TIME  5000
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
@@ -77,35 +77,43 @@
 #define TURBO     254
 #define RAMP      253
 #define STEADY    252
+
 #ifdef VOLTAGE_MON
 #define BATTCHECK 251
 #endif
+
 #define MEMORY    250
 #ifdef MEMORY
 #define MEMTOGGLE // runtime config for memory (requires MEMORY)
 #endif
+
 #ifdef THERMAL_REGULATION
 #define THERM_CALIBRATION_MODE 248  // let user configure temperature limit
 #endif
+
 #define BIKING_MODE 247   // steady on with pulses at 1Hz
-//#define BIKING_MODE2 246   // steady on with pulses at 1Hz
+//#define BIKING_MODE2 246   // steady on with pulses at 1Hz, dimmer
+                             // than BIKING_MODE
 // comment out to use minimal version instead (smaller)
 #define FULL_BIKING_MODE
+
 // Required for any of the strobes below it
 //#define ANY_STROBE
 //#define STROBE    245         // Simple tactical strobe
 //#define POLICE_STROBE 244     // 2-speed tactical strobe
 //#define RANDOM_STROBE 243     // variable-speed tactical strobe
 //#define SOS 242               // distress signal
-#define HEART_BEACON 241      // 1Hz heartbeat-pattern beacon
+//#define HEART_BEACON 241      // 1Hz heartbeat-pattern beacon
+
 // next line required for any of the party strobes to work
-#define PARTY_STROBES
-#define PARTY_STROBE12 240    // 12Hz party strobe
-#define PARTY_STROBE24 239    // 24Hz party strobe
-#define PARTY_STROBE60 238    // 60Hz party strobe
+//#define PARTY_STROBES
+//#define PARTY_STROBE12 240    // 12Hz party strobe
+//#define PARTY_STROBE24 239    // 24Hz party strobe
+//#define PARTY_STROBE60 238    // 60Hz party strobe
 //#define PARTY_VARSTROBE1 237  // variable-speed party strobe (slow)
 //#define PARTY_VARSTROBE2 236  // variable-speed party strobe (fast)
-#define GOODNIGHT 235         // hour-long ramp down then poweroff
+
+//#define GOODNIGHT 235         // hour-long ramp down then poweroff
 
 
 #if defined(MEMTOGGLE) || defined(THERM_CALIBRATION_MODE)
