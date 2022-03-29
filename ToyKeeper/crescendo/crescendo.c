@@ -405,6 +405,29 @@ inline void hw_setup() {
     #endif
 }
 
+inline void config_mode(uint8_t *dummy) {
+    _delay_s();       // wait for user to stop fast-pressing button
+    fast_presses = 0; // exit this mode after one use
+                      //mode = STEADY;
+    mode_idx = 1;
+    next_mode_num = 255;
+
+    uint8_t t = 0;
+    #ifdef MEMTOGGLE
+    // turn memory on/off
+    // (click during the "buzz" to change the setting)
+    toggle(&memory, ++t);
+    #endif  // ifdef MEMTOGGLE
+
+    #ifdef THERM_CALIBRATION_MODE
+    // Enter temperature calibration mode?
+    next_mode_num = THERM_CALIBRATION_MODE;
+    toggle(dummy, ++t);  // doesn't actually set anything
+    mode_idx = 1;
+    next_mode_num = 255;
+    #endif
+}
+
 int main(void)
 {
     hw_setup();
@@ -480,28 +503,7 @@ int main(void)
 
         #ifdef CONFIG_MODE
         else if (fast_presses > 15) {
-            _delay_s();       // wait for user to stop fast-pressing button
-            fast_presses = 0; // exit this mode after one use
-            //mode = STEADY;
-            mode_idx = 1;
-            next_mode_num = 255;
-
-            uint8_t t = 0;
-            #ifdef MEMTOGGLE
-            // turn memory on/off
-            // (click during the "buzz" to change the setting)
-            toggle(&memory, ++t);
-            #endif  // ifdef MEMTOGGLE
-
-            #ifdef THERM_CALIBRATION_MODE
-            // Enter temperature calibration mode?
-            next_mode_num = THERM_CALIBRATION_MODE;
-            // mode_override does nothing here; just a dummy value
-            toggle(&mode_override, ++t);
-            mode_idx = 1;
-            next_mode_num = 255;
-            #endif
-
+            config_mode(&mode_override);
             // if config mode ends with no changes,
             // pretend this is the first loop
             continue;
