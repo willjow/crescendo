@@ -545,6 +545,51 @@ inline void goodnight_mode() {
     poweroff();
 }
 
+inline void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
+    //if (ADCSRA & (1 << ADIF)) {  // if a voltage reading is ready
+    {  // nope, always execute
+        //uint8_t voltage = ADCH;  // get the waiting value
+        uint8_t voltage = get_voltage();  // get a new value, first is unreliable
+        // See if voltage is lower than what we were looking for
+        if (voltage < ADC_LOW) {
+            (*lowbatt_cnt)++;
+        } else {
+            *lowbatt_cnt = 0;
+        }
+        // See if it's been low for a while, and maybe step down
+        if (*lowbatt_cnt >= 8) {
+            // DEBUG: blink on step-down:
+            //set_level(0);  _delay_ms(100);
+
+            if (mode != STEADY) {
+                // step "down" from special modes to medium-low
+                mode_idx = 1;
+                //mode = STEADY;
+                ramp_level = RAMP_SIZE/4;
+            }
+            else {
+                if (ramp_level > 1) {  // solid non-moon mode
+                    // drop by 50% each time
+                    ramp_level = (actual_level >> 1);
+                } else { // Already at the lowest mode
+                    // Turn off the light
+                    poweroff();
+                }
+            }
+            set_mode(ramp_level);
+            target_level = ramp_level;
+            //save_mode();  // we didn't actually change the mode
+            *lowbatt_cnt = 0;
+            // Wait before lowering the level again
+            _delay_s();
+        }
+
+        // Make sure conversion is running for next time through
+        // (not relevant with thermal regulation also active)
+        //ADCSRA |= (1 << ADSC);
+    }
+}
+
 int main(void)
 {
     hw_setup();
@@ -594,7 +639,6 @@ int main(void)
     uint8_t mode;
     #ifdef VOLTAGE_MON
     uint8_t lowbatt_cnt = 0;
-    uint8_t voltage;
     #endif
     #ifdef THERMAL_REGULATION
     #define THERM_HISTORY_SIZE 8
@@ -802,50 +846,8 @@ int main(void)
         }
         fast_presses = 0;
 
-
         #ifdef VOLTAGE_MON
-        //if (ADCSRA & (1 << ADIF)) {  // if a voltage reading is ready
-        {  // nope, always execute
-            //voltage = ADCH;  // get the waiting value
-            voltage = get_voltage();  // get a new value, first is unreliable
-            // See if voltage is lower than what we were looking for
-            if (voltage < ADC_LOW) {
-                lowbatt_cnt ++;
-            } else {
-                lowbatt_cnt = 0;
-            }
-            // See if it's been low for a while, and maybe step down
-            if (lowbatt_cnt >= 8) {
-                // DEBUG: blink on step-down:
-                //set_level(0);  _delay_ms(100);
-
-                if (mode != STEADY) {
-                    // step "down" from special modes to medium-low
-                    mode_idx = 1;
-                    //mode = STEADY;
-                    ramp_level = RAMP_SIZE/4;
-                }
-                else {
-                    if (ramp_level > 1) {  // solid non-moon mode
-                        // drop by 50% each time
-                        ramp_level = (actual_level >> 1);
-                    } else { // Already at the lowest mode
-                        // Turn off the light
-                        poweroff();
-                    }
-                }
-                set_mode(ramp_level);
-                target_level = ramp_level;
-                //save_mode();  // we didn't actually change the mode
-                lowbatt_cnt = 0;
-                // Wait before lowering the level again
-                _delay_s();
-            }
-
-            // Make sure conversion is running for next time through
-            // (not relevant with thermal regulation also active)
-            //ADCSRA |= (1 << ADSC);
-        }
+        monitor_voltage(mode, &lowbatt_cnt);
         #endif  // ifdef VOLTAGE_MON
 
         #ifdef THERMAL_REGULATION
