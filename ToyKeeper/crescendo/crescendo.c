@@ -379,9 +379,7 @@ void toggle(uint8_t *var, uint8_t num) {
 }
 #endif  // ifdef CONFIG_MODE
 
-
-int main(void)
-{
+inline void hw_setup() {
     // Set PWM pin to output
     DDRB |= (1 << PWM_PIN);     // enable main channel
     #ifdef RAMP_CH2
@@ -405,6 +403,11 @@ int main(void)
     GTCCR = _BV (COM1B1) | _BV (PWM1B);
     OCR1C = 255;  // Set ceiling value to maximum
     #endif
+}
+
+int main(void)
+{
+    hw_setup();
 
     #ifdef CONFIG_MODE
     uint8_t mode_override = 0;
