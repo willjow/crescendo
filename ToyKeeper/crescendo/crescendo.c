@@ -251,6 +251,177 @@ void blink(uint8_t val, uint8_t speed)
     }
 }
 
+#ifdef THERMAL_REGULATION
+#define TEMP_ORIGIN 275  // roughly 0 C or 32 F (ish)
+int16_t current_temperature() {
+    ADC_on_temperature();
+    // average a few values; temperature is noisy
+    // (use some of the noise as extra precision, ish)
+    uint16_t temp = 0;
+    uint8_t i;
+    get_temperature();
+    for(i=0; i<8; i++) {
+        temp += get_temperature();
+        _delay_4ms(1);
+    }
+    // convert 12.3 fixed-point to 13.2 fixed-point
+    // ... and center it at 0 C
+    temp = (temp>>1) - (TEMP_ORIGIN<<2);
+    return temp;
+}
+#endif  // ifdef THERMAL_REGULATION
+
+#ifdef CONFIG_MODE
+void toggle(uint8_t *var, uint8_t num) {
+    // Used for config mode
+    // Changes the value of a config option, waits for the user to "save"
+    // by turning the light off, then changes the value back in case they
+    // didn't save.  Can be used repeatedly on different options, allowing
+    // the user to change and save only one at a time.
+    blink(num, BLINK_SPEED/8);  // indicate which option number this is
+    _delay_4ms(250/4);
+    *var ^= 1;
+    save_state();
+    // "buzz" for a while to indicate the active toggle window
+    blink(32, 500/32/4);
+    // if the user didn't click, reset the value and return
+    *var ^= 1;
+    save_state();
+    _delay_s();
+}
+#endif  // ifdef CONFIG_MODE
+
+inline void hw_setup() {
+    // Set PWM pin to output
+    DDRB |= (1 << PWM_PIN);     // enable main channel
+    #ifdef RAMP_CH2
+    DDRB |= (1 << ALT_PWM_PIN); // enable second channel
+    #endif
+    #ifdef RAMP_CH3
+    // enable second PWM counter (OC1B) and third channel (FET, PB4)
+    DDRB |= (1 << FET_PWM_PIN); // enable third channel (DDB4)
+    #endif
+
+    // Set timer to do PWM for correct output pin and set prescaler timing
+    //TCCR0A = 0x23; // phase corrected PWM is 0x21 for PB1, fast-PWM is 0x23
+    //TCCR0B = 0x01; // pre-scaler for timer (1 => 1, 2 => 8, 3 => 64...)
+    //TCCR0A = FAST;
+    // Set timer to do PWM for correct output pin and set prescaler timing
+    TCCR0B = 0x01; // pre-scaler for timer (1 => 1, 2 => 8, 3 => 64...)
+
+    #ifdef RAMP_CH3
+    // Second PWM counter is ... weird
+    TCCR1 = _BV (CS10);
+    GTCCR = _BV (COM1B1) | _BV (PWM1B);
+    OCR1C = 255;  // Set ceiling value to maximum
+    #endif
+}
+
+inline void config_mode(uint8_t *dummy) {
+    _delay_s();       // wait for user to stop fast-pressing button
+    fast_presses = 0; // exit this mode after one use
+                      //mode = STEADY;
+    mode_idx = 1;
+    next_mode_num = 255;
+
+    uint8_t t = 0;
+    #ifdef MEMTOGGLE
+    // turn memory on/off
+    // (click during the "buzz" to change the setting)
+    toggle(&memory, ++t);
+    #endif  // ifdef MEMTOGGLE
+
+    #ifdef THERM_CALIBRATION_MODE
+    // Enter temperature calibration mode?
+    next_mode_num = THERM_CALIBRATION_MODE;
+    toggle(dummy, ++t);  // doesn't actually set anything
+    mode_idx = 1;
+    next_mode_num = 255;
+    #endif
+}
+
+inline void ramp_mode() {
+    set_mode(ramp_level);  // turn light on
+
+    // ramp up by default
+    //if (fast_presses == 0) {
+    //    ramp_dir = 1;
+    //}
+    // double-tap to ramp down
+    //else if (fast_presses == 1) {
+    if (fast_presses == 1) {
+        next_mode_num = mode_idx;  // stay in ramping mode
+        ramp_dir = -1;             // ... but go down
+    }
+    // triple-tap to enter turbo
+    else if (fast_presses == 2) {
+        next_mode_num = mode_idx + 2;  // bypass "steady" mode
+    }
+
+    // wait a bit before actually ramping
+    // (give the user a chance to select moon, or double-tap)
+    _delay_500ms();
+
+    // if we got through the delay, assume normal operation
+    // (not trying to double-tap or triple-tap)
+    // (next mode should be normal)
+    next_mode_num = 255;
+    // ramp up on single tap
+    // (cancel earlier reversal)
+    if (fast_presses == 1) {
+        ramp_dir = 1;
+    }
+    // don't want this confusing us any more
+    fast_presses = 0;
+
+    // Just in case (SRAM could have partially decayed)
+    //ramp_dir = (ramp_dir == 1) ? 1 : -1;
+    // Do the actual ramp
+    while (1) {
+        set_mode(ramp_level);
+        _delay_4ms(RAMP_TIME/RAMP_SIZE/4);
+        if (
+            ((ramp_dir > 0) && (ramp_level >= RAMP_SIZE))
+            ||
+            ((ramp_dir < 0) && (ramp_level <= 1))
+            )
+            break;
+        ramp_level += ramp_dir;
+    }
+    if (ramp_dir == 1) {
+        #ifdef STOP_AT_TOP
+        // go to steady mode
+        mode_idx += 1;
+        #endif
+        #ifdef BLINK_AT_TOP
+        // blink at the top
+        set_mode(0);
+        _delay_4ms(2);
+        #endif
+    }
+    ramp_dir = -ramp_dir;
+}
+
+inline void battcheck_mode() {
+    _delay_500ms();
+    #ifdef BATTCHECK_VpT
+    // blink out volts and tenths
+    uint8_t result = battcheck();
+    blink(result >> 5, BLINK_SPEED/5);
+    _delay_4ms(BLINK_SPEED*2/3);
+    blink(1,8/4);
+    _delay_4ms(BLINK_SPEED*4/3);
+    blink(result & 0b00011111, BLINK_SPEED/5);
+    #else  // ifdef BATTCHECK_VpT
+    // blink zero to five times to show voltage
+    // (or zero to nine times, if 8-bar mode)
+    // (~0%, ~25%, ~50%, ~75%, ~100%, >100%)
+    blink(battcheck(), BLINK_SPEED/4);
+    #endif  // ifdef BATTCHECK_VpT
+    // wait between readouts
+    _delay_s(); _delay_s();
+}
+
 #ifdef ANY_STROBE
 #ifdef POLICE_STROBE
 void strobe(uint8_t ontime, uint8_t offtime) {
@@ -326,26 +497,6 @@ inline void biking_mode(uint8_t lo, uint8_t hi) {
 }
 #endif
 
-#ifdef THERMAL_REGULATION
-#define TEMP_ORIGIN 275  // roughly 0 C or 32 F (ish)
-int16_t current_temperature() {
-    ADC_on_temperature();
-    // average a few values; temperature is noisy
-    // (use some of the noise as extra precision, ish)
-    uint16_t temp = 0;
-    uint8_t i;
-    get_temperature();
-    for(i=0; i<8; i++) {
-        temp += get_temperature();
-        _delay_4ms(1);
-    }
-    // convert 12.3 fixed-point to 13.2 fixed-point
-    // ... and center it at 0 C
-    temp = (temp>>1) - (TEMP_ORIGIN<<2);
-    return temp;
-}
-#endif  // ifdef THERMAL_REGULATION
-
 #ifdef GOODNIGHT
 void poweroff() {
 #else
@@ -357,75 +508,6 @@ inline void poweroff() {
     ADCSRA &= ~(1<<7); //ADC off
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     sleep_mode();
-}
-
-#ifdef CONFIG_MODE
-void toggle(uint8_t *var, uint8_t num) {
-    // Used for config mode
-    // Changes the value of a config option, waits for the user to "save"
-    // by turning the light off, then changes the value back in case they
-    // didn't save.  Can be used repeatedly on different options, allowing
-    // the user to change and save only one at a time.
-    blink(num, BLINK_SPEED/8);  // indicate which option number this is
-    _delay_4ms(250/4);
-    *var ^= 1;
-    save_state();
-    // "buzz" for a while to indicate the active toggle window
-    blink(32, 500/32/4);
-    // if the user didn't click, reset the value and return
-    *var ^= 1;
-    save_state();
-    _delay_s();
-}
-#endif  // ifdef CONFIG_MODE
-
-inline void hw_setup() {
-    // Set PWM pin to output
-    DDRB |= (1 << PWM_PIN);     // enable main channel
-    #ifdef RAMP_CH2
-    DDRB |= (1 << ALT_PWM_PIN); // enable second channel
-    #endif
-    #ifdef RAMP_CH3
-    // enable second PWM counter (OC1B) and third channel (FET, PB4)
-    DDRB |= (1 << FET_PWM_PIN); // enable third channel (DDB4)
-    #endif
-
-    // Set timer to do PWM for correct output pin and set prescaler timing
-    //TCCR0A = 0x23; // phase corrected PWM is 0x21 for PB1, fast-PWM is 0x23
-    //TCCR0B = 0x01; // pre-scaler for timer (1 => 1, 2 => 8, 3 => 64...)
-    //TCCR0A = FAST;
-    // Set timer to do PWM for correct output pin and set prescaler timing
-    TCCR0B = 0x01; // pre-scaler for timer (1 => 1, 2 => 8, 3 => 64...)
-
-    #ifdef RAMP_CH3
-    // Second PWM counter is ... weird
-    TCCR1 = _BV (CS10);
-    GTCCR = _BV (COM1B1) | _BV (PWM1B);
-    OCR1C = 255;  // Set ceiling value to maximum
-    #endif
-}
-
-inline void config_mode(uint8_t *dummy) {
-    _delay_s();       // wait for user to stop fast-pressing button
-    fast_presses = 0; // exit this mode after one use
-                      //mode = STEADY;
-    mode_idx = 1;
-    next_mode_num = 255;
-
-    uint8_t t = 0;
-    #ifdef MEMTOGGLE
-    // turn memory on/off
-    // (click during the "buzz" to change the setting)
-    toggle(&memory, ++t);
-    #endif  // ifdef MEMTOGGLE
-
-    #ifdef THERM_CALIBRATION_MODE
-    // Enter temperature calibration mode?
-    next_mode_num = THERM_CALIBRATION_MODE;
-    toggle(dummy, ++t);  // doesn't actually set anything
-    mode_idx = 1;
-    next_mode_num = 255;
-    #endif
 }
 
 int main(void)
@@ -535,64 +617,7 @@ int main(void)
 
         // smooth ramp mode, lets user select any output level
         if (mode == RAMP) {
-            set_mode(ramp_level);  // turn light on
-
-            // ramp up by default
-            //if (fast_presses == 0) {
-            //    ramp_dir = 1;
-            //}
-            // double-tap to ramp down
-            //else if (fast_presses == 1) {
-            if (fast_presses == 1) {
-                next_mode_num = mode_idx;  // stay in ramping mode
-                ramp_dir = -1;             // ... but go down
-            }
-            // triple-tap to enter turbo
-            else if (fast_presses == 2) {
-                next_mode_num = mode_idx + 2;  // bypass "steady" mode
-            }
-
-            // wait a bit before actually ramping
-            // (give the user a chance to select moon, or double-tap)
-            _delay_500ms();
-
-            // if we got through the delay, assume normal operation
-            // (not trying to double-tap or triple-tap)
-            // (next mode should be normal)
-            next_mode_num = 255;
-            // ramp up on single tap
-            // (cancel earlier reversal)
-            if (fast_presses == 1) {
-                ramp_dir = 1;
-            }
-            // don't want this confusing us any more
-            fast_presses = 0;
-
-            // Just in case (SRAM could have partially decayed)
-            //ramp_dir = (ramp_dir == 1) ? 1 : -1;
-            // Do the actual ramp
-            for (;; ramp_level += ramp_dir) {
-                set_mode(ramp_level);
-                _delay_4ms(RAMP_TIME/RAMP_SIZE/4);
-                if (
-                    ((ramp_dir > 0) && (ramp_level >= RAMP_SIZE))
-                    ||
-                    ((ramp_dir < 0) && (ramp_level <= 1))
-                    )
-                    break;
-            }
-            if (ramp_dir == 1) {
-                #ifdef STOP_AT_TOP
-                // go to steady mode
-                mode_idx += 1;
-                #endif
-                #ifdef BLINK_AT_TOP
-                // blink at the top
-                set_mode(0);
-                _delay_4ms(2);
-                #endif
-            }
-            ramp_dir = -ramp_dir;
+            ramp_mode();
         }
 
         else if (mode == STEADY) {
@@ -727,23 +752,7 @@ int main(void)
         #ifdef BATTCHECK
         // battery check mode, show how much power is left
         else if (mode == BATTCHECK) {
-            _delay_500ms();
-            #ifdef BATTCHECK_VpT
-            // blink out volts and tenths
-            uint8_t result = battcheck();
-            blink(result >> 5, BLINK_SPEED/5);
-            _delay_4ms(BLINK_SPEED*2/3);
-            blink(1,8/4);
-            _delay_4ms(BLINK_SPEED*4/3);
-            blink(result & 0b00011111, BLINK_SPEED/5);
-            #else  // ifdef BATTCHECK_VpT
-            // blink zero to five times to show voltage
-            // (or zero to nine times, if 8-bar mode)
-            // (~0%, ~25%, ~50%, ~75%, ~100%, >100%)
-            blink(battcheck(), BLINK_SPEED/4);
-            #endif  // ifdef BATTCHECK_VpT
-            // wait between readouts
-            _delay_s(); _delay_s();
+            battcheck_mode();
         }
         #endif // ifdef BATTCHECK
 
