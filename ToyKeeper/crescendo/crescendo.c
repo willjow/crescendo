@@ -223,7 +223,7 @@ int main(void)
             // if the user taps quickly, go to the real moon mode
             next_mode_num = 1;
 
-            _delay_500ms();
+            _delay_input();
 
             // if they didn't tap quickly, go to the memorized mode/level
             mode_idx = saved_mode_idx;
@@ -246,9 +246,9 @@ int main(void)
                 set_mode(ramp_level);
                 target_level = ramp_level;
             }
-            // User has 0.5s to tap again to advance to the next mode
+            // Wait for user to tap again to advance to the next mode
             //next_mode_num = 255;
-            _delay_500ms();
+            _delay_input();
             // After a delay, assume user wants to adjust ramp
             // instead of going to next mode (unless they're
             // tapping rapidly, in which case we should advance to turbo)
@@ -262,7 +262,7 @@ int main(void)
                 target_level = RAMP_SIZE;
             }
             //next_mode_num = 255;
-            _delay_500ms();
+            _delay_input();
             // go back to the previously-memorized level
             // if the user taps after a delay,
             // instead of advancing to blinkies

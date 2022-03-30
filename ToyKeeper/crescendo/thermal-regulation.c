@@ -93,7 +93,7 @@ inline void monitor_temperature(uint8_t mode,
             save_state();
         }
         // don't repeat for a little while
-        _delay_500ms();
+        _delay_input();
     }
     #endif
 

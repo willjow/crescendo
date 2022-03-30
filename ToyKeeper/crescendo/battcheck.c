@@ -2,7 +2,6 @@
 #define BATTCHECK_C
 
 void battcheck_mode() {
-    _delay_500ms();
     #ifdef BATTCHECK_VpT
     // blink out volts and tenths
     uint8_t result = battcheck();
@@ -18,7 +17,7 @@ void battcheck_mode() {
     blink(battcheck(), BLINK_ONTIME, BLINK_OFFTIME);
     #endif  // ifdef BATTCHECK_VpT
     // wait between readouts
-    _delay_500ms();
+    _delay_s();
 }
 
 void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {

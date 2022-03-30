@@ -75,7 +75,7 @@ void ramp_mode() {
 
     // wait a bit before actually ramping
     // (give the user a chance to select moon, or double-tap)
-    _delay_500ms();
+    _delay_input();
 
     // if we got through the delay, assume normal operation
     // (not trying to double-tap or triple-tap)

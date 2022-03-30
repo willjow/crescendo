@@ -46,8 +46,7 @@
 // (higher makes it slower and easier to do double-taps / triple-taps,
 //  lower makes the UI faster)
 // (recommended values 250 to 750)
-//#define HALF_SECOND 500
-#define HALF_SECOND 333
+#define INPUT_WAIT_TIME 333
 
 // Enable battery indicator mode?
 #ifdef VOLTAGE_MON

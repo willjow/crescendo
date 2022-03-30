@@ -3,8 +3,8 @@
 
 #include "misc.h"
 
-void _delay_500ms() {
-    _delay_4ms(HALF_SECOND/4);
+void _delay_input() {
+    _delay_4ms(INPUT_WAIT_TIME / 4);
 }
 
 void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
