@@ -82,9 +82,9 @@
 #define BATTCHECK 251
 #endif
 
-#define MEMORY    250
+//#define MEMORY    250
 #ifdef MEMORY
-#define MEMTOGGLE // runtime config for memory (requires MEMORY)
+//#define MEMTOGGLE // runtime config for memory (requires MEMORY)
 #endif
 
 #ifdef THERMAL_REGULATION
