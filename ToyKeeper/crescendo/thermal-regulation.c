@@ -62,8 +62,11 @@ inline void monitor_temperature(uint8_t mode,
     diff = temperature - temperatures[0];
     projected = temperature + (diff<<THERM_PREDICTION_STRENGTH);
 
+    if (0) {} // placeholder
+
+    #ifdef THERM_CALIBRATION_MODE
     // never step down in thermal calibration mode
-    if (mode == THERM_CALIBRATION_MODE) {
+    else if (mode == THERM_CALIBRATION_MODE) {
         if (first_loop) {
             // TODO: blink out current temperature limit
             // let user set default or max limit?
@@ -92,6 +95,7 @@ inline void monitor_temperature(uint8_t mode,
         // don't repeat for a little while
         _delay_500ms();
     }
+    #endif
 
     // too hot, step down (maybe)
     else if (projected >= THERM_CEIL) {

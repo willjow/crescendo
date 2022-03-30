@@ -10,10 +10,14 @@
 #define EEP_WEAR_LVL_LEN 32
 #endif
 #endif
+
 #ifdef MEMORY
 void save_mode() {  // save the current mode index (with wear leveling)
+    #ifdef MEMTOGGLE
     // only save when memory is enabled
-    if (memory) {
+    if (memory)
+    #endif
+    {
         eeprom_write_byte((uint8_t *)(eepos), 0xff);     // erase old state
         eeprom_write_byte((uint8_t *)(++eepos), 0xff);     // erase old state
 
@@ -26,7 +30,7 @@ void save_mode() {  // save the current mode index (with wear leveling)
 }
 #endif
 
-#ifdef CONFIG_MODE
+#if defined(MEMORY) || defined(CONFIG_MODE)
 #define OPT_memory (EEP_WEAR_LVL_LEN+1)
 #define OPT_therm_ceil (EEP_WEAR_LVL_LEN+2)
 void save_state() {
@@ -44,7 +48,7 @@ void save_state() {
 #define save_state save_mode
 #endif
 
-#ifdef CONFIG_MODE
+#if defined(MEMORY) || defined(CONFIG_MODE)
 void restore_state() {
     uint8_t eep;
     #ifdef MEMTOGGLE

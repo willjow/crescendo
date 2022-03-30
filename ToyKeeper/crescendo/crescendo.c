@@ -136,7 +136,7 @@ int main(void)
 {
     hw_setup();
 
-    #ifdef CONFIG_MODE
+    #if defined(MEMORY) || defined(CONFIG_MODE)
     uint8_t mode_override = 0;
     // Read config values and saved state
     restore_state();
@@ -156,13 +156,13 @@ int main(void)
         ramp_dir = 1;
         next_mode_num = 255;
         mode_idx = 0;
-        #ifdef MEMORY
+        #if defined(MEMORY) && defined(CONFIG_MODE)
         #ifdef MEMTOGGLE
         if (memory) { mode_override = MEMORY; }
         #else
         mode_override = MEMORY;
         #endif  // ifdef MEMTOGGLE
-        #endif  // ifdef MEMORY
+        #endif  // if defined(MEMORY) && defined(CONFIG_MODE)
     }
     long_press = 0;
     #ifdef MEMORY
@@ -392,7 +392,11 @@ int main(void)
         #endif  // ifdef VOLTAGE_MON
 
         #ifdef THERMAL_REGULATION
-        if ((mode == STEADY) || (mode == TURBO) || (mode == THERM_CALIBRATION_MODE)) {
+        if ((mode == STEADY) || (mode == TURBO)
+            #ifdef THERM_CALIBRATION_MODE
+            || (mode == THERM_CALIBRATION_MODE)
+            #endif
+            ) {
             monitor_temperature(mode, temperatures,
                                 &overheat_count, &underheat_count,
                                 first_temp_reading, first_loop, &loop_count);
