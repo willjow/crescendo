@@ -39,12 +39,11 @@ void party_strobe_loop(uint8_t ontime, uint8_t offtime) {
 
 #ifdef SOS
 void SOS_mode() {
-#define SOS_SPEED (200/4)
-    blink(3, SOS_SPEED);
-    _delay_4ms(SOS_SPEED*5);
-    blink(3, SOS_SPEED*5/2);
-    //_delay_4ms(SOS_SPEED);
-    blink(3, SOS_SPEED);
+#define DIT_LENGTH (200 / 4)
+#define DAH_LENGTH (DIT_LENGTH * 3)
+    blink(3, DIT_LENGTH, DIT_LENGTH);
+    blink(3, DAH_LENGTH, DIT_LENGTH);
+    blink(3, DIT_LENGTH, DIT_LENGTH);
     _delay_s(); _delay_s();
 }
 #endif

@@ -59,9 +59,12 @@
 //#define BATTCHECK_VpT  // Volts + tenths
 
 // output to use for blinks on battery check (and other modes)
-#define BLINK_BRIGHTNESS    RAMP_SIZE/4
-// ms per normal-speed blink
-#define BLINK_SPEED         (500/4)
+#define BLINK_BRIGHTNESS    (RAMP_SIZE/4)
+// 4ms units per normal-speed blink
+#define BLINK_SPEED         (1000/4)
+#define BLINK_ONTIME        (BLINK_SPEED * 2 / 12)
+#define BLINK_OFFTIME       (BLINK_SPEED * 3 / 12)
+#define BLINK_SPACE         (BLINK_SPEED * 8 / 12)
 
 // Uncomment this if you want the ramp to stop when it reaches maximum
 //#define STOP_AT_TOP     HOP_ON_POP

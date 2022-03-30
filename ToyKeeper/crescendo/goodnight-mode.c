@@ -13,7 +13,7 @@ void poweroff() {
 void goodnight_mode() {
     uint8_t i, j;
     // signal that this is *not* the STEADY mode
-    blink(2, BLINK_SPEED/16);
+    blink(2, BLINK_SPEED / 32, BLINK_SPEED / 16);
     #define GOODNIGHT_TOP (RAMP_SIZE/6)
     // ramp up instead of going directly to the top level
     // (probably pointless in this UI)

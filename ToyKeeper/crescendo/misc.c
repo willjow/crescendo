@@ -7,14 +7,18 @@ void _delay_500ms() {
     _delay_4ms(HALF_SECOND/4);
 }
 
-void blink(uint8_t val, uint8_t speed) {
-    for (; val>0; val--)
-    {
+void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
+    if (!val) {
+        // "zero" val gets a single short blink
+        on_4ms = 2;
+        val = 1;
+    }
+
+    for (; val>0; val--) {
         set_level(BLINK_BRIGHTNESS);
-        _delay_4ms(speed);
+        _delay_4ms(on_4ms);
         set_level(0);
-        _delay_4ms(speed);
-        _delay_4ms(speed);
+        _delay_4ms(off_4ms);
     }
 }
 

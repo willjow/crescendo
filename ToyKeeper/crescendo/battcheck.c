@@ -6,19 +6,19 @@ void battcheck_mode() {
     #ifdef BATTCHECK_VpT
     // blink out volts and tenths
     uint8_t result = battcheck();
-    blink(result >> 5, BLINK_SPEED/5);
-    _delay_4ms(BLINK_SPEED*2/3);
-    blink(1,8/4);
-    _delay_4ms(BLINK_SPEED*4/3);
-    blink(result & 0b00011111, BLINK_SPEED/5);
+    uint8_t volts = result >> 5;
+    uint8_t tenths = result & 0b00011111;
+    blink(volts, BLINK_ONTIME, BLINK_OFFTIME);
+    _delay_4ms(BLINK_SPACE);
+    blink(tenths, BLINK_ONTIME, BLINK_OFFTIME);
     #else  // ifdef BATTCHECK_VpT
     // blink zero to five times to show voltage
     // (or zero to nine times, if 8-bar mode)
     // (~0%, ~25%, ~50%, ~75%, ~100%, >100%)
-    blink(battcheck(), BLINK_SPEED/4);
+    blink(battcheck(), BLINK_ONTIME, BLINK_OFFTIME);
     #endif  // ifdef BATTCHECK_VpT
     // wait between readouts
-    _delay_s(); _delay_s();
+    _delay_500ms();
 }
 
 void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {

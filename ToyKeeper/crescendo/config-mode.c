@@ -9,12 +9,12 @@ void toggle(uint8_t *var, uint8_t num) {
     // by turning the light off, then changes the value back in case they
     // didn't save.  Can be used repeatedly on different options, allowing
     // the user to change and save only one at a time.
-    blink(num, BLINK_SPEED/8);  // indicate which option number this is
+    blink(num, BLINK_SPEED / 16, BLINK_SPEED / 8);  // indicate which option number this is
     _delay_4ms(250/4);
     *var ^= 1;
     save_state();
     // "buzz" for a while to indicate the active toggle window
-    blink(32, 500/32/4);
+    blink(32, 500 / 32 / 4, 500 / 32 / 2);
     // if the user didn't click, reset the value and return
     *var ^= 1;
     save_state();
