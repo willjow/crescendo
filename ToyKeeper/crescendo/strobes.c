@@ -1,6 +1,8 @@
 #ifndef STROBES_C
 #define STROBES_C
 
+#include "strobes.h"
+
 #ifdef ANY_STROBE
 #ifdef POLICE_STROBE
 void strobe(uint8_t ontime, uint8_t offtime) {

@@ -1,6 +1,8 @@
 #ifndef GOODNIGHT_MODE_C
 #define GOODNIGHT_MODE_C
 
+#include "goodnight_mode.h"
+
 void poweroff() {
     // Turn off main LED
     set_level(0);

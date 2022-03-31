@@ -1,6 +1,8 @@
 #ifndef LOAD_SAVE_C
 #define LOAD_SAVE_C
 
+#include "load-save.h"
+
 #if defined(MEMORY) || defined(CONFIG_MODE)
 #if (ATTINY == 85) || (ATTINY == 45)
 #define EEP_WEAR_LVL_LEN 128

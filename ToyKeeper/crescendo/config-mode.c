@@ -1,6 +1,8 @@
 #ifndef CONFIG_MODE_C
 #define CONFIG_MODE_C
 
+#include "config-mode.c"
+
 #ifdef CONFIG_MODE
 
 void toggle(uint8_t *var, uint8_t num) {

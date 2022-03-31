@@ -1,6 +1,8 @@
 #ifndef THERMAL_REGULATION_C
 #define THERMAL_REGULATION_C
 
+#include "thermal-regulation.h"
+
 #ifdef THERMAL_REGULATION
 #define TEMP_ORIGIN 275  // roughly 0 C or 32 F (ish)
 int16_t current_temperature() {
