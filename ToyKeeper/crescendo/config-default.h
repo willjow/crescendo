@@ -104,6 +104,7 @@
 //#define STROBE    245         // Simple tactical strobe
 //#define POLICE_STROBE 244     // 2-speed tactical strobe
 //#define RANDOM_STROBE 243     // variable-speed tactical strobe
+
 //#define SOS 242               // distress signal
 //#define HEART_BEACON 241      // 1Hz heartbeat-pattern beacon
 

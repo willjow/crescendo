@@ -86,9 +86,18 @@
 #include "misc.h"
 #include "load-save.h"
 #include "ramp-mode.h"
+
+#ifdef VOLTAGE_MON
 #include "battcheck.h"
+#endif
+
+#ifdef THERMAL_REGULATION
 #include "thermal-regulation.h"
+#endif
+
+#ifdef CONFIG_MODE
 #include "config-mode.h"
+#endif
 
 #ifdef GOODNIGHT
 #include "goodnight-mode.h"
@@ -103,9 +112,18 @@
 #include "misc.c"
 #include "load-save.c"
 #include "ramp-mode.c"
+
+#ifdef VOLTAGE_MON
 #include "battcheck.c"
+#endif
+
+#ifdef THERMAL_REGULATION
 #include "thermal-regulation.c"
+#endif
+
+#ifdef CONFIG_MODE
 #include "config-mode.c"
+#endif
 
 #ifdef GOODNIGHT
 #include "goodnight-mode.c"
