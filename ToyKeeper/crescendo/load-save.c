@@ -32,7 +32,7 @@ void save_mode() {  // save the current mode index (with wear leveling)
 }
 #endif
 
-#if defined(MEMORY) || defined(CONFIG_MODE)
+#ifdef CONFIG_MODE
 #define OPT_memory (EEP_WEAR_LVL_LEN+1)
 #define OPT_therm_ceil (EEP_WEAR_LVL_LEN+2)
 void save_state() {
@@ -46,8 +46,6 @@ void save_state() {
     eeprom_write_byte((uint8_t *)OPT_therm_ceil, therm_ceil);
     #endif
 }
-#else
-#define save_state save_mode
 #endif
 
 #if defined(MEMORY) || defined(CONFIG_MODE)
