@@ -89,7 +89,11 @@
 #include "battcheck.h"
 #include "thermal-regulation.h"
 #include "config-mode.h"
+
+#ifdef GOODNIGHT
 #include "goodnight-mode.h"
+#endif
+
 #include "strobes.h"
 
 /********* Include all the app logic source files *********/
@@ -102,7 +106,11 @@
 #include "battcheck.c"
 #include "thermal-regulation.c"
 #include "config-mode.c"
+
+#ifdef GOODNIGHT
 #include "goodnight-mode.c"
+#endif
+
 #include "strobes.c"
 
 

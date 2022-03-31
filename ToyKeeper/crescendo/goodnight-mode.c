@@ -3,15 +3,6 @@
 
 #include "goodnight_mode.h"
 
-void poweroff() {
-    // Turn off main LED
-    set_level(0);
-    // Power down as many components as possible
-    ADCSRA &= ~(1<<7); //ADC off
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-    sleep_mode();
-}
-
 void goodnight_mode() {
     uint8_t i, j;
     // signal that this is *not* the STEADY mode

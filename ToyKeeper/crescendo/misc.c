@@ -3,6 +3,17 @@
 
 #include "misc.h"
 
+#if defined(VOLTAGE_MON) || defined(GOODNIGHT)
+void poweroff() {
+    // Turn off main LED
+    set_level(0);
+    // Power down as many components as possible
+    ADCSRA &= ~(1<<7); //ADC off
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    sleep_mode();
+}
+#endif
+
 void _delay_input() {
     _delay_4ms(INPUT_WAIT_TIME / 4);
 }
