@@ -99,6 +99,10 @@
 #include "config-mode.h"
 #endif
 
+#ifdef BIKING_MODE
+#include "biking-mode.h"
+#endif
+
 #ifdef GOODNIGHT
 #include "goodnight-mode.h"
 #endif
@@ -127,6 +131,10 @@
 
 #ifdef CONFIG_MODE
 #include "config-mode.c"
+#endif
+
+#ifdef BIKING_MODE
+#include "biking-mode.c"
 #endif
 
 #ifdef GOODNIGHT
