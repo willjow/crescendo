@@ -3,8 +3,6 @@
 
 #include "config-mode.c"
 
-#ifdef CONFIG_MODE
-
 void toggle(uint8_t *var, uint8_t num) {
     // Used for config mode
     // Changes the value of a config option, waits for the user to "save"
@@ -46,7 +44,5 @@ void config_mode(uint8_t *dummy) {
     next_mode_num = 255;
     #endif
 }
-
-#endif
 
 #endif

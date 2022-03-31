@@ -3,7 +3,6 @@
 
 #include "thermal-regulation.h"
 
-#ifdef THERMAL_REGULATION
 #define TEMP_ORIGIN 275  // roughly 0 C or 32 F (ish)
 int16_t current_temperature() {
     ADC_on_temperature();
@@ -21,7 +20,6 @@ int16_t current_temperature() {
     temp = (temp>>1) - (TEMP_ORIGIN<<2);
     return temp;
 }
-#endif  // ifdef THERMAL_REGULATION
 
 #define THERM_HISTORY_SIZE 8
 inline void monitor_temperature(uint8_t mode,
