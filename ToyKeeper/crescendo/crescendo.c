@@ -103,6 +103,10 @@
 #include "goodnight-mode.h"
 #endif
 
+#ifdef SOS
+#include "sos-mode.h"
+#endif
+
 #include "strobes.h"
 
 /********* Include all the app logic source files *********/
@@ -127,6 +131,10 @@
 
 #ifdef GOODNIGHT
 #include "goodnight-mode.c"
+#endif
+
+#ifdef SOS
+#include "sos-mode.c"
 #endif
 
 #include "strobes.c"

@@ -39,17 +39,6 @@ void party_strobe_loop(uint8_t ontime, uint8_t offtime) {
 }
 #endif
 
-#ifdef SOS
-void SOS_mode() {
-#define DIT_LENGTH (200 / 4)
-#define DAH_LENGTH (DIT_LENGTH * 3)
-    blink(3, DIT_LENGTH, DIT_LENGTH);
-    blink(3, DAH_LENGTH, DIT_LENGTH);
-    blink(3, DIT_LENGTH, DIT_LENGTH);
-    _delay_s(); _delay_s();
-}
-#endif
-
 #ifdef BIKING_MODE
 void biking_mode(uint8_t lo, uint8_t hi) {
     #ifdef FULL_BIKING_MODE
