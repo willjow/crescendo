@@ -163,3 +163,8 @@ TODO
   - Manual memory
     - for now, maybe just hardcoded, but ideally is runtime-selectable
       - perhaps just add another config menu for this?
+  - add support for off-time capacitor or off-time sleep mode to distinguish
+    between long and short presses
+      - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
+      - the above reports that relying on SRAM decay is not a reliable
+        long-term solution...
