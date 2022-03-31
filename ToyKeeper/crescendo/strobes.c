@@ -4,11 +4,7 @@
 #include "strobes.h"
 
 #ifdef ANY_STROBE
-#ifdef POLICE_STROBE
 void strobe(uint8_t ontime, uint8_t offtime) {
-#else
-inline void strobe(uint8_t ontime, uint8_t offtime) {
-#endif
     uint8_t i;
     for(i=0;i<8;i++) {
         set_level(RAMP_SIZE);
