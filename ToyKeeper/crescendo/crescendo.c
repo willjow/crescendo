@@ -111,7 +111,9 @@
 #include "sos-mode.h"
 #endif
 
+#if defined(ANY_STROBE) || defined(PARTY_STROBES)
 #include "strobes.h"
+#endif
 
 /********* Include all the app logic source files *********/
 // (is a bit weird to do things this way,
@@ -145,7 +147,9 @@
 #include "sos-mode.c"
 #endif
 
+#if defined(ANY_STROBE) || defined(PARTY_STROBES)
 #include "strobes.c"
+#endif
 
 
 inline void hw_setup() {
