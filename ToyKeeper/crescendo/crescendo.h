@@ -38,7 +38,7 @@ uint8_t saved_ramp_level = 1;
 // counter for entering config mode
 // (needs to be remembered while off, but only for up to half a second)
 uint8_t fast_presses __attribute__ ((section (".noinit")));
-uint8_t long_press __attribute__ ((section (".noinit")));
+uint16_t long_press __attribute__ ((section (".noinit")));
 // current or last-used mode number
 uint8_t mode_idx __attribute__ ((section (".noinit")));
 uint8_t ramp_level __attribute__ ((section (".noinit")));
