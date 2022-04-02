@@ -17,19 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- * ATTINY13 Diagram
- *           ----
- *         -|1  8|- VCC
- *         -|2  7|- Voltage ADC
- *         -|3  6|-
- *     GND -|4  5|- PWM (Nx7135)
- *           ----
+ * ATtiny13A/25/45/85 DIAGRAM
+ * --------------------------
+ *   NOTE: The ATtiny13A does not support PWM (CH3).
+ *
+ *               ----
+ *       Reset -|1  8|- VCC
+ *         OTC -|2  7|- Voltage ADC
+ *   PWM (CH3) -|3  6|- PWM (CH2)
+ *         GND -|4  5|- PWM (CH1)
+ *               ----
  *
  * FUSES
- *      (check bin/flash*.sh for recommended values)
+ * -----
+ *   (check bin/flash*.sh for recommended values)
  *
  * CALIBRATION
- *
+ * -----------
  *   To find out what values to use, flash the driver with battcheck.hex
  *   and hook the light up to each voltage you need a value for.  This is
  *   much more reliable than attempting to calculate the values from a
