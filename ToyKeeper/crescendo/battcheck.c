@@ -51,7 +51,7 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
                     poweroff();
                 }
             }
-            set_mode(ramp_level);
+            set_level(ramp_level);
             target_level = ramp_level;
             //save_mode();  // we didn't actually change the mode
             *lowbatt_cnt = 0;

@@ -269,7 +269,7 @@ int main(void)
             mode_override = 0;
 
             // moon mode for half a second
-            set_mode(1);
+            set_level(1);
             // if the user taps quickly, go to the real moon mode
             next_mode_num = 1;
 
@@ -293,7 +293,7 @@ int main(void)
         else if (mode == STEADY) {
             // normal flashlight mode
             if (first_loop) {
-                set_mode(ramp_level);
+                set_level(ramp_level);
                 target_level = ramp_level;
             }
             // Wait for user to tap again to advance to the next mode
@@ -308,7 +308,7 @@ int main(void)
         else if (mode == TURBO) {
             // turbo is special because it's easier to handle that way
             if (first_loop) {
-                set_mode(RAMP_SIZE);
+                set_level(RAMP_SIZE);
                 target_level = RAMP_SIZE;
             }
             //next_mode_num = 255;
@@ -368,13 +368,13 @@ int main(void)
 
         #ifdef HEART_BEACON
         else if (mode == HEART_BEACON) {
-            set_mode(RAMP_SIZE);
+            set_level(RAMP_SIZE);
             _delay_4ms(1);
-            set_mode(0);
+            set_level(0);
             _delay_4ms(250/4);
-            set_mode(RAMP_SIZE);
+            set_level(RAMP_SIZE);
             _delay_4ms(1);
-            set_mode(0);
+            set_level(0);
             _delay_4ms(750/4);
         }
         #endif

@@ -58,7 +58,7 @@ void set_level(uint8_t level) {
 }
 
 void ramp_mode() {
-    set_mode(ramp_level);  // turn light on
+    set_level(ramp_level);  // turn light on
 
     // ramp up by default
     //if (fast_presses == 0) {
@@ -95,7 +95,7 @@ void ramp_mode() {
     //ramp_dir = (ramp_dir == 1) ? 1 : -1;
     // Do the actual ramp
     while (1) {
-        set_mode(ramp_level);
+        set_level(ramp_level);
         _delay_4ms(RAMP_TIME/RAMP_SIZE/4);
         if (
             ((ramp_dir > 0) && (ramp_level >= RAMP_SIZE))
@@ -112,7 +112,7 @@ void ramp_mode() {
         #endif
         #ifdef BLINK_AT_TOP
         // blink at the top
-        set_mode(0);
+        set_level(0);
         _delay_4ms(2);
         #endif
     }

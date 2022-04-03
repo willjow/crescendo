@@ -71,12 +71,12 @@ inline void monitor_temperature(uint8_t mode,
             // TODO: blink out current temperature limit
             // let user set default or max limit?
             therm_ceil = DEFAULT_THERM_CEIL;
-            set_mode(RAMP_SIZE/4);
+            set_level(RAMP_SIZE/4);
             save_state();
             _delay_s();
             _delay_s();
             // turn power up all the way for calibration purposes
-            set_mode(RAMP_SIZE);
+            set_level(RAMP_SIZE);
         }
         // use the current temperature as the new ceiling value
         //tempCeil = projected >> 2;
@@ -118,7 +118,7 @@ inline void monitor_temperature(uint8_t mode,
             }
             // really, don't try to regulate below the floor
             if (actual_level > THERM_FLOOR) {
-                set_mode(stepdown);
+                set_level(stepdown);
             }
         }
         else {
@@ -133,7 +133,7 @@ inline void monitor_temperature(uint8_t mode,
                 *underheat_count = 0;
                 // never go above the user's requested level
                 if (actual_level < target_level) {
-                    set_mode(actual_level + 1);  // step up slowly
+                    set_level(actual_level + 1);  // step up slowly
                 }
             } else {
                 (*underheat_count)++;

@@ -12,13 +12,13 @@ void goodnight_mode() {
     // (probably pointless in this UI)
     /*
     for (i=1; i<=GOODNIGHT_TOP; i++) {
-        set_mode(i);
+        set_level(i);
         _delay_4ms(2*RAMP_TIME/RAMP_SIZE/4);
     }
     */
     // ramp down over about an hour
     for(i=GOODNIGHT_TOP; i>=1; i--) {
-        set_mode(i);
+        set_level(i);
         // how long the down ramp should last, in seconds
         #define GOODNIGHT_TIME 60*60
         // how long does _delay_s() actually last, in seconds?

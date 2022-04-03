@@ -12,8 +12,6 @@ void set_output(uint8_t pwm1);
 #endif
 
 void set_level(uint8_t level);
-#define set_mode set_level
-
 void ramp_mode();
 
 #endif
