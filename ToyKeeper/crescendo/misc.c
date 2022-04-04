@@ -34,7 +34,12 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
 }
 
 void next_mode() {
-    // allow an override, if it exists
+    // allow an override, if it exists; mostly only useful for setting
+    // RAMP_IDX, STEADY_IDX, or TURBO_IDX because the other mode indexes aren't
+    // really known until compile time
+    //
+    // `mode_nums` is defined such that mode indexes should be
+    // (mode num) - MAX_MODES, but ideally we don't rely on that
     if (next_mode_num != DISABLE_MODE_OVERRIDE) {
         mode_idx = next_mode_num;
         next_mode_num = DISABLE_MODE_OVERRIDE;
