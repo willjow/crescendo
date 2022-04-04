@@ -54,8 +54,8 @@
 #endif
 // Choose a battery indicator style
 //#define BATTCHECK_4bars  // up to 4 blinks
-#define BATTCHECK_8bars  // up to 8 blinks
-//#define BATTCHECK_VpT  // Volts + tenths
+//#define BATTCHECK_8bars  // up to 8 blinks
+#define BATTCHECK_VpT      // Volts + tenths
 
 // output to use for blinks on battery check (and other modes)
 #define BLINK_BRIGHTNESS    (MAX_LEVEL/4)
