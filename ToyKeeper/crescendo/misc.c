@@ -35,8 +35,7 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
 
 void next_mode() {
     // allow an override, if it exists
-    //if (next_mode_num < sizeof(mode_cycle)) {
-    if (next_mode_num < DISABLE_MODE_OVERRIDE) {
+    if (next_mode_num != DISABLE_MODE_OVERRIDE) {
         mode_idx = next_mode_num;
         next_mode_num = DISABLE_MODE_OVERRIDE;
         return;
