@@ -308,8 +308,8 @@ int main(void)
         else if (mode == TURBO) {
             // turbo is special because it's easier to handle that way
             if (first_loop) {
-                set_level(RAMP_SIZE);
-                target_level = RAMP_SIZE;
+                set_level(MAX_LEVEL);
+                target_level = MAX_LEVEL;
             }
             //next_mode_num = 255;
             _delay_input();
@@ -340,7 +340,7 @@ int main(void)
             // pseudo-random strobe
             uint8_t ms = (34 + (pgm_rand() & 0x3f))>>2;
             //strobe(ms, ms);
-            set_level(RAMP_SIZE);
+            set_level(MAX_LEVEL);
             _delay_4ms(ms);
             set_level(0);
             _delay_4ms(ms);
@@ -361,11 +361,11 @@ int main(void)
 
         #ifdef HEART_BEACON
         else if (mode == HEART_BEACON) {
-            set_level(RAMP_SIZE);
+            set_level(MAX_LEVEL);
             _delay_4ms(1);
             set_level(0);
             _delay_4ms(250/4);
-            set_level(RAMP_SIZE);
+            set_level(MAX_LEVEL);
             _delay_4ms(1);
             set_level(0);
             _delay_4ms(750/4);

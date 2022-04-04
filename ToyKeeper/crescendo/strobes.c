@@ -7,7 +7,7 @@
 void strobe(uint8_t ontime, uint8_t offtime) {
     uint8_t i;
     for(i=0;i<8;i++) {
-        set_level(RAMP_SIZE);
+        set_level(MAX_LEVEL);
         _delay_4ms(ontime);
         set_level(0);
         _delay_4ms(offtime);
@@ -17,7 +17,7 @@ void strobe(uint8_t ontime, uint8_t offtime) {
 
 #ifdef PARTY_STROBES
 void party_strobe(uint8_t ontime, uint8_t offtime) {
-    set_level(RAMP_SIZE);
+    set_level(MAX_LEVEL);
     if (ontime) {
         _delay_ms(ontime);
     } else {

@@ -35,7 +35,7 @@ inline void monitor_temperature(uint8_t mode,
     // how low is the lowpass filter?
     #define THERM_LOWPASS 8
     // lowest ramp level; never go below this (sanity check)
-    #define THERM_FLOOR (RAMP_SIZE/4)
+    #define THERM_FLOOR (MAX_LEVEL/4)
     // highest temperature allowed
     // (convert configured value to 13.2 fixed-point)
     #define THERM_CEIL (therm_ceil<<2)
@@ -71,12 +71,12 @@ inline void monitor_temperature(uint8_t mode,
             // TODO: blink out current temperature limit
             // let user set default or max limit?
             therm_ceil = DEFAULT_THERM_CEIL;
-            set_level(RAMP_SIZE/4);
+            set_level(MAX_LEVEL/4);
             save_state();
             _delay_s();
             _delay_s();
             // turn power up all the way for calibration purposes
-            set_level(RAMP_SIZE);
+            set_level(MAX_LEVEL);
         }
         // use the current temperature as the new ceiling value
         //tempCeil = projected >> 2;

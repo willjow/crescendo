@@ -40,7 +40,7 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
                 // step "down" from special modes to medium-low
                 mode_idx = 1;
                 //mode = STEADY;
-                ramp_level = RAMP_SIZE/4;
+                ramp_level = MAX_LEVEL/4;
             }
             else {
                 if (ramp_level > 1) {  // solid non-moon mode
