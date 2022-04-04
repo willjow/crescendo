@@ -51,51 +51,51 @@ enum mode_nums {
     RAMP_E = MAX_MODES,
     STEADY_E,
     TURBO_E,
-    #ifdef MEMORY
-    MEMORY_E,
-    #endif
-    #ifdef USE_BATTCHECK
+#ifdef USE_BATTCHECK
     BATTCHECK_E,
-    #endif
-    #ifdef GOODNIGHT
+#endif
+#ifdef GOODNIGHT
     GOODNIGHT_E
-    #endif
-    #ifdef BIKING_MODE
+#endif
+#ifdef BIKING_MODE
     BIKING_MODE_E,
-    #endif
-    #ifdef SOS
+#endif
+#ifdef SOS
     SOS_E,
-    #endif
-    #ifdef STROBE
-    STROBE_E,
-    #endif
-    #ifdef POLICE_STROBE
-    POLICE_STROBE_E,
-    #endif
-    #ifdef RANDOM_STROBE
+#endif
+#ifdef RANDOM_STROBE
     RANDOM_STROBE_E,
-    #endif
-    #ifdef HEART_BEACON
+#endif
+#ifdef POLICE_STROBE
+    POLICE_STROBE_E,
+#endif
+#ifdef STROBE
+    STROBE_E,
+#endif
+#ifdef HEART_BEACON
     HEART_BEACON_E,
-    #endif
-    #ifdef PARTY_STROBE12
+#endif
+#ifdef PARTY_STROBE12
     PARTY_STROBE12_E,
-    #endif
-    #ifdef PARTY_STROBE24
+#endif
+#ifdef PARTY_STROBE24
     PARTY_STROBE24_E,
-    #endif
-    #ifdef PARTY_STROBE60
+#endif
+#ifdef PARTY_STROBE60
     PARTY_STROBE60_E,
-    #endif
-    #ifdef PARTY_VARSTROBE1
+#endif
+#ifdef PARTY_VARSTROBE1
     PARTY_VARSTROBE1_E,
-    #endif
-    #ifdef PARTY_VARSTROBE2
+#endif
+#ifdef PARTY_VARSTROBE2
     PARTY_VARSTROBE2_E,
-    #endif
-    #ifdef THERM_CALIBRATION_MODE
+#endif
+#ifdef MEMORY
+    MEMORY_E,
+#endif
+#ifdef THERM_CALIBRATION_MODE
     THERM_CALIBRATION_MODE_E,
-    #endif
+#endif
 };
 
 uint8_t mode_cycle[] = {
