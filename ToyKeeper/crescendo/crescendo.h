@@ -48,7 +48,9 @@ uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
 uint8_t mode_cycle[] = {
-    RAMP, STEADY, TURBO,
+    RAMP,
+    STEADY,
+    TURBO,
 #ifdef USE_BATTCHECK
     BATTCHECK,
 #endif
@@ -57,6 +59,9 @@ uint8_t mode_cycle[] = {
 #endif
 #ifdef BIKING_MODE
     BIKING_MODE,
+#endif
+#ifdef SOS
+    SOS,
 #endif
 #ifdef RANDOM_STROBE
     RANDOM_STROBE,
@@ -84,9 +89,6 @@ uint8_t mode_cycle[] = {
 #endif
 #ifdef PARTY_VARSTROBE2
     PARTY_VARSTROBE2,
-#endif
-#ifdef SOS
-    SOS,
 #endif
 };
 
