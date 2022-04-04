@@ -70,10 +70,6 @@
 // Uncomment this if you want it to blink when it reaches maximum
 #define BLINK_AT_TOP
 
-// Maximum number of modes; modes will mapped to ints via enum starting
-// at MAX_MODES
-#define MAX_MODES 127
-
 // Enabled Modes
 #ifdef VOLTAGE_MON
 #define BATTCHECK

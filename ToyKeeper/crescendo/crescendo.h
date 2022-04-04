@@ -47,6 +47,10 @@ uint8_t next_mode_num __attribute__ ((section (".noinit")));
 uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
+// Maximum number of modes; modes will mapped to ints via enum starting
+// at MAX_MODES
+#define MAX_MODES 127
+
 enum mode_nums {
     RAMP_E = MAX_MODES,
     STEADY_E,
