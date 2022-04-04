@@ -36,9 +36,9 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
 void next_mode() {
     // allow an override, if it exists
     //if (next_mode_num < sizeof(mode_cycle)) {
-    if (next_mode_num < 255) {
+    if (next_mode_num < DISABLE_MODE_OVERRIDE) {
         mode_idx = next_mode_num;
-        next_mode_num = 255;
+        next_mode_num = DISABLE_MODE_OVERRIDE;
         return;
     }
 
@@ -46,7 +46,7 @@ void next_mode() {
     if (mode_idx >= sizeof(mode_cycle)) {
         // Wrap around
         // (wrap to steady mode (1), not ramp (0))
-        mode_idx = 1;
+        mode_idx = STEADY_IDX;
     }
 }
 

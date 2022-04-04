@@ -98,6 +98,10 @@ enum mode_nums {
 #endif
 };
 
+#define RAMP_IDX 0
+#define STEADY_IDX 1
+#define TURBO_IDX 2
+#define DISABLE_MODE_OVERRIDE 255
 uint8_t mode_cycle[] = {
     RAMP_E,
     STEADY_E,

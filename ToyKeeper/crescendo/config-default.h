@@ -72,7 +72,7 @@
 
 // Maximum number of modes; modes will mapped to ints via enum starting
 // at MAX_MODES
-#define MAX_MODES 128
+#define MAX_MODES 127
 
 // Enabled Modes
 #ifdef VOLTAGE_MON

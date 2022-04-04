@@ -204,7 +204,7 @@ int main(void)
         fast_presses = 0;
         ramp_level = 1;
         ramp_dir = 1;
-        next_mode_num = 255;
+        next_mode_num = DISABLE_MODE_OVERRIDE;
         mode_idx = 0;
         #if defined(MEMORY) && defined(CONFIG_MODE)
         #ifdef MEMTOGGLE
@@ -273,7 +273,7 @@ int main(void)
             // moon mode for half a second
             set_level(1);
             // if the user taps quickly, go to the real moon mode
-            next_mode_num = 1;
+            next_mode_num = STEADY_IDX;
 
             _delay_input();
 
@@ -299,12 +299,12 @@ int main(void)
                 target_level = ramp_level;
             }
             // Wait for user to tap again to advance to the next mode
-            //next_mode_num = 255;
+            //next_mode_num = DISABLE_MODE_OVERRIDE;
             _delay_input();
             // After a delay, assume user wants to adjust ramp
             // instead of going to next mode (unless they're
             // tapping rapidly, in which case we should advance to turbo)
-            next_mode_num = 0;
+            next_mode_num = RAMP_IDX;
         }
 
         else if (mode == TURBO_E) {
@@ -313,13 +313,13 @@ int main(void)
                 set_level(MAX_LEVEL);
                 target_level = MAX_LEVEL;
             }
-            //next_mode_num = 255;
+            //next_mode_num = DISABLE_MODE_OVERRIDE;
             _delay_input();
             // go back to the previously-memorized level
             // if the user taps after a delay,
             // instead of advancing to blinkies
             // (allows something similar to "momentary" turbo)
-            next_mode_num = 1;
+            next_mode_num = STEADY_IDX;
         }
 
         #ifdef STROBE

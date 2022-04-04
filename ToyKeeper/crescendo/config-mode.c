@@ -25,8 +25,8 @@ void config_mode(uint8_t *dummy) {
     _delay_s();       // wait for user to stop fast-pressing button
     fast_presses = 0; // exit this mode after one use
                       //mode = STEADY_E;
-    mode_idx = 1;
-    next_mode_num = 255;
+    mode_idx = STEADY_IDX;
+    next_mode_num = DISABLE_MODE_OVERRIDE;
 
     uint8_t t = 0;
 
@@ -40,8 +40,8 @@ void config_mode(uint8_t *dummy) {
     // Enter temperature calibration mode?
     next_mode_num = THERM_CALIBRATION_MODE_E;
     toggle(dummy, ++t);  // doesn't actually set anything
-    mode_idx = 1;
-    next_mode_num = 255;
+    mode_idx = STEADY_IDX;
+    next_mode_num = DISABLE_MODE_OVERRIDE;
     #endif
 }
 
