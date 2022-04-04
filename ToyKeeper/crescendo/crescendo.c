@@ -115,7 +115,7 @@
 #include "sos-mode.h"
 #endif
 
-#if defined(ANY_STROBE) || defined(PARTY_STROBES)
+#if defined(TACTICAL_STROBES) || defined(PARTY_STROBES)
 #include "strobes.h"
 #endif
 
@@ -151,7 +151,7 @@
 #include "sos-mode.c"
 #endif
 
-#if defined(ANY_STROBE) || defined(PARTY_STROBES)
+#if defined(TACTICAL_STROBES) || defined(PARTY_STROBES)
 #include "strobes.c"
 #endif
 

@@ -96,17 +96,17 @@
 #define FULL_BIKING_MODE        // comment out to use minimal version
                                 // instead (decreases program size)
 
+//#define TACTICAL_STROBES      // Required for any of the tactical strobes
+//#define STROBE                // Simple tactical strobe
+//#define POLICE_STROBE         // 2-speed tactical strobe
+//#define RANDOM_STROBE         // variable-speed tactical strobe
+
 //#define PARTY_STROBES         // Required for any of the party strobes
 //#define PARTY_STROBE12        // 12Hz party strobe
 //#define PARTY_STROBE24        // 24Hz party strobe
 //#define PARTY_STROBE60        // 60Hz party strobe
 //#define PARTY_VARSTROBE1      // variable-speed party strobe (slow)
 //#define PARTY_VARSTROBE2      // variable-speed party strobe (fast)
-
-//#define ANY_STROBE            // Required for any of the tactical strobes
-//#define STROBE                // Simple tactical strobe
-//#define POLICE_STROBE         // 2-speed tactical strobe
-//#define RANDOM_STROBE         // variable-speed tactical strobe
 
 //#define SOS                   // distress signal
 //#define HEART_BEACON          // 1Hz heartbeat-pattern beacon

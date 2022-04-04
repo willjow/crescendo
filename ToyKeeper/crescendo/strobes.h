@@ -1,7 +1,7 @@
 #ifndef STROBES_H
 #define STROBES_H
 
-#ifdef ANY_STROBE
+#ifdef TACTICAL_STROBES
 void strobe(uint8_t ontime, uint8_t offtime);
 #endif
 #ifdef PARTY_STROBES

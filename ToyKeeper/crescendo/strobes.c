@@ -3,7 +3,7 @@
 
 #include "strobes.h"
 
-#ifdef ANY_STROBE
+#ifdef TACTICAL_STROBES
 void strobe(uint8_t ontime, uint8_t offtime) {
     uint8_t i;
     for(i=0;i<8;i++) {
