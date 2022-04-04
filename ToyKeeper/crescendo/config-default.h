@@ -70,51 +70,47 @@
 // Uncomment this if you want it to blink when it reaches maximum
 #define BLINK_AT_TOP
 
-// 255 is the default eeprom state, don't use
-// (actually, no longer applies...  using a different algorithm now)
-// (previously tried to store mode type plus ramp level in a single byte
-//  for mode memory purposes, but it was a bad idea)
-#define DONOTUSE  255
-// Modes start at 255 and count down
-#define TURBO     254
-#define RAMP      253
-#define STEADY    252
+// Maximum number of modes; modes will mapped to ints via enum starting
+// at MAX_MODES
+#define MAX_MODES 128
+
+// Enabled Modes
+#define TURBO
+#define RAMP
+#define STEADY
 
 #ifdef VOLTAGE_MON
-#define BATTCHECK 251
+#define BATTCHECK
 #endif
 
-//#define MEMORY    250
+//#define MEMORY
 #ifdef MEMORY
-//#define MEMTOGGLE // runtime config for memory (requires MEMORY)
+//#define MEMTOGGLE             // runtime config for memory (requires MEMORY)
 #endif
 
 #ifdef THERMAL_REGULATION
-#define THERM_CALIBRATION_MODE 248  // let user configure temperature limit
+#define THERM_CALIBRATION_MODE  // let user configure temperature limit
 #endif
 
-#define BIKING_MODE 247   // steady on with pulses at 1Hz
-// comment out to use minimal version instead (smaller)
-#define FULL_BIKING_MODE
+#define BIKING_MODE             // steady on with pulses at 1Hz
+#define FULL_BIKING_MODE        // comment out to use minimal version
+                                // instead (decreases program size)
 
-// Required for any of the strobes below it
-//#define ANY_STROBE
-//#define STROBE    245         // Simple tactical strobe
-//#define POLICE_STROBE 244     // 2-speed tactical strobe
-//#define RANDOM_STROBE 243     // variable-speed tactical strobe
+//#define PARTY_STROBES         // Required for any of the party strobes
+//#define PARTY_STROBE12        // 12Hz party strobe
+//#define PARTY_STROBE24        // 24Hz party strobe
+//#define PARTY_STROBE60        // 60Hz party strobe
+//#define PARTY_VARSTROBE1      // variable-speed party strobe (slow)
+//#define PARTY_VARSTROBE2      // variable-speed party strobe (fast)
 
-//#define SOS 242               // distress signal
-//#define HEART_BEACON 241      // 1Hz heartbeat-pattern beacon
+//#define ANY_STROBE            // Required for any of the tactical strobes
+//#define STROBE                // Simple tactical strobe
+//#define POLICE_STROBE         // 2-speed tactical strobe
+//#define RANDOM_STROBE         // variable-speed tactical strobe
 
-// next line required for any of the party strobes to work
-//#define PARTY_STROBES
-//#define PARTY_STROBE12 240    // 12Hz party strobe
-//#define PARTY_STROBE24 239    // 24Hz party strobe
-//#define PARTY_STROBE60 238    // 60Hz party strobe
-//#define PARTY_VARSTROBE1 237  // variable-speed party strobe (slow)
-//#define PARTY_VARSTROBE2 236  // variable-speed party strobe (fast)
-
-//#define GOODNIGHT 235         // hour-long ramp down then poweroff
+//#define SOS                   // distress signal
+//#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
+//#define GOODNIGHT             // hour-long ramp down then poweroff
 
 
 #if defined(MEMTOGGLE) || defined(THERM_CALIBRATION_MODE)

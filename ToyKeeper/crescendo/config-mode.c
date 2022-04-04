@@ -38,7 +38,7 @@ void config_mode(uint8_t *dummy) {
 
     #ifdef THERM_CALIBRATION_MODE
     // Enter temperature calibration mode?
-    next_mode_num = THERM_CALIBRATION_MODE;
+    next_mode_num = THERM_CALIBRATION_MODE_E;
     toggle(dummy, ++t);  // doesn't actually set anything
     mode_idx = 1;
     next_mode_num = 255;

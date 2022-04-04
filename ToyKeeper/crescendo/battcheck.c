@@ -36,7 +36,7 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
             // DEBUG: blink on step-down:
             //set_level(0);  _delay_ms(100);
 
-            if (mode != STEADY) {
+            if (mode != STEADY_E) {
                 // step "down" from special modes to medium-low
                 mode_idx = 1;
                 //mode = STEADY;

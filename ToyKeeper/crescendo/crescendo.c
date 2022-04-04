@@ -208,9 +208,9 @@ int main(void)
         mode_idx = 0;
         #if defined(MEMORY) && defined(CONFIG_MODE)
         #ifdef MEMTOGGLE
-        if (memory) { mode_override = MEMORY; }
+        if (memory) { mode_override = MEMORY_E; }
         #else
-        mode_override = MEMORY;
+        mode_override = MEMORY_E;
         #endif  // ifdef MEMTOGGLE
         #endif  // if defined(MEMORY) && defined(CONFIG_MODE)
     }
@@ -241,8 +241,10 @@ int main(void)
     uint8_t first_loop = 1;
     uint8_t loop_count = 0;
     while(1) {
-        if (mode_idx < sizeof(mode_cycle)) mode = mode_cycle[mode_idx];
-        else mode = mode_idx;
+        if (mode_idx < sizeof(mode_cycle))
+            mode = mode_cycle[mode_idx];
+        else
+            mode = mode_idx;
 
         #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)
         // make sure a voltage reading has started, for LVP purposes
@@ -264,7 +266,7 @@ int main(void)
 
         #ifdef MEMORY
         // memorized level
-        else if (mode_override == MEMORY) {
+        else if (mode_override == MEMORY_E) {
             // only do this once
             mode_override = 0;
 
@@ -286,11 +288,11 @@ int main(void)
         #endif
 
         // smooth ramp mode, lets user select any output level
-        if (mode == RAMP) {
+        if (mode == RAMP_E) {
             ramp_mode();
         }
 
-        else if (mode == STEADY) {
+        else if (mode == STEADY_E) {
             // normal flashlight mode
             if (first_loop) {
                 set_level(ramp_level);
@@ -305,7 +307,7 @@ int main(void)
             next_mode_num = 0;
         }
 
-        else if (mode == TURBO) {
+        else if (mode == TURBO_E) {
             // turbo is special because it's easier to handle that way
             if (first_loop) {
                 set_level(MAX_LEVEL);
@@ -321,14 +323,14 @@ int main(void)
         }
 
         #ifdef STROBE
-        else if (mode == STROBE) {
+        else if (mode == STROBE_E) {
             // 10Hz tactical strobe
             strobe(33/4,67/4);
         }
         #endif // ifdef STROBE
 
         #ifdef POLICE_STROBE
-        else if (mode == POLICE_STROBE) {
+        else if (mode == POLICE_STROBE_E) {
             // police-like strobe
             strobe(20/4,40/4);
             strobe(40/4,80/4);
@@ -336,7 +338,7 @@ int main(void)
         #endif // ifdef POLICE_STROBE
 
         #ifdef RANDOM_STROBE
-        else if (mode == RANDOM_STROBE) {
+        else if (mode == RANDOM_STROBE_E) {
             // pseudo-random strobe
             uint8_t ms = (34 + (pgm_rand() & 0x3f))>>2;
             //strobe(ms, ms);
@@ -349,18 +351,20 @@ int main(void)
         #endif // ifdef RANDOM_STROBE
 
         #ifdef BIKING_MODE
-        else if (mode == BIKING_MODE) {
+        else if (mode == BIKING_MODE_E) {
             // 2-level stutter beacon for biking and such
             biking_mode(ramp_level);
         }
         #endif  // ifdef BIKING_MODE
 
         #ifdef SOS
-        else if (mode == SOS) { SOS_mode(); }
+        else if (mode == SOS_E) {
+            SOS_mode();
+        }
         #endif // ifdef SOS
 
         #ifdef HEART_BEACON
-        else if (mode == HEART_BEACON) {
+        else if (mode == HEART_BEACON_E) {
             set_level(MAX_LEVEL);
             _delay_4ms(1);
             set_level(0);
@@ -373,25 +377,25 @@ int main(void)
         #endif
 
         #ifdef PARTY_STROBE12
-        else if (mode == PARTY_STROBE12) {
+        else if (mode == PARTY_STROBE12_E) {
             party_strobe_loop(1,79);
         }
         #endif
 
         #ifdef PARTY_STROBE24
-        else if (mode == PARTY_STROBE24) {
+        else if (mode == PARTY_STROBE24_E) {
             party_strobe_loop(0,41);
         }
         #endif
 
         #ifdef PARTY_STROBE60
-        else if (mode == PARTY_STROBE60) {
+        else if (mode == PARTY_STROBE60_E) {
             party_strobe_loop(0,15);
         }
         #endif
 
         #ifdef PARTY_VARSTROBE1
-        else if (mode == PARTY_VARSTROBE1) {
+        else if (mode == PARTY_VARSTROBE1_E) {
             uint8_t j, speed;
             for(j=0; j<66; j++) {
                 if (j<33) { speed = j; }
@@ -402,7 +406,7 @@ int main(void)
         #endif
 
         #ifdef PARTY_VARSTROBE2
-        else if (mode == PARTY_VARSTROBE2) {
+        else if (mode == PARTY_VARSTROBE2_E) {
             uint8_t j, speed;
             for(j=0; j<100; j++) {
                 if (j<50) { speed = j; }
@@ -414,14 +418,14 @@ int main(void)
 
         #ifdef BATTCHECK
         // battery check mode, show how much power is left
-        else if (mode == BATTCHECK) {
+        else if (mode == BATTCHECK_E) {
             battcheck_mode();
         }
         #endif // ifdef BATTCHECK
 
         #ifdef GOODNIGHT
         // "good night" mode, slowly ramps down and shuts off
-        else if (mode == GOODNIGHT) {
+        else if (mode == GOODNIGHT_E) {
             goodnight_mode();
         }
         #endif // ifdef GOODNIGHT
@@ -435,9 +439,9 @@ int main(void)
         #endif  // ifdef VOLTAGE_MON
 
         #ifdef THERMAL_REGULATION
-        if ((mode == STEADY) || (mode == TURBO)
+        if ((mode == STEADY_E) || (mode == TURBO_E)
             #ifdef THERM_CALIBRATION_MODE
-            || (mode == THERM_CALIBRATION_MODE)
+            || (mode == THERM_CALIBRATION_MODE_E)
             #endif
             ) {
             monitor_temperature(mode, temperatures,

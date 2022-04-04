@@ -47,48 +47,99 @@ uint8_t next_mode_num __attribute__ ((section (".noinit")));
 uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
+enum mode_nums {
+    RAMP_E = MAX_MODES,
+    STEADY_E,
+    TURBO_E,
+    #ifdef MEMORY
+    MEMORY_E,
+    #endif
+    #ifdef USE_BATTCHECK
+    BATTCHECK_E,
+    #endif
+    #ifdef GOODNIGHT
+    GOODNIGHT_E
+    #endif
+    #ifdef BIKING_MODE
+    BIKING_MODE_E,
+    #endif
+    #ifdef SOS
+    SOS_E,
+    #endif
+    #ifdef STROBE
+    STROBE_E,
+    #endif
+    #ifdef POLICE_STROBE
+    POLICE_STROBE_E,
+    #endif
+    #ifdef RANDOM_STROBE
+    RANDOM_STROBE_E,
+    #endif
+    #ifdef HEART_BEACON
+    HEART_BEACON_E,
+    #endif
+    #ifdef PARTY_STROBE12
+    PARTY_STROBE12_E,
+    #endif
+    #ifdef PARTY_STROBE24
+    PARTY_STROBE24_E,
+    #endif
+    #ifdef PARTY_STROBE60
+    PARTY_STROBE60_E,
+    #endif
+    #ifdef PARTY_VARSTROBE1
+    PARTY_VARSTROBE1_E,
+    #endif
+    #ifdef PARTY_VARSTROBE2
+    PARTY_VARSTROBE2_E,
+    #endif
+    #ifdef THERM_CALIBRATION_MODE
+    THERM_CALIBRATION_MODE_E,
+    #endif
+};
+
 uint8_t mode_cycle[] = {
-    RAMP,
-    STEADY,
-    TURBO,
+    RAMP_E,
+    STEADY_E,
+    TURBO_E,
 #ifdef USE_BATTCHECK
-    BATTCHECK,
+    BATTCHECK_E,
 #endif
 #ifdef GOODNIGHT
-    GOODNIGHT,
+    GOODNIGHT_E,
 #endif
 #ifdef BIKING_MODE
-    BIKING_MODE,
+    BIKING_MODE_E,
 #endif
 #ifdef SOS
-    SOS,
+    SOS_E,
 #endif
 #ifdef RANDOM_STROBE
-    RANDOM_STROBE,
+    RANDOM_STROBE_E,
 #endif
 #ifdef POLICE_STROBE
-    POLICE_STROBE,
+    POLICE_STROBE_E,
 #endif
 #ifdef STROBE
-    STROBE,
+    STROBE_E,
 #endif
 #ifdef HEART_BEACON
-    HEART_BEACON,
+    HEART_BEACON_E,
 #endif
 #ifdef PARTY_STROBE12
-    PARTY_STROBE12,
+    PARTY_STROBE12_E,
 #endif
 #ifdef PARTY_STROBE24
-    PARTY_STROBE24,
+    PARTY_STROBE24_E,
 #endif
 #ifdef PARTY_STROBE60
-    PARTY_STROBE60,
+    PARTY_STROBE60_E,
 #endif
 #ifdef PARTY_VARSTROBE1
-    PARTY_VARSTROBE1,
+    PARTY_VARSTROBE1_E,
 #endif
 #ifdef PARTY_VARSTROBE2
-    PARTY_VARSTROBE2,
+    PARTY_VARSTROBE2_E,
 #endif
 };
 

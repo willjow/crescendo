@@ -66,7 +66,7 @@ inline void monitor_temperature(uint8_t mode,
 
     #ifdef THERM_CALIBRATION_MODE
     // never step down in thermal calibration mode
-    else if (mode == THERM_CALIBRATION_MODE) {
+    else if (mode == THERM_CALIBRATION_MODE_E) {
         if (first_loop) {
             // TODO: blink out current temperature limit
             // let user set default or max limit?
