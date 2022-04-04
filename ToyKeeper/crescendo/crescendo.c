@@ -351,14 +351,7 @@ int main(void)
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE) {
             // 2-level stutter beacon for biking and such
-            biking_mode(RAMP_SIZE/2, RAMP_SIZE);
-        }
-        #endif  // ifdef BIKING_MODE
-
-        #ifdef BIKING_MODE2
-        else if (mode == BIKING_MODE2) {
-            // 2-level stutter beacon for biking and such
-            biking_mode(RAMP_SIZE/4, RAMP_SIZE/2);
+            biking_mode(ramp_level);
         }
         #endif  // ifdef BIKING_MODE
 

@@ -94,8 +94,6 @@
 #endif
 
 #define BIKING_MODE 247   // steady on with pulses at 1Hz
-//#define BIKING_MODE2 246   // steady on with pulses at 1Hz, dimmer
-                             // than BIKING_MODE
 // comment out to use minimal version instead (smaller)
 #define FULL_BIKING_MODE
 

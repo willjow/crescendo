@@ -55,9 +55,6 @@ uint8_t modes[] = {
 #ifdef GOODNIGHT
     GOODNIGHT,
 #endif
-#ifdef BIKING_MODE2
-    BIKING_MODE2,
-#endif
 #ifdef BIKING_MODE
     BIKING_MODE,
 #endif
@@ -102,5 +99,6 @@ PROGMEM const uint8_t ramp_ch2[] = { RAMP_CH2 };
 PROGMEM const uint8_t ramp_ch3[] = { RAMP_CH3 };
 #endif
 #define RAMP_SIZE  sizeof(ramp_ch1)
+#define MAX_LEVEL RAMP_SIZE
 
 #endif
