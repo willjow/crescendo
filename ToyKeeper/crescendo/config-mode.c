@@ -24,7 +24,7 @@ void toggle(uint8_t *var, uint8_t num) {
 void config_mode(uint8_t *dummy) {
     _delay_s();       // wait for user to stop fast-pressing button
     fast_presses = 0; // exit this mode after one use
-                      //mode = STEADY;
+                      //mode = STEADY_E;
     mode_idx = 1;
     next_mode_num = 255;
 
