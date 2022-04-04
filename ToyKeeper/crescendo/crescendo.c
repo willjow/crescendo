@@ -241,7 +241,7 @@ int main(void)
     uint8_t first_loop = 1;
     uint8_t loop_count = 0;
     while(1) {
-        if (mode_idx < sizeof(modes)) mode = modes[mode_idx];
+        if (mode_idx < sizeof(mode_cycle)) mode = mode_cycle[mode_idx];
         else mode = mode_idx;
 
         #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)

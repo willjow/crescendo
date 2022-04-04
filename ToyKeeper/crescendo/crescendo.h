@@ -47,7 +47,7 @@ uint8_t next_mode_num __attribute__ ((section (".noinit")));
 uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
-uint8_t modes[] = {
+uint8_t mode_cycle[] = {
     RAMP, STEADY, TURBO,
 #ifdef USE_BATTCHECK
     BATTCHECK,
