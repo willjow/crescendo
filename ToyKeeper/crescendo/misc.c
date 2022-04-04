@@ -40,9 +40,9 @@ void next_mode() {
     //
     // `mode_nums` is defined such that mode indexes should be
     // (mode num) - MAX_MODES, but ideally we don't rely on that
-    if (next_mode_num != DISABLE_MODE_OVERRIDE) {
-        mode_idx = next_mode_num;
-        next_mode_num = DISABLE_MODE_OVERRIDE;
+    if (next_mode_idx != DISABLE_MODE_OVERRIDE) {
+        mode_idx = next_mode_idx;
+        next_mode_idx = DISABLE_MODE_OVERRIDE;
         return;
     }
 

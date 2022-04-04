@@ -67,12 +67,12 @@ void ramp_mode() {
     // double-tap to ramp down
     //else if (fast_presses == 1) {
     if (fast_presses == 1) {
-        next_mode_num = RAMP_IDX;   // stay in ramping mode
+        next_mode_idx = RAMP_IDX;   // stay in ramping mode
         ramp_dir = -1;              // ... but go down
     }
     // triple-tap to enter turbo
     else if (fast_presses == 2) {
-        next_mode_num = TURBO_IDX;  // bypass "steady" mode
+        next_mode_idx = TURBO_IDX;  // bypass "steady" mode
     }
 
     // wait a bit before actually ramping
@@ -82,7 +82,7 @@ void ramp_mode() {
     // if we got through the delay, assume normal operation
     // (not trying to double-tap or triple-tap)
     // (next mode should be normal)
-    next_mode_num = DISABLE_MODE_OVERRIDE;
+    next_mode_idx = DISABLE_MODE_OVERRIDE;
     // ramp up on single tap
     // (cancel earlier reversal)
     if (fast_presses == 1) {
