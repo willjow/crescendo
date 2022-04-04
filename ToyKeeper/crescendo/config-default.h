@@ -75,10 +75,6 @@
 #define MAX_MODES 128
 
 // Enabled Modes
-#define TURBO
-#define RAMP
-#define STEADY
-
 #ifdef VOLTAGE_MON
 #define BATTCHECK
 #endif
