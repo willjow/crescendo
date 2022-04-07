@@ -206,11 +206,11 @@ int main(void)
         ramp_dir = 1;
         next_mode_idx = DISABLE_MODE_OVERRIDE;
         mode_idx = 0;
-        #if defined(MEMORY) && defined(CONFIG_MODE)
+        #ifdef MEMORY
         #ifdef MEMTOGGLE
-        if (memory) { mode_override = MEMORY_E; }
+        if (memory) { mode_override = MEMORIZED_MODE_E; }
         #else
-        mode_override = MEMORY_E;
+        mode_override = MEMORIZED_MODE_E;
         #endif  // ifdef MEMTOGGLE
         #endif  // if defined(MEMORY) && defined(CONFIG_MODE)
     }
@@ -266,7 +266,7 @@ int main(void)
 
         #ifdef MEMORY
         // memorized level
-        else if (mode_override == MEMORY_E) {
+        else if (mode_override == MEMORIZED_MODE_E) {
             // only do this once
             mode_override = 0;
 

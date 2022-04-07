@@ -95,7 +95,7 @@ enum mode_nums {
     PARTY_VARSTROBE2_E,
 #endif
 #ifdef MEMORY
-    MEMORY_E,
+    MEMORIZED_MODE_E,
 #endif
 #ifdef THERM_CALIBRATION_MODE
     THERM_CALIBRATION_MODE_E,
