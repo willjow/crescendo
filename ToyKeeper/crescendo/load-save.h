@@ -12,9 +12,11 @@ enum eeprom_options {
 };
 
 enum eeprom_wl_options {
-#ifdef MEMORY
-    EEP_WL_MODE_IDX,
+#ifdef RAMP_MEMORY
     EEP_WL_RAMP_LEVEL,
+#endif
+#ifdef MODE_MEMORY
+    EEP_WL_MODE_IDX,
 #endif
     EEP_WL_OPTIONS_END
 };
@@ -24,13 +26,21 @@ enum eeprom_wl_options {
 #define EEP_WL_END (EEP_WL_START + EEP_WL_SIZE - EEP_WL_OPTIONS_END)
 
 #ifdef MEMORY
-void save_mode();
+uint8_t eepos = EEP_WL_START;
+#ifdef RAMP_MEMORY
+uint8_t saved_ramp_level = 1;
+#endif
+#ifdef MODE_MEMORY
+uint8_t saved_mode_idx = 0;
+#endif
+
+void save_state_wl();
 #endif
 
 #ifdef CONFIG_MODE
 void save_state();
 #else
-#define save_state save_mode
+#define save_state save_state_wl
 #endif
 
 #if defined(MEMORY) || defined(CONFIG_MODE)

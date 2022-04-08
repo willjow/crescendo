@@ -4,21 +4,26 @@
 #include "load-save.h"
 
 #ifdef MEMORY
-void save_mode() {  // save the current mode index (with wear leveling)
+void save_state_wl() {  // save the current ramp/mode (with wear leveling)
     #ifdef MEMTOGGLE
     // only save when memory is enabled
     if (memory)
     #endif
     {
-        eeprom_write_byte((uint8_t *)(eepos), 0xff);     // erase old state
-        eeprom_write_byte((uint8_t *)(++eepos), 0xff);     // erase old state
-        eepos++;
+        for (uint8_t i = 0; i < EEP_WL_OPTIONS_END; i++) {
+            eeprom_write_byte((uint8_t *)eepos, 0xff);  // erase old state
+            eepos++;
+        }
         if (eepos > EEP_WL_END)
             eepos = EEP_WL_START;
-        // save current mode
-        eeprom_write_byte((uint8_t *)(eepos), mode_idx);
+        #ifdef RAMP_MEMORY
         // save current brightness
-        eeprom_write_byte((uint8_t *)(eepos + 1), ramp_level);
+        eeprom_write_byte((uint8_t *)(eepos + EEP_WL_RAMP_LEVEL), ramp_level);
+        #endif
+        #ifdef MODE_MEMORY
+        // save current mode
+        eeprom_write_byte((uint8_t *)(eepos + EEP_WL_MODE_IDX), mode_idx);
+        #endif
     }
 }
 #endif
@@ -26,7 +31,7 @@ void save_mode() {  // save the current mode index (with wear leveling)
 #ifdef CONFIG_MODE
 void save_state() {
     #ifdef MEMORY
-    save_mode();
+    save_state_wl();
     #endif
     #ifdef MEMTOGGLE
     eeprom_write_byte((uint8_t *)EEP_MEMORY, memory);

@@ -31,10 +31,6 @@ uint8_t memory;
 #ifdef THERMAL_REGULATION
 uint8_t therm_ceil = DEFAULT_THERM_CEIL;
 #endif
-// Other state variables
-uint8_t eepos;
-uint8_t saved_mode_idx = 0;
-uint8_t saved_ramp_level = 1;
 // counter for entering config mode
 // (needs to be remembered while off, but only for up to half a second)
 uint8_t fast_presses __attribute__ ((section (".noinit")));

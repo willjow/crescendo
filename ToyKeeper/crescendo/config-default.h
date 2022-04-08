@@ -75,10 +75,9 @@
 #define BATTCHECK
 #endif
 
-//#define MEMORY
-#ifdef MEMORY
-//#define MEMTOGGLE                     // runtime config for memory (requires MEMORY)
-#endif
+#define RAMP_MEMORY             // memorize ramp level
+#define MODE_MEMORY             // memorize mode
+#define MEMTOGGLE               // runtime config for memory
 
 #ifdef THERMAL_REGULATION
 #define THERM_CALIBRATION_MODE  // let user configure temperature limit
@@ -104,6 +103,9 @@
 //#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
 //#define GOODNIGHT             // hour-long ramp down then poweroff
 
+#if defined(RAMP_MEMORY) || defined(MODE_MEMORY)
+#define MEMORY
+#endif
 
 #if defined(MEMTOGGLE) || defined(THERM_CALIBRATION_MODE)
 #define CONFIG_MODE

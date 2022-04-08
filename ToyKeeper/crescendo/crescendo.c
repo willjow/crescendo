@@ -216,7 +216,7 @@ int main(void)
     }
     long_press = 0;
     #ifdef MEMORY
-    save_mode();
+    save_state_wl();
     #endif
 
     // Turn features on or off as needed
@@ -281,7 +281,7 @@ int main(void)
             mode_idx = saved_mode_idx;
             ramp_level = saved_ramp_level;
             // remember for next time
-            save_mode();
+            save_state_wl();
             // restart as if this were the first loop
             continue;
         }

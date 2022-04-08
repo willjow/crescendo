@@ -52,7 +52,7 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
             }
             set_level(ramp_level);
             target_level = ramp_level;
-            //save_mode();  // we didn't actually change the mode
+            //save_state_wl();  // we didn't actually change the mode
             *lowbatt_cnt = 0;
             // Wait before lowering the level again
             _delay_s();
