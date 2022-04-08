@@ -77,7 +77,7 @@
 
 #define RAMP_MEMORY             // memorize ramp level
 #define MODE_MEMORY             // memorize mode
-#define MEMTOGGLE               // runtime config for memory
+#define MEMTOGGLE               // runtime toggle for memory
 
 #ifdef THERMAL_REGULATION
 #define THERM_CALIBRATION_MODE  // let user configure temperature limit

@@ -277,9 +277,13 @@ int main(void)
 
             _delay_input();
 
-            // if they didn't tap quickly, go to the memorized mode/level
-            mode_idx = saved_mode_idx;
+            // if they didn't tap quickly, go to the memorized level/mode
+            #ifdef RAMP_MEMORY
             ramp_level = saved_ramp_level;
+            #endif
+            #ifdef MODE_MEMORY
+            mode_idx = saved_mode_idx;
+            #endif
             // remember for next time
             save_state_wl();
             // restart as if this were the first loop

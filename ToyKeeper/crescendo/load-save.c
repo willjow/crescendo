@@ -4,7 +4,7 @@
 #include "load-save.h"
 
 #ifdef MEMORY
-void save_state_wl() {  // save the current ramp/mode (with wear leveling)
+void save_state_wl() {  // save the current level/mode (with wear leveling)
     #ifdef MEMTOGGLE
     // only save when memory is enabled
     if (memory)
@@ -62,7 +62,7 @@ void restore_state() {
     #endif
 
     #ifdef MEMORY
-    // find the memorized ramp/mode
+    // find the memorized level/mode
     for (eepos = EEP_WL_START; eepos <= EEP_WL_END; eepos += EEP_WL_OPTIONS_END) {
         eep = eeprom_read_byte((const uint8_t *)eepos);
         if (eep != 0xff) {
