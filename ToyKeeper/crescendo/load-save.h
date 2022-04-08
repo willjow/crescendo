@@ -12,6 +12,8 @@ enum eeprom_options {
 };
 
 enum eeprom_wl_options {
+    // the first wear-leveled option must be one that is never 0xff, because we
+    // load from eeprom by searching for the first byte that isn't 0xff
 #ifdef RAMP_MEMORY
     EEP_WL_RAMP_LEVEL,
 #endif

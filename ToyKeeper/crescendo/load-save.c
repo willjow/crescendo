@@ -62,15 +62,16 @@ void restore_state() {
     #endif
 
     #ifdef MEMORY
-    // find the mode index and last brightness level
-    for (eepos = EEP_WL_START; eepos <= EEP_WL_END; eepos += 2) {
+    // find the memorized ramp/mode
+    for (eepos = EEP_WL_START; eepos <= EEP_WL_END; eepos += EEP_WL_OPTIONS_END) {
         eep = eeprom_read_byte((const uint8_t *)eepos);
         if (eep != 0xff) {
-            saved_mode_idx = eep;
-            eep = eeprom_read_byte((const uint8_t *)(eepos + 1));
-            if (eep != 0xff) {
-                saved_ramp_level = eep;
-            }
+            #ifdef RAMP_MEMORY
+            saved_ramp_level = eeprom_read_byte((const uint8_t *)(eepos + EEP_WL_RAMP_LEVEL));
+            #endif
+            #ifdef MODE_MEMORY
+            saved_mode_idx = eeprom_read_byte((const uint8_t *)(eepos + EEP_WL_MODE_IDX));
+            #endif
             break;
         }
     }
