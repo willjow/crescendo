@@ -26,11 +26,6 @@
 #define FET_7135_LAYOUT
 //#define NANJG_LAYOUT
 //#define TRIPLEDOWN_LAYOUT
-//
-/*
- * =========================================================================
- * Settings to modify per driver
- */
 
 #define VOLTAGE_MON         // Comment out to disable LVP and battcheck
 #define THERMAL_REGULATION  // Comment out to disable thermal regulation

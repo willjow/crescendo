@@ -270,9 +270,9 @@ int main(void)
             // only do this once
             mode_override = 0;
 
-            // moon mode for half a second
+            // moon mode for a bit
             set_level(1);
-            // if the user taps quickly, go to the real moon mode
+            // if the user taps quickly, go to the real steady mode
             next_mode_idx = STEADY_IDX;
 
             _delay_input();
