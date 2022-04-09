@@ -193,12 +193,7 @@ int main(void)
     #endif
 
     // check button press time, unless the mode is overridden
-    if (! long_press) {
-        // Indicates they did a short press, go to the next mode
-        // We don't care what the fast_presses value is as long as it's over 15
-        fast_presses = (fast_presses+1) & 0x1f;
-        next_mode(); // Will handle wrap arounds
-    } else {
+    if (long_press) {
         // Long press, use memorized level
         // ... or reset to the first mode
         fast_presses = 0;
@@ -213,6 +208,11 @@ int main(void)
         mode_override = MEMORIZED_MODE_E;
         #endif  // ifdef MEMTOGGLE
         #endif  // if defined(MEMORY) && defined(CONFIG_MODE)
+    } else {
+        // Fast press, go to the next mode
+        // We don't care what the fast_presses value is as long as it's over 15
+        fast_presses = (fast_presses+1) & 0x1f;
+        next_mode(); // Will handle wrap arounds
     }
     long_press = 0;
     #ifdef MEMORY
