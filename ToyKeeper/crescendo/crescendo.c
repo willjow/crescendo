@@ -270,7 +270,7 @@ int main(void)
             // pretend this is the first loop
             continue;
         }
-        #endif  // ifdef CONFIG_MODE
+        #endif
 
         #ifdef MEMORY
         // memorized level
@@ -338,32 +338,31 @@ int main(void)
         else if (mode == STROBE_E) {
             tactical_strobe();
         }
-        #endif // ifdef STROBE
+        #endif
 
         #ifdef POLICE_STROBE
         else if (mode == POLICE_STROBE_E) {
             police_strobe();
         }
-        #endif // ifdef POLICE_STROBE
+        #endif
 
         #ifdef RANDOM_STROBE
         else if (mode == RANDOM_STROBE_E) {
             random_strobe();
         }
-        #endif // ifdef RANDOM_STROBE
+        #endif
 
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE_E) {
-            // 2-level stutter beacon for biking and such
             biking_mode(ramp_level);
         }
-        #endif  // ifdef BIKING_MODE
+        #endif
 
         #ifdef SOS
         else if (mode == SOS_E) {
             SOS_mode();
         }
-        #endif // ifdef SOS
+        #endif
 
         #ifdef HEART_BEACON
         else if (mode == HEART_BEACON_E) {
@@ -402,18 +401,16 @@ int main(void)
         #endif
 
         #ifdef BATTCHECK
-        // battery check mode, show how much power is left
         else if (mode == BATTCHECK_E) {
             battcheck_mode();
         }
-        #endif // ifdef BATTCHECK
+        #endif
 
         #ifdef GOODNIGHT
-        // "good night" mode, slowly ramps down and shuts off
         else if (mode == GOODNIGHT_E) {
             goodnight_mode();
         }
-        #endif // ifdef GOODNIGHT
+        #endif
 
         else {  // shouldn't happen  (compiler omits this entire clause)
         }
@@ -421,7 +418,7 @@ int main(void)
 
         #ifdef VOLTAGE_MON
         monitor_voltage(mode, &lowbatt_cnt);
-        #endif  // ifdef VOLTAGE_MON
+        #endif
 
         #ifdef THERMAL_REGULATION
         if ((mode == STEADY_E) || (mode == TURBO_E)
@@ -434,7 +431,7 @@ int main(void)
                                 first_temp_reading, first_loop, &loop_count);
             first_temp_reading = 0;
         }
-        #endif  // ifdef THERMAL_REGULATION
+        #endif
 
         first_loop = 0;
         loop_count ++;
