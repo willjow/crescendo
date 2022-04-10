@@ -21,13 +21,13 @@ void toggle(uint8_t *var, uint8_t num) {
     _delay_s();
 }
 
-void config_mode(uint8_t *dummy) {
-    _delay_s();       // wait for user to stop fast-pressing button
-    fast_presses = 0; // exit this mode after one use
-                      //mode = STEADY_E;
+void config_mode() {
+    _delay_s();        // wait for user to stop fast-pressing button
+    fast_presses = 0;  // exit this mode after one use
     mode_idx = STEADY_IDX;
     next_mode_idx = DISABLE_MODE_OVERRIDE;
 
+    uint8_t dummy = 0;
     uint8_t t = 0;
 
     #ifdef MEMTOGGLE
@@ -39,7 +39,7 @@ void config_mode(uint8_t *dummy) {
     #ifdef THERM_CALIBRATION_MODE
     // Enter temperature calibration mode?
     next_mode_idx = THERM_CALIBRATION_MODE_E;
-    toggle(dummy, ++t);  // doesn't actually set anything
+    toggle(&dummy, ++t);  // doesn't actually set anything; just for visuals
     mode_idx = STEADY_IDX;
     next_mode_idx = DISABLE_MODE_OVERRIDE;
     #endif

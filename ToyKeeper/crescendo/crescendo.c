@@ -274,7 +274,7 @@ int main(void)
 
         #ifdef CONFIG_MODE
         else if (fast_presses > 15) {
-            config_mode(&mode_override);
+            config_mode();
             // if config mode ends with no changes,
             // pretend this is the first loop
             continue;
