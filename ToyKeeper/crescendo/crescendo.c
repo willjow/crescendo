@@ -115,6 +115,10 @@
 #include "sos-mode.h"
 #endif
 
+#ifdef HEART_BEACON
+#include "heart-beacon-mode.h"
+#endif
+
 #if defined(TACTICAL_STROBES) || defined(PARTY_STROBES)
 #include "strobes.h"
 #endif
@@ -149,6 +153,10 @@
 
 #ifdef SOS
 #include "sos-mode.c"
+#endif
+
+#ifdef HEART_BEACON
+#include "heart-beacon-mode.c"
 #endif
 
 #if defined(TACTICAL_STROBES) || defined(PARTY_STROBES)
@@ -328,29 +336,19 @@ int main(void)
 
         #ifdef STROBE
         else if (mode == STROBE_E) {
-            // 10Hz tactical strobe
-            strobe(33/4,67/4);
+            tactical_strobe();
         }
         #endif // ifdef STROBE
 
         #ifdef POLICE_STROBE
         else if (mode == POLICE_STROBE_E) {
-            // police-like strobe
-            strobe(20/4,40/4);
-            strobe(40/4,80/4);
+            police_strobe();
         }
         #endif // ifdef POLICE_STROBE
 
         #ifdef RANDOM_STROBE
         else if (mode == RANDOM_STROBE_E) {
-            // pseudo-random strobe
-            uint8_t ms = (34 + (pgm_rand() & 0x3f))>>2;
-            //strobe(ms, ms);
-            set_level(MAX_LEVEL);
-            _delay_4ms(ms);
-            set_level(0);
-            _delay_4ms(ms);
-            //strobe(ms, ms);
+            random_strobe();
         }
         #endif // ifdef RANDOM_STROBE
 
@@ -369,54 +367,37 @@ int main(void)
 
         #ifdef HEART_BEACON
         else if (mode == HEART_BEACON_E) {
-            set_level(MAX_LEVEL);
-            _delay_4ms(1);
-            set_level(0);
-            _delay_4ms(250/4);
-            set_level(MAX_LEVEL);
-            _delay_4ms(1);
-            set_level(0);
-            _delay_4ms(750/4);
+            heart_beacon_mode();
         }
         #endif
 
         #ifdef PARTY_STROBE12
         else if (mode == PARTY_STROBE12_E) {
-            party_strobe_loop(1,79);
+            party_strobe_12();
         }
         #endif
 
         #ifdef PARTY_STROBE24
         else if (mode == PARTY_STROBE24_E) {
-            party_strobe_loop(0,41);
+            party_strobe_24();
         }
         #endif
 
         #ifdef PARTY_STROBE60
         else if (mode == PARTY_STROBE60_E) {
-            party_strobe_loop(0,15);
+            party_strobe_60();
         }
         #endif
 
         #ifdef PARTY_VARSTROBE1
         else if (mode == PARTY_VARSTROBE1_E) {
-            uint8_t j, speed;
-            for(j=0; j<66; j++) {
-                if (j<33) { speed = j; }
-                else { speed = 66-j; }
-                party_strobe(1,(speed+33-6)<<1);
-            }
+            party_varstrobe_1();
         }
         #endif
 
         #ifdef PARTY_VARSTROBE2
         else if (mode == PARTY_VARSTROBE2_E) {
-            uint8_t j, speed;
-            for(j=0; j<100; j++) {
-                if (j<50) { speed = j; }
-                else { speed = 100-j; }
-                party_strobe(0, speed+9);
-            }
+            party_varstrobe_2();
         }
         #endif
 
