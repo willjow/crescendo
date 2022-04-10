@@ -24,11 +24,6 @@
  * global variables
  */
 
-// Config option variables
-#ifdef MEMTOGGLE
-uint8_t memory;
-#endif
-
 // Bytes to use for checking whether the SRAM has retained its data.
 // We basically set these all to 0, then check whether any bits have inverted
 // to 1 upon startup. We declare a long press if there are any inversions and

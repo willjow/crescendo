@@ -99,6 +99,10 @@
 #include "thermal-regulation.h"
 #endif
 
+#ifdef MEMORY
+#include "memory.h"
+#endif
+
 #ifdef CONFIG_MODE
 #include "config-mode.h"
 #endif
@@ -137,6 +141,10 @@
 
 #ifdef THERMAL_REGULATION
 #include "thermal-regulation.c"
+#endif
+
+#ifdef MEMORY
+#include "memory.c"
 #endif
 
 #ifdef CONFIG_MODE
@@ -259,7 +267,7 @@ int main(void)
         ADC_on();
         #endif
 
-
+        /* ==== Special Modes ============================================== */
         if (0) {  // This can't happen
         }
 
@@ -277,28 +285,13 @@ int main(void)
         else if (mode_override == MEMORIZED_MODE_E) {
             // only do this once
             mode_override = 0;
-
-            // moon mode for a bit
-            set_level(1);
-            // if the user taps quickly, go to the real steady mode
-            next_mode_idx = STEADY_IDX;
-
-            _delay_input();
-
-            // if they didn't tap quickly, go to the memorized level/mode
-            #ifdef RAMP_MEMORY
-            ramp_level = saved_ramp_level;
-            #endif
-            #ifdef MODE_MEMORY
-            mode_idx = saved_mode_idx;
-            #endif
-            // remember for next time
-            save_state_wl();
+            memory_override();
             // restart as if this were the first loop
             continue;
         }
         #endif
 
+        /* ==== Normal Modes =============================================== */
         // smooth ramp mode, lets user select any output level
         if (mode == RAMP_E) {
             ramp_mode();
@@ -390,8 +383,6 @@ int main(void)
         }
         #endif
 
-        else {  // shouldn't happen  (compiler omits this entire clause)
-        }
         fast_presses = 0;
 
         #ifdef VOLTAGE_MON
