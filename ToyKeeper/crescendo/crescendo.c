@@ -89,7 +89,7 @@
 
 #include "misc.h"
 #include "load-save.h"
-#include "ramp-mode.h"
+#include "ramping.h"
 
 #ifdef VOLTAGE_MON
 #include "battcheck.h"
@@ -129,7 +129,7 @@
 
 #include "misc.c"
 #include "load-save.c"
-#include "ramp-mode.c"
+#include "ramping.c"
 
 #ifdef VOLTAGE_MON
 #include "battcheck.c"
@@ -305,33 +305,11 @@ int main(void)
         }
 
         else if (mode == STEADY_E) {
-            // normal flashlight mode
-            if (first_loop) {
-                set_level(ramp_level);
-                target_level = ramp_level;
-            }
-            // Wait for user to tap again to advance to the next mode
-            //next_mode_idx = DISABLE_MODE_OVERRIDE;
-            _delay_input();
-            // After a delay, assume user wants to adjust ramp
-            // instead of going to next mode (unless they're
-            // tapping rapidly, in which case we should advance to turbo)
-            next_mode_idx = RAMP_IDX;
+            steady_mode(first_loop);
         }
 
         else if (mode == TURBO_E) {
-            // turbo is special because it's easier to handle that way
-            if (first_loop) {
-                set_level(MAX_LEVEL);
-                target_level = MAX_LEVEL;
-            }
-            //next_mode_idx = DISABLE_MODE_OVERRIDE;
-            _delay_input();
-            // go back to the previously-memorized level
-            // if the user taps after a delay,
-            // instead of advancing to blinkies
-            // (allows something similar to "momentary" turbo)
-            next_mode_idx = STEADY_IDX;
+            turbo_mode(first_loop);
         }
 
         #ifdef STROBE

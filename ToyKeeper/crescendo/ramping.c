@@ -1,7 +1,7 @@
-#ifndef RAMP_MODE_C
-#define RAMP_MODE_C
+#ifndef RAMPING_C
+#define RAMPING_C
 
-#include "ramp-mode.h"
+#include "ramping.h"
 
 #ifdef RAMP_CH3
 void set_output(uint8_t pwm1, uint8_t pwm2, uint8_t pwm3) {
@@ -117,6 +117,36 @@ void ramp_mode() {
         #endif
     }
     ramp_dir = -ramp_dir;
+}
+
+void steady_mode(uint8_t first_loop) {
+    // normal flashlight mode
+    if (first_loop) {
+        set_level(ramp_level);
+        target_level = ramp_level;
+    }
+    // Wait for user to tap again to advance to the next mode
+    //next_mode_idx = DISABLE_MODE_OVERRIDE;
+    _delay_input();
+    // After a delay, assume user wants to adjust ramp
+    // instead of going to next mode (unless they're
+    // tapping rapidly, in which case we should advance to turbo)
+    next_mode_idx = RAMP_IDX;
+}
+
+void turbo_mode(uint8_t first_loop) {
+    // turbo is special because it's easier to handle that way
+    if (first_loop) {
+        set_level(MAX_LEVEL);
+        target_level = MAX_LEVEL;
+    }
+    //next_mode_idx = DISABLE_MODE_OVERRIDE;
+    _delay_input();
+    // go back to the previously-memorized level
+    // if the user taps after a delay,
+    // instead of advancing to blinkies
+    // (allows something similar to "momentary" turbo)
+    next_mode_idx = STEADY_IDX;
 }
 
 #endif
