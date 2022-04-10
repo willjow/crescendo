@@ -28,9 +28,6 @@
 #ifdef MEMTOGGLE
 uint8_t memory;
 #endif
-#ifdef THERMAL_REGULATION
-uint8_t therm_ceil = DEFAULT_THERM_CEIL;
-#endif
 
 // Bytes to use for checking whether the SRAM has retained its data.
 // We basically set these all to 0, then check whether any bits have inverted
