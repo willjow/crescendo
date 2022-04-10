@@ -219,7 +219,8 @@ int main(void)
         mode_idx = 0;
         #ifdef MEMORY
         #ifdef MEMTOGGLE
-        if (memory) { mode_override = MEMORIZED_MODE_E; }
+        if (memory)
+            mode_override = MEMORIZED_MODE_E;
         #else
         mode_override = MEMORIZED_MODE_E;
         #endif  // ifdef MEMTOGGLE
@@ -227,7 +228,7 @@ int main(void)
     } else {
         // Fast press, go to the next mode
         // We don't care what the fast_presses value is as long as it's over 15
-        fast_presses = (fast_presses+1) & 0x1f;
+        fast_presses = (fast_presses + 1) & 0x1f;
         next_mode(); // Will handle wrap arounds
     }
     long_press = 0;
@@ -403,6 +404,6 @@ int main(void)
         #endif
 
         first_loop = 0;
-        loop_count ++;
+        loop_count++;
     }
 }
