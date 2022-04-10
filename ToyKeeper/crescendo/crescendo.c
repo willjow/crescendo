@@ -216,7 +216,7 @@ int main(void)
         ramp_level = 1;
         ramp_dir = 1;
         next_mode_idx = DISABLE_MODE_OVERRIDE;
-        mode_idx = 0;
+        mode_idx = RAMP_IDX;
         #ifdef MEMORY
         #ifdef MEMTOGGLE
         if (memory)
@@ -228,8 +228,14 @@ int main(void)
     } else {
         // Fast press, go to the next mode
         // We don't care what the fast_presses value is as long as it's over 15
-        fast_presses = (fast_presses + 1) & 0x1f;
-        next_mode(); // Will handle wrap arounds
+        //
+        // (This will wrap after pressing the button 255, but I think it's
+        // probably fine to not handle this as there's no real reason to
+        // "accidentally" press the button that many times...)
+        //
+        // if (fast_presses <= 15)
+        fast_presses++;
+        next_mode();  // Will handle wrap arounds
     }
     long_press = 0;
     #ifdef MEMORY
@@ -274,6 +280,8 @@ int main(void)
 
         #ifdef CONFIG_MODE
         else if (fast_presses > 15) {
+            _delay_s();        // wait for user to stop fast-pressing button
+            fast_presses = 0;  // exit this mode after one use
             config_mode();
             // if config mode ends with no changes,
             // pretend this is the first loop
@@ -384,8 +392,6 @@ int main(void)
         }
         #endif
 
-        fast_presses = 0;
-
         #ifdef VOLTAGE_MON
         monitor_voltage(mode, &lowbatt_cnt);
         #endif
@@ -403,6 +409,7 @@ int main(void)
         }
         #endif
 
+        fast_presses = 0;
         first_loop = 0;
         loop_count++;
     }

@@ -65,7 +65,6 @@ void ramp_mode() {
     //    ramp_dir = 1;
     //}
     // double-tap to ramp down
-    //else if (fast_presses == 1) {
     if (fast_presses == 1) {
         next_mode_idx = RAMP_IDX;   // stay in ramping mode
         ramp_dir = -1;              // ... but go down
