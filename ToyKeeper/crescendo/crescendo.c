@@ -236,11 +236,11 @@ int main(void)
         // if (fast_presses <= 15)
         fast_presses++;
         next_mode();  // Will handle wrap arounds
+        #ifdef MEMORY
+        save_state_wl();
+        #endif
     }
     long_press = 0;
-    #ifdef MEMORY
-    save_state_wl();
-    #endif
 
     // Turn features on or off as needed
     #ifdef VOLTAGE_MON
