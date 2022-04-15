@@ -40,17 +40,30 @@ void next_mode() {
     //
     // `mode_nums` is defined such that mode indexes should be
     // (mode num) - MAX_MODES, but ideally we don't rely on that
-    if (next_mode_idx != DISABLE_MODE_OVERRIDE) {
-        mode_idx = next_mode_idx;
-        next_mode_idx = DISABLE_MODE_OVERRIDE;
+    //
+    // ------------------------
+    //
+    // On the other hand, we do
+    //
+    //      if (mode_id < sizeof(mode_cycle))
+    //          mode = mode_cycle[mode_id];
+    //      else
+    //          mode = mode_id;
+    //
+    // at the beginning of the main loop, so we can still override arbitrarily
+    // by setting `mode_id` to an `enum mode_nums` instead of an index of
+    // `mode_cycle[]`.
+    if (next_mode_id != DISABLE_MODE_OVERRIDE) {
+        mode_id = next_mode_id;
+        next_mode_id = DISABLE_MODE_OVERRIDE;
         return;
     }
 
-    mode_idx += 1;
-    if (mode_idx >= sizeof(mode_cycle)) {
+    mode_id += 1;
+    if (mode_id >= sizeof(mode_cycle)) {
         // Wrap around
         // (wrap to steady mode (1), not ramp (0))
-        mode_idx = STEADY_IDX;
+        mode_id = STEADY_IDX;
     }
 }
 

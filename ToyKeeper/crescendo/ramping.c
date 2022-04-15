@@ -66,12 +66,12 @@ void ramp_mode() {
     //}
     // double-tap to ramp down
     if (fast_presses == 1) {
-        next_mode_idx = RAMP_IDX;   // stay in ramping mode
+        next_mode_id = RAMP_IDX;    // stay in ramping mode
         ramp_dir = -1;              // ... but go down
     }
     // triple-tap to enter turbo
     else if (fast_presses == 2) {
-        next_mode_idx = TURBO_IDX;  // bypass "steady" mode
+        next_mode_id = TURBO_IDX;   // bypass "steady" mode
     }
 
     // wait a bit before actually ramping
@@ -81,7 +81,7 @@ void ramp_mode() {
     // if we got through the delay, assume normal operation
     // (not trying to double-tap or triple-tap)
     // (next mode should be normal)
-    next_mode_idx = DISABLE_MODE_OVERRIDE;
+    next_mode_id = DISABLE_MODE_OVERRIDE;
     // ramp up on single tap
     // (cancel earlier reversal)
     if (fast_presses == 1) {
@@ -107,7 +107,7 @@ void ramp_mode() {
     if (ramp_dir == 1) {
         #ifdef STOP_AT_TOP
         // go to steady mode
-        mode_idx = STEADY_IDX;
+        mode_id = STEADY_IDX;
         #endif
         #ifdef BLINK_AT_TOP
         // blink at the top
@@ -125,12 +125,12 @@ void steady_mode(uint8_t first_loop) {
         target_level = ramp_level;
     }
     // Wait for user to tap again to advance to the next mode
-    //next_mode_idx = DISABLE_MODE_OVERRIDE;
+    //next_mode_id = DISABLE_MODE_OVERRIDE;
     _delay_input();
     // After a delay, assume user wants to adjust ramp
     // instead of going to next mode (unless they're
     // tapping rapidly, in which case we should advance to turbo)
-    next_mode_idx = RAMP_IDX;
+    next_mode_id = RAMP_IDX;
 }
 
 void turbo_mode(uint8_t first_loop) {
@@ -139,13 +139,13 @@ void turbo_mode(uint8_t first_loop) {
         set_level(MAX_LEVEL);
         target_level = MAX_LEVEL;
     }
-    //next_mode_idx = DISABLE_MODE_OVERRIDE;
+    //next_mode_id = DISABLE_MODE_OVERRIDE;
     _delay_input();
     // go back to the previously-memorized level
     // if the user taps after a delay,
     // instead of advancing to blinkies
     // (allows something similar to "momentary" turbo)
-    next_mode_idx = STEADY_IDX;
+    next_mode_id = STEADY_IDX;
 }
 
 #endif

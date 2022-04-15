@@ -38,7 +38,7 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
 
             if (mode != STEADY_E) {
                 // step "down" from special modes to medium-low
-                mode_idx = STEADY_IDX;
+                mode_id = STEADY_IDX;
                 ramp_level = MAX_LEVEL/4;
             }
             else {

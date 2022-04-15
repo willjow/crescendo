@@ -18,7 +18,7 @@ enum eeprom_wl_options {
     EEP_WL_RAMP_LEVEL,
 #endif
 #ifdef MODE_MEMORY
-    EEP_WL_MODE_IDX,
+    EEP_WL_MODE_ID,
 #endif
     EEP_WL_OPTIONS_END
 };
@@ -33,7 +33,7 @@ uint8_t eepos = EEP_WL_START;
 uint8_t saved_ramp_level = 1;
 #endif
 #ifdef MODE_MEMORY
-uint8_t saved_mode_idx = 0;
+uint8_t saved_mode_id = 0;
 #endif
 
 void save_state_wl();

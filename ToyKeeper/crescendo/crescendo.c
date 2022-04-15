@@ -215,8 +215,8 @@ int main(void)
         fast_presses = 0;
         ramp_level = 1;
         ramp_dir = 1;
-        next_mode_idx = DISABLE_MODE_OVERRIDE;
-        mode_idx = RAMP_IDX;
+        next_mode_id = DISABLE_MODE_OVERRIDE;
+        mode_id = RAMP_IDX;
         #ifdef MEMORY
         #ifdef MEMTOGGLE
         if (memory)
@@ -264,10 +264,10 @@ int main(void)
     uint8_t first_loop = 1;
     uint8_t loop_count = 0;
     while(1) {
-        if (mode_idx < sizeof(mode_cycle))
-            mode = mode_cycle[mode_idx];
+        if (mode_id < sizeof(mode_cycle))
+            mode = mode_cycle[mode_id];
         else
-            mode = mode_idx;
+            mode = mode_id;
 
         #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)
         // make sure a voltage reading has started, for LVP purposes

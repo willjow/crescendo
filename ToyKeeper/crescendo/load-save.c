@@ -22,7 +22,7 @@ void save_state_wl() {  // save the current level/mode (with wear leveling)
         #endif
         #ifdef MODE_MEMORY
         // save current mode
-        eeprom_write_byte((uint8_t *)(eepos + EEP_WL_MODE_IDX), mode_idx);
+        eeprom_write_byte((uint8_t *)(eepos + EEP_WL_MODE_ID), mode_id);
         #endif
     }
 }
@@ -70,7 +70,7 @@ void restore_state() {
             saved_ramp_level = eeprom_read_byte((const uint8_t *)(eepos + EEP_WL_RAMP_LEVEL));
             #endif
             #ifdef MODE_MEMORY
-            saved_mode_idx = eeprom_read_byte((const uint8_t *)(eepos + EEP_WL_MODE_IDX));
+            saved_mode_id = eeprom_read_byte((const uint8_t *)(eepos + EEP_WL_MODE_ID));
             #endif
             break;
         }
