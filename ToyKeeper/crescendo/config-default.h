@@ -23,7 +23,8 @@
 //#define ATTINY 25
 
 // Pick your driver type:
-#define FET_7135_LAYOUT
+//#define FET_7135_LAYOUT
+#define H17FX_LAYOUT
 //#define NANJG_LAYOUT
 //#define TRIPLEDOWN_LAYOUT
 

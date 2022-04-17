@@ -19,13 +19,13 @@
  *
  * ATtiny13A/25/45/85 DIAGRAM
  * --------------------------
- *   NOTE: The ATtiny13A does not support PWM (CH3).
+ *   NOTE: The ATtiny13A does not support PWM on pin 3.
  *
  *               ----
  *       Reset -|1  8|- VCC
  *         OTC -|2  7|- Voltage ADC
- *   PWM (CH3) -|3  6|- PWM (CH2)
- *         GND -|4  5|- PWM (CH1)
+ *   PWM (PB4) -|3  6|- PWM (PB1)
+ *         GND -|4  5|- PWM (PB0)
  *               ----
  *
  * FUSES

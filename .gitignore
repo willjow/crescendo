@@ -12,6 +12,7 @@
 ToyKeeper/*
 !ToyKeeper/tk*.h
 !ToyKeeper/hwdef-FET_7135.h
+!ToyKeeper/hwdef-H17Fx.h
 !ToyKeeper/hwdef-nanjg.h
 !ToyKeeper/hwdef-Tripledown.h
 

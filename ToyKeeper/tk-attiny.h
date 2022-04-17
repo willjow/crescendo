@@ -104,6 +104,9 @@
 #elif defined(TRIPLEDOWN_LAYOUT)
 #include "hwdef-Tripledown.h"
 
+#elif defined(H17FX_LAYOUT)
+#include "hwdef-H17Fx.h"
+
 #elif defined(FERRERO_ROCHER_LAYOUT)
 #include "hwdef-Ferrero_Rocher.h"
 
