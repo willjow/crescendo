@@ -23,6 +23,8 @@
 #define FET_PWM_PIN PB4     // pin 3
 #define FET_PWM_LVL OCR1B   // output compare register for PB4
 
+#define ENABLE_PWM1B
+
 #define VOLTAGE_PIN PB2     // pin 7, voltage ADC
 #define ADC_CHANNEL 0x01    // MUX 01 corresponds with PB2
 #define ADC_DIDR    ADC1D   // Digital input disable bit corresponding with PB2

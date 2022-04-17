@@ -190,8 +190,8 @@ inline void hw_setup() {
     // Set timer to do PWM for correct output pin and set prescaler timing
     TCCR0B = 0x01; // pre-scaler for timer (1 => 1, 2 => 8, 3 => 64...)
 
-    #ifdef RAMP_CH3
-    // Second PWM counter is ... weird
+    #ifdef ENABLE_PWM1B
+    // Second PWM counter (PB4/OCR1B) is ... weird
     TCCR1 = _BV (CS10);
     GTCCR = _BV (COM1B1) | _BV (PWM1B);
     OCR1C = 255;  // Set ceiling value to maximum
