@@ -202,8 +202,11 @@ int main(void)
 {
     hw_setup();
 
-    #if defined(MEMORY) || defined(CONFIG_MODE)
+    #ifdef MEMORY
     uint8_t mode_override = 0;
+    #endif
+
+    #if defined(MEMORY) || defined(CONFIG_MODE)
     // Read config values and saved state
     restore_state();
     #endif

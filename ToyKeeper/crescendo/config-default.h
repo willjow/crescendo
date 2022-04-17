@@ -71,7 +71,7 @@
 #define BATTCHECK
 #endif
 
-#define RAMP_MEMORY             // memorize ramp level
+//#define RAMP_MEMORY           // memorize ramp level
 //#define MODE_MEMORY           // memorize mode
 //#define MEMTOGGLE             // runtime toggle for memory
 
