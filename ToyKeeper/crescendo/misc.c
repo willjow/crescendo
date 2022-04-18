@@ -56,13 +56,12 @@ void next_mode() {
     if (next_mode_id != DISABLE_MODE_OVERRIDE) {
         mode_id = next_mode_id;
         next_mode_id = DISABLE_MODE_OVERRIDE;
-        return;
-    }
-
-    mode_id += 1;
-    if (mode_id >= sizeof(mode_cycle)) {
-        // Wrap around to steady mode, not ramp
-        mode_id = STEADY_IDX;
+    } else {
+        mode_id += 1;
+        if (mode_id >= sizeof(mode_cycle)) {
+            // Wrap around to steady mode, not ramp
+            mode_id = STEADY_IDX;
+        }
     }
 }
 
