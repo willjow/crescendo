@@ -243,8 +243,8 @@ int main(void)
             mode_override = MEMORIZED_MODE_E;
         #else
         mode_override = MEMORIZED_MODE_E;
-        #endif  // ifdef MEMTOGGLE
-        #endif  // if defined(MEMORY) && defined(CONFIG_MODE)
+        #endif
+        #endif
     } else {
         // Fast press, go to the next mode
         // We don't care what the fast_presses value is as long as it's over 15
@@ -335,11 +335,15 @@ int main(void)
         else if (mode == STEADY_E) {
             if (first_loop)
                 steady_mode();
+            // TODO(willjow): add back in delay for increasing loop iteration
+            // time?
         }
 
         else if (mode == TURBO_E) {
             if (first_loop)
                 turbo_mode();
+            // TODO(willjow): add back in delay for increasing loop iteration
+            // time?
         }
 
         #ifdef STROBE

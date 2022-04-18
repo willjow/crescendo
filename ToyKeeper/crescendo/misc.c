@@ -61,8 +61,7 @@ void next_mode() {
 
     mode_id += 1;
     if (mode_id >= sizeof(mode_cycle)) {
-        // Wrap around
-        // (wrap to steady mode (1), not ramp (0))
+        // Wrap around to steady mode, not ramp
         mode_id = STEADY_IDX;
     }
 }
