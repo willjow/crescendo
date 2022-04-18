@@ -289,7 +289,7 @@ int main(void)
     #endif
     uint8_t first_loop = 1;
     uint8_t loop_count = 0;
-    while(1) {
+    while (1) {
         if (mode_id < sizeof(mode_cycle))
             mode = mode_cycle[mode_id];
         else
