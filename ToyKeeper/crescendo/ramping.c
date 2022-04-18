@@ -60,10 +60,6 @@ void set_level(uint8_t level) {
 void ramp_mode() {
     set_level(ramp_level);  // turn light on
 
-    // ramp up by default
-    //if (fast_presses == 0) {
-    //    ramp_dir = 1;
-    //}
     // double-tap to ramp down
     if (fast_presses == 1) {
         next_mode_id = RAMP_IDX;    // stay in ramping mode
@@ -118,12 +114,11 @@ void ramp_mode() {
     ramp_dir = -ramp_dir;
 }
 
-void steady_mode(uint8_t first_loop) {
+void steady_mode() {
     // normal flashlight mode
-    if (first_loop) {
-        set_level(ramp_level);
-        target_level = ramp_level;
-    }
+    set_level(ramp_level);
+    target_level = ramp_level;
+
     // Wait for user to tap again to advance to the next mode
     //next_mode_id = DISABLE_MODE_OVERRIDE;
     _delay_input();
@@ -133,12 +128,12 @@ void steady_mode(uint8_t first_loop) {
     next_mode_id = RAMP_IDX;
 }
 
-void turbo_mode(uint8_t first_loop) {
+void turbo_mode() {
     // turbo is special because it's easier to handle that way
-    if (first_loop) {
-        set_level(MAX_LEVEL);
-        target_level = MAX_LEVEL;
-    }
+    set_level(MAX_LEVEL);
+    target_level = MAX_LEVEL;
+
+    // Wait for user to tap again to advance to the next mode
     //next_mode_id = DISABLE_MODE_OVERRIDE;
     _delay_input();
     // go back to the previously-memorized level

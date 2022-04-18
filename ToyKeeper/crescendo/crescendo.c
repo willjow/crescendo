@@ -333,11 +333,13 @@ int main(void)
         }
 
         else if (mode == STEADY_E) {
-            steady_mode(first_loop);
+            if (first_loop)
+                steady_mode();
         }
 
         else if (mode == TURBO_E) {
-            turbo_mode(first_loop);
+            if (first_loop)
+                turbo_mode();
         }
 
         #ifdef STROBE
