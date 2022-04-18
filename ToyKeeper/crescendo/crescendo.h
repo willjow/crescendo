@@ -41,9 +41,9 @@ uint32_t long_press __attribute__ ((section (".noinit")));
 uint8_t fast_presses __attribute__ ((section (".noinit")));
 // current or last-used mode number
 uint8_t mode_id __attribute__ ((section (".noinit")));
+uint8_t next_mode_id __attribute__ ((section (".noinit")));
 uint8_t ramp_level __attribute__ ((section (".noinit")));
 int8_t ramp_dir __attribute__ ((section (".noinit")));
-uint8_t next_mode_id __attribute__ ((section (".noinit")));
 
 uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
