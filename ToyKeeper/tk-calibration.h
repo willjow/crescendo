@@ -75,7 +75,8 @@
 #else
 // The OTC value 1.0s after being disconnected from power
 // Anything higher than this is a short press, lower is a long press
-#define CAP_SHORT           115
+//#define CAP_SHORT           115
+#define CAP_SHORT           10  // H17Fx sample
 #endif
 
 

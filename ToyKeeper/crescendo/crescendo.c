@@ -91,6 +91,10 @@
 #include "load-save.h"
 #include "ramping.h"
 
+#ifdef OFFTIME
+#include "offtime.h"
+#endif
+
 #ifdef VOLTAGE_MON
 #include "battcheck.h"
 #endif
@@ -134,6 +138,10 @@
 #include "misc.c"
 #include "load-save.c"
 #include "ramping.c"
+
+#ifdef OFFTIME
+#include "offtime.c"
+#endif
 
 #ifdef VOLTAGE_MON
 #include "battcheck.c"
@@ -200,6 +208,11 @@ inline void hw_setup() {
 
 int main(void)
 {
+    #ifdef OFFTIME
+    // check the OTC immediately before it has a chance to charge or discharge
+    uint8_t cap_val = read_otc();  // save it for later
+    #endif
+
     hw_setup();
 
     #ifdef MEMORY
@@ -211,8 +224,12 @@ int main(void)
     restore_state();
     #endif
 
-    // check button press time, unless the mode is overridden
+    // check button press time
+    #ifdef OFFTIME
+    if (cap_val < CAP_SHORT) {
+    #else
     if (long_press) {
+    #endif
         // Long press, use memorized level
         // ... or reset to the first mode
         fast_presses = 0;
@@ -243,7 +260,13 @@ int main(void)
         save_state_wl();
         #endif
     }
+
+    // reset offtime indicator
+    #ifdef OFFTIME
+    charge_otc();
+    #else
     long_press = 0;
+    #endif
 
     // Turn features on or off as needed
     #ifdef VOLTAGE_MON

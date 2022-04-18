@@ -24,6 +24,7 @@
  * global variables
  */
 
+#ifndef OFFTIME
 // Bytes to use for checking whether the SRAM has retained its data.
 // We basically set these all to 0, then check whether any bits have inverted
 // to 1 upon startup. We declare a long press if there are any inversions and
@@ -33,6 +34,8 @@
 // declaring a short press as there are more chances for noise to cause
 // inversions after the voltage decreases below the data-retention threshold.
 uint32_t long_press __attribute__ ((section (".noinit")));
+#endif
+
 // counter for entering config mode
 // (needs to be remembered while off, but only for up to half a second)
 uint8_t fast_presses __attribute__ ((section (".noinit")));

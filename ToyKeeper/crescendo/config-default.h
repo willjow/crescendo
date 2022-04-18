@@ -28,9 +28,15 @@
 //#define NANJG_LAYOUT
 //#define TRIPLEDOWN_LAYOUT
 
-#define VOLTAGE_MON         // Comment out to disable LVP and battcheck
-#define THERMAL_REGULATION  // Comment out to disable thermal regulation
-#define MAX_THERM_CEIL 70   // Highest allowed temperature ceiling
+// Offtime method
+// (uncomment all to use SRAM trick)
+// TODO: OFFTIM3 is not currently supported
+//#define OFFTIM3   // offtime capacitor: short/medium/long presses
+#define OFFTIM2     // offtime capacitor: short/long presses
+
+//#define VOLTAGE_MON            // Comment out to disable LVP and battcheck
+//#define THERMAL_REGULATION     // Comment out to disable thermal regulation
+#define MAX_THERM_CEIL 70      // Highest allowed temperature ceiling
 #define DEFAULT_THERM_CEIL 50  // Temperature limit when unconfigured
 
 // How many ms should it take to ramp all the way up?
@@ -98,6 +104,10 @@
 //#define SOS                   // distress signal
 //#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
 //#define GOODNIGHT             // hour-long ramp down then poweroff
+
+#if defined(OFFTIM2) || defined(OFFTIM3)
+#define OFFTIME
+#endif
 
 #if defined(RAMP_MEMORY) || defined(MODE_MEMORY)
 #define MEMORY
