@@ -33,6 +33,26 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
     }
 }
 
+#ifdef USE_BLINK_NUM
+void blink_num(uint8_t num) {
+    uint8_t hundreds = num / 100;
+    num = num % 100;
+    uint8_t tens = num / 10;
+    num = num % 10;
+
+    if (hundreds) {
+        blink(hundreds, BLINK_ONTIME, BLINK_OFFTIME);
+        _delay_4ms(BLINK_SPACE);
+    }
+    if (hundreds || tens) {
+        blink(tens, BLINK_ONTIME, BLINK_OFFTIME);
+        _delay_4ms(BLINK_SPACE);
+    }
+    blink(num, BLINK_ONTIME, BLINK_OFFTIME);
+    _delay_4ms(BLINK_SPACE);
+}
+#endif
+
 void next_mode() {
     // allow an override, if it exists; mostly only useful for setting
     // RAMP_IDX, STEADY_IDX, or TURBO_IDX because the other mode indexes aren't
