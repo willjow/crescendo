@@ -1,8 +1,7 @@
 TODO
 ----
 
-  - revise manual to match code
-  - ramping while in bike flasher mode
+  - update manual to reflect any changes
   - Manual memory
     - for now, maybe just hardcoded, but ideally is runtime-selectable
       - perhaps just add another config menu for this?
