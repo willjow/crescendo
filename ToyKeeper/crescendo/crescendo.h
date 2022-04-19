@@ -107,7 +107,7 @@ enum mode_nums {
 #define STEADY_IDX 1
 #define TURBO_IDX 2
 #define DISABLE_MODE_OVERRIDE 255
-enum mode_nums mode_cycle[] = {
+const enum mode_nums mode_cycle[] = {
     RAMP_E,
     STEADY_E,
     TURBO_E,
