@@ -301,8 +301,7 @@ int main(void)
         #endif
 
         /* ==== Special Modes ============================================== */
-        if (0) {  // This can't happen
-        }
+        if (0) {}
 
         #ifdef CONFIG_MODE
         else if (fast_presses > 15) {
@@ -328,22 +327,20 @@ int main(void)
 
         /* ==== Normal Modes =============================================== */
         // smooth ramp mode, lets user select any output level
-        if (mode == RAMP_E) {
+        if (0) {}
+
+        else if (mode == RAMP_E) {
             ramp_mode();
         }
 
         else if (mode == STEADY_E) {
             if (first_loop)
                 steady_mode();
-            // TODO(willjow): add back in delay for increasing loop iteration
-            // time?
         }
 
         else if (mode == TURBO_E) {
             if (first_loop)
                 turbo_mode();
-            // TODO(willjow): add back in delay for increasing loop iteration
-            // time?
         }
 
         #ifdef STROBE
@@ -424,6 +421,7 @@ int main(void)
         }
         #endif
 
+        /* ==== Protection/Cleanup ========================================= */
         #ifdef VOLTAGE_MON
         monitor_voltage(mode, &lowbatt_cnt);
         #endif
