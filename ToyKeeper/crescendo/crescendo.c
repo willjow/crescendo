@@ -277,7 +277,6 @@ int main(void)
     ADC_off();
     #endif
 
-    uint8_t mode;
     #ifdef VOLTAGE_MON
     uint8_t lowbatt_cnt = 0;
     #endif
@@ -289,6 +288,7 @@ int main(void)
     #endif
     uint8_t first_loop = 1;
     uint8_t loop_count = 0;
+    mode_num_e mode;
     while (1) {
         if (mode_id < sizeof(mode_cycle))
             mode = mode_cycle[mode_id];
