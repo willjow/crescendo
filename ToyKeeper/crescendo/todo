@@ -1,6 +1,25 @@
 TODO
 ----
 
+[debug]
+  - two fast presses from steady remains in steady
+        - one fast press works to ramp up
+        - three fast presses works to go to the max level
+        - four fast presses works to go to biking mode
+  - stopping at the top of ramp results in being stuck at the top of ramp
+        - three fast presses goes to biking mode
+            => stuck in non-moving ramp mode?
+        - nothing else seems to get out of the top ramp mode
+        - stopping at the bottom of the ramp doesn't seem to cause any problems
+
+  => both of these seem to point to something not being right with ramp mode
+
+  - seems to be fixed now
+
+  - NEW BUG: occasionally the light will just turn off on a fast press... maybe
+    it's getting stuck in some corrupted mode number?
+
+[features]
   - update manual to reflect any changes
   - Manual memory
     - for now, maybe just hardcoded, but ideally is runtime-selectable
