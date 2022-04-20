@@ -233,10 +233,10 @@ int main(void)
         // Long press, use memorized level
         // ... or reset to the first mode
         fast_presses = 0;
+        mode_id = RAMP_IDX;
+        next_mode_id = DISABLE_MODE_OVERRIDE;
         ramp_level = 1;
         ramp_dir = 1;
-        next_mode_id = DISABLE_MODE_OVERRIDE;
-        mode_id = RAMP_IDX;
         #ifdef MEMORY
         #ifdef MEMTOGGLE
         if (memory)
@@ -290,7 +290,7 @@ int main(void)
     uint8_t loop_count = 0;
     mode_num_e mode;
     while (1) {
-        if (mode_id < sizeof(mode_cycle))
+        if (mode_id < (sizeof(mode_cycle) / sizeof(mode_cycle[0])))
             mode = mode_cycle[mode_id];
         else
             mode = mode_id;

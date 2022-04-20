@@ -63,7 +63,7 @@ void ramp_mode() {
     // double-tap to ramp down
     if (fast_presses == 1) {
         next_mode_id = RAMP_IDX;    // stay in ramping mode
-        ramp_dir = -1;              // ... but go down
+        ramp_dir = -1;              // prepare to ramp down
     }
     // triple-tap to enter turbo
     else if (fast_presses == 2) {
@@ -79,7 +79,7 @@ void ramp_mode() {
     // (next mode should be normal)
     next_mode_id = DISABLE_MODE_OVERRIDE;
     // ramp up on single tap
-    // (cancel earlier reversal)
+    // (cancel earlier preemptive reversal)
     if (fast_presses == 1) {
         ramp_dir = 1;
     }
