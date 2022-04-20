@@ -3,7 +3,7 @@
 
 #include "load-save.h"
 
-#ifdef MEMORY
+#ifdef MEMORY_WL
 void save_state_wl() {  // save the current level/mode (with wear leveling)
     #ifdef MEMTOGGLE
     // only save when memory is enabled
@@ -30,7 +30,7 @@ void save_state_wl() {  // save the current level/mode (with wear leveling)
 
 #ifdef CONFIG_MODE
 void save_state() {
-    #ifdef MEMORY
+    #ifdef MEMORY_WL
     save_state_wl();
     #endif
     #ifdef MEMTOGGLE
@@ -42,7 +42,7 @@ void save_state() {
 }
 #endif
 
-#if defined(MEMORY) || defined(CONFIG_MODE)
+#if defined(MEMORY_WL) || defined(CONFIG_MODE)
 void restore_state() {
     uint8_t eep;
     #ifdef MEMTOGGLE
@@ -61,7 +61,7 @@ void restore_state() {
     }
     #endif
 
-    #ifdef MEMORY
+    #ifdef MEMORY_WL
     // find the memorized level/mode
     for (eepos = EEP_WL_START; eepos <= EEP_WL_END; eepos += EEP_WL_OPTIONS_END) {
         eep = eeprom_read_byte((const uint8_t *)eepos);

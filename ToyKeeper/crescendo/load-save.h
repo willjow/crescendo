@@ -27,7 +27,7 @@ enum eeprom_wl_options {
 #define EEP_WL_START EEP_OPTIONS_END
 #define EEP_WL_END (EEP_WL_START + EEP_WL_SIZE - EEP_WL_OPTIONS_END)
 
-#ifdef MEMORY
+#ifdef MEMORY_WL
 uint8_t eepos = EEP_WL_START;
 #ifdef RAMP_MEMORY
 uint8_t saved_ramp_level = 1;
@@ -45,7 +45,7 @@ void save_state();
 #define save_state save_state_wl
 #endif
 
-#if defined(MEMORY) || defined(CONFIG_MODE)
+#if defined(MEMORY_WL) || defined(CONFIG_MODE)
 void restore_state();
 #endif
 

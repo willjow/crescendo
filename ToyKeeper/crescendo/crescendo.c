@@ -219,7 +219,7 @@ int main(void)
     uint8_t mode_override = 0;
     #endif
 
-    #if defined(MEMORY) || defined(CONFIG_MODE)
+    #if defined(MEMORY_WL) || defined(CONFIG_MODE)
     // Read config values and saved state
     restore_state();
     #endif
@@ -256,7 +256,7 @@ int main(void)
         // if (fast_presses <= 15)
         fast_presses++;
         next_mode();  // Will handle wrap arounds
-        #ifdef MEMORY
+        #ifdef MEMORY_WL
         save_state_wl();
         #endif
     }

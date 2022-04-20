@@ -88,6 +88,9 @@
 //#define MODE_MEMORY           // memorize mode
 //#define MEMTOGGLE             // runtime toggle for memory
 
+#define MANUAL_LEVEL CH0_MAX    // manual (as in hard-code it yourself...)
+                                // ramp memory level
+
 #ifdef THERMAL_REGULATION
 #define THERM_CALIBRATION_MODE  // let user configure temperature limit
 #endif
@@ -117,6 +120,10 @@
 #endif
 
 #if defined(RAMP_MEMORY) || defined(MODE_MEMORY)
+#define MEMORY_WL
+#endif
+
+#if defined(MEMORY_WL) || defined(MANUAL_LEVEL)
 #define MEMORY
 #endif
 
