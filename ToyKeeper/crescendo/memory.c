@@ -21,7 +21,7 @@ void memory_override() {
     #ifdef MODE_MEMORY
     mode_id = saved_mode_id;
     #else
-    mode_id = STEADY_IDX
+    mode_id = STEADY_IDX;
     #endif
 
     #ifdef MEMORY_WL

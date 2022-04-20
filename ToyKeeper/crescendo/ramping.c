@@ -101,13 +101,17 @@ void ramp_mode() {
         ramp_level += ramp_dir;
     }
     #ifdef STOP_AT_ENDS
-    // go to steady mode
+    // go to steady mode; not the first loop anymore so we need to manually set
+    // the appropriate variables
     mode_id = STEADY_IDX;
+    next_mode_id = RAMP_IDX;
+    target_level = ramp_level;
     #endif
     #ifdef BLINK_AT_TOP
     if (ramp_dir == 1) {
         set_level(0);
         _delay_4ms(2);
+        set_level(ramp_level);
     }
     #endif
     ramp_dir = -ramp_dir;
