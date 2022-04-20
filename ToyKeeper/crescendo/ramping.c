@@ -100,17 +100,16 @@ void ramp_mode() {
             break;
         ramp_level += ramp_dir;
     }
+    #ifdef STOP_AT_ENDS
+    // go to steady mode
+    mode_id = STEADY_IDX;
+    #endif
+    #ifdef BLINK_AT_TOP
     if (ramp_dir == 1) {
-        #ifdef STOP_AT_TOP
-        // go to steady mode
-        mode_id = STEADY_IDX;
-        #endif
-        #ifdef BLINK_AT_TOP
-        // blink at the top
         set_level(0);
         _delay_4ms(2);
-        #endif
     }
+    #endif
     ramp_dir = -ramp_dir;
 }
 

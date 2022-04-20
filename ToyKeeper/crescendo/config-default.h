@@ -67,8 +67,15 @@
 #define BLINK_OFFTIME       (BLINK_SPEED * 3 / 12)
 #define BLINK_SPACE         (BLINK_SPEED * 8 / 12)
 
-// Uncomment this if you want the ramp to stop when it reaches maximum
-//#define STOP_AT_TOP     HOP_ON_POP
+/*
+ * Uncomment this if you want the ramp to stop when it reaches maximum
+ * #define STOP_AT_TOP     HOP_ON_POP
+ *
+ * (the above doesn't actually do anything anymore in favor of stopping at both
+ * ends, but I'll keep the macro here just for ToyKeeper's Dr. Seuss reference)
+*/
+// Uncomment this if you want the ramp to stop when it reaches max/min
+#define STOP_AT_ENDS
 // Uncomment this if you want it to blink when it reaches maximum
 #define BLINK_AT_TOP
 
