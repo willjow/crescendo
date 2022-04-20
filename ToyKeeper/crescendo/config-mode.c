@@ -14,7 +14,7 @@ void toggle(uint8_t *var, uint8_t num) {
     *var ^= 1;
     save_state();
     // "buzz" for a while to indicate the active toggle window
-    blink(32, 500 / 32 / 4, 500 / 32 / 2);
+    buzz();
     // if the user didn't click, reset the value and return
     *var ^= 1;
     save_state();
