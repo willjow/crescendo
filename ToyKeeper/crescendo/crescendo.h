@@ -33,23 +33,23 @@
 // More bytes should theoretically decrease the probability of falsely
 // declaring a short press as there are more chances for noise to cause
 // inversions after the voltage decreases below the data-retention threshold.
-uint32_t long_press __attribute__ ((section (".noinit")));
+volatile uint32_t long_press __attribute__ ((section (".noinit"))) __attribute__ ((used));
 #endif
 
-// counter for entering config mode
-// (needs to be remembered while off, but only for up to half a second)
-uint8_t fast_presses __attribute__ ((section (".noinit")));
-// current or last-used mode number
-uint8_t mode_id __attribute__ ((section (".noinit")));
-uint8_t next_mode_id __attribute__ ((section (".noinit")));
-uint8_t ramp_level __attribute__ ((section (".noinit")));
-int8_t ramp_dir __attribute__ ((section (".noinit")));
+volatile uint8_t fast_presses __attribute__ ((section (".noinit"))) __attribute__ ((used));
+volatile uint8_t mode_id __attribute__ ((section (".noinit"))) __attribute__ ((used));
+volatile uint8_t next_mode_id __attribute__ ((section (".noinit"))) __attribute__ ((used));
+volatile uint8_t ramp_level __attribute__ ((section (".noinit"))) __attribute__ ((used));
+volatile int8_t ramp_dir __attribute__ ((section (".noinit"))) __attribute__ ((used));
 
 uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
 // Maximum number of modes; modes will mapped to ints via enum starting
-// at MAX_MODES
+// at MAX_MODES. An equally large range should be reserved for indexes into the
+// mode_cycle array (starting at 0 of course). We also need to reserve one
+// value (currently 255) to serve as the indicator that mode overrides should
+// be ignored.
 #define MAX_MODES 127
 #define DISABLE_MODE_OVERRIDE 255
 
@@ -102,6 +102,7 @@ typedef enum mode_num {
 #ifdef THERM_CALIBRATION_MODE
     THERM_CALIBRATION_MODE_E,
 #endif
+    NUM_MODES_E
 } mode_num_e;
 
 #define RAMP_IDX 0
