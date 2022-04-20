@@ -33,6 +33,12 @@
 // More bytes should theoretically decrease the probability of falsely
 // declaring a short press as there are more chances for noise to cause
 // inversions after the voltage decreases below the data-retention threshold.
+//
+// NOTE: ToyKeeper empirically determined that there's no advantage of using 32
+// bits here over 8: https://budgetlightforum.com/comment/1101037#comment-1101037
+//
+// Regardless, I'll leave this as 32 bits as long as it fits because the theory
+// remains the same.
 volatile uint32_t long_press __attribute__ ((section (".noinit"))) __attribute__ ((used));
 #endif
 
