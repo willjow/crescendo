@@ -30,15 +30,22 @@ How to use
 
 From off:
 
-  - Click:
-    - Without memory: Ramp up, starting at moon.
-    - With memory: 0.5s of moon, then the memorized mode and level.
-      (memory is short-cycle, so a short-press will then go back to the
-      ramp at the beginning of the mode sequence)
-  - Click, tap: Go directly to moon mode.
-  - Click, tap, tap: Go directly to maximum output.
-  - Click, tap, tap, tap: Battery check mode.
-  - Click, tap 15+ times until light stops lighting up: Config mode.
+  With memory:
+    - Click: 0.5s of moon, then the memorized mode and level.
+             (memory is short-cycle, so a short-press will then go back to the
+             ramp at the beginning of the mode sequence)
+    - Click, tap: Ramp up, starting at moon.
+    - Click, tap, tap: Go directly to moon mode.
+    - Click, tap, tap, tap: Go directly to maximum output.
+    - Click, tap, tap, tap, tap: Battery check mode.
+    - Click, tap 15+ times until light stops lighting up: Config mode.
+
+  Without memory:
+    - Click: Ramp up, starting at moon.
+    - Click, tap: Go directly to moon mode.
+    - Click, tap, tap: Go directly to maximum output.
+    - Click, tap, tap, tap: Battery check mode.
+    - Click, tap 15+ times until light stops lighting up: Config mode.
 
 In ramp mode:
 

@@ -6,8 +6,8 @@
 void memory_override() {
     // moon mode for a bit
     set_level(1);
-    // if the user taps quickly, go to the real steady mode
-    next_mode_id = STEADY_IDX;
+    // if the user taps quickly, go to ramp mode
+    next_mode_id = RAMP_IDX;
 
     _delay_input();
 
