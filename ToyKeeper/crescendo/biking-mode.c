@@ -4,9 +4,12 @@
 #include "biking-mode.h"
 
 void biking_mode(uint8_t steady_level) {
-    uint8_t burst_level = steady_level << 1;
-    if (steady_level > (MAX_LEVEL / 2))
+    uint8_t burst_level;
+    if (steady_level <= (MAX_LEVEL >> 1))
+        burst_level = steady_level << 1;
+    else
         burst_level = MAX_LEVEL;
+
     if (steady_level > MAX_BIKING_LEVEL)
         steady_level = MAX_BIKING_LEVEL;
     #ifdef FULL_BIKING_MODE
