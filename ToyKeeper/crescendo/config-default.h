@@ -41,7 +41,7 @@
 
 // How many ms should it take to ramp all the way up?
 // (recommended values 2000 to 5000 depending on personal preference)
-#define RAMP_TIME  5000
+#define RAMP_TIME  4000
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
