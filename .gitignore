@@ -21,3 +21,8 @@ ToyKeeper/crescendo/*.hex
 ToyKeeper/crescendo/*.elf
 ToyKeeper/crescendo/*.o
 ToyKeeper/crescendo/*.map
+
+!ToyKeeper/battcheck/
+ToyKeeper/battcheck/*.elf
+ToyKeeper/battcheck/*.o
+ToyKeeper/battcheck/*.map
