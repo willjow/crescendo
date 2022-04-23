@@ -1,5 +1,5 @@
-#ifndef BATTCHECK_C
-#define BATTCHECK_C
+#ifndef VOLTAGE_MONITOR_C
+#define VOLTAGE_MONITOR_C
 
 void battcheck_mode() {
     #ifdef BATTCHECK_VpT

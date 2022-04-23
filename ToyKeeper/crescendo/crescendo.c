@@ -96,7 +96,7 @@
 #endif
 
 #ifdef VOLTAGE_MON
-#include "battcheck.h"
+#include "voltage-monitor.h"
 #endif
 
 #ifdef THERMAL_REGULATION
@@ -144,7 +144,7 @@
 #endif
 
 #ifdef VOLTAGE_MON
-#include "battcheck.c"
+#include "voltage-monitor.c"
 #endif
 
 #ifdef THERMAL_REGULATION
