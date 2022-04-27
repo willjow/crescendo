@@ -31,7 +31,6 @@
     //#define EEPSIZE 64
     #define V_REF REFS0
     #define BOGOMIPS 950
-    #define ADMUX_VCC 0b00001100
     #define DELAY_ZERO_TIME 252
     #define SWITCH_PORT  PINB  // PINA or PINB or PINC
     #define VOLTAGE_ADC_DIDR DIDR0  // this MCU only has one DIDR
@@ -41,7 +40,6 @@
     //#define EEPSIZE 128
     #define V_REF REFS1
     #define BOGOMIPS (F_CPU/4000)
-    #define ADMUX_VCC 0b00001100
     #define ADMUX_THERM 0b10001111
     #define DELAY_ZERO_TIME 1020
     #define SWITCH_PORT  PINB  // PINA or PINB or PINC
@@ -53,7 +51,6 @@
     #define V_REF REFS1
     #define BOGOMIPS (F_CPU/4000)
     // (1 << V_REF) | (0 << ADLAR) | (VCC_CHANNEL)
-    #define ADMUX_VCC 0b00001100
     // (1 << V_REF) | (0 << ADLAR) | (THERM_CHANNEL)
     #define ADMUX_THERM 0b10001111
     #define DELAY_ZERO_TIME 1020
@@ -63,8 +60,6 @@
     #define F_CPU 8000000UL
     #define V_REF REFS1
     #define BOGOMIPS (F_CPU/4000)
-    // DS table 19-3, 19-4, 1.1V ref / VCC
-    #define ADMUX_VCC 0b00001101
     // (1 << V_REF) | (THERM_CHANNEL)
     // DS table 19-3, 19-4, internal sensor / 1.1V ref
     #define ADMUX_THERM 0b10001110
