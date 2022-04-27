@@ -34,6 +34,13 @@
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
 
+// Use V_CC as the reference voltage and V_BG (1.1V internal) as the input for
+// voltage adc measurements (not compatible with ATtiny13).
+//
+// Comment out to use V_BG as the reference voltage and one of the mcu pins as
+// the input (specified in hwdef file).
+#define VCC_REF
+
 #define VOLTAGE_MON            // Comment out to disable LVP and battcheck
 //#define THERMAL_REGULATION     // Comment out to disable thermal regulation
 #define MAX_THERM_CEIL 70      // Highest allowed temperature ceiling

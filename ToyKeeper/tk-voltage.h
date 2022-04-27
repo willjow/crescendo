@@ -119,29 +119,6 @@ PROGMEM const uint8_t voltage_blinks[] = {
 };
 #endif  // BATTCHECK_8bars
 #ifdef BATTCHECK_VpT
-/*
-PROGMEM const uint8_t v_whole_blinks[] = {
-               // 0 blinks for (shouldn't happen)
-    0,         // 1 blink for (shouldn't happen)
-    ADC_20,    // 2 blinks for 2V
-    ADC_30,    // 3 blinks for 3V
-    ADC_40,    // 4 blinks for 4V
-    255,       // Ceiling, don't remove
-};
-PROGMEM const uint8_t v_tenth_blinks[] = {
-               // 0 blinks for less than 1%
-    ADC_30,
-    ADC_33,
-    ADC_35,
-    ADC_37,
-    ADC_38,
-    ADC_39,
-    ADC_40,
-    ADC_41,
-    ADC_42,
-    255,       // Ceiling, don't remove
-};
-*/
 PROGMEM const uint8_t voltage_blinks[] = {
     // 0 blinks for (shouldn't happen)
     ADC_25,(2<<5)+5,
@@ -173,7 +150,13 @@ inline uint8_t battcheck() {
     uint8_t voltage = get_voltage();
     uint8_t i = 0;
     // figure out how many times to blink
+    #ifdef VCC_REF
+    // With V_CC as reference and 1.1V V_BG as input, ADC values are decreasing
+    // as voltage increases
+    while (voltage < pgm_read_byte(voltage_blinks + i))
+    #else
     while (voltage > pgm_read_byte(voltage_blinks + i))
+    #endif
         i += 2;
     return pgm_read_byte(voltage_blinks + i + 1);
 }
@@ -184,7 +167,11 @@ inline uint8_t battcheck() {
     uint8_t voltage = get_voltage();
     uint8_t i = 0;
     // figure out how many times to blink
+    #ifdef VCC_REF
+    while (voltage < pgm_read_byte(voltage_blinks + i))
+    #else
     while (voltage > pgm_read_byte(voltage_blinks + i))
+    #endif
         i++;
     return i;
 }
