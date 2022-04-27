@@ -170,24 +170,22 @@ inline uint8_t battcheck() {
     // Return an composite int, number of "blinks", for approximate battery charge
     // Uses the table above for return values
     // Return value is 3 bits of whole volts and 5 bits of tenths-of-a-volt
-    uint8_t i, voltage;
-    voltage = get_voltage();
+    uint8_t voltage = get_voltage();
+    uint8_t i = 0;
     // figure out how many times to blink
-    for (i=0;
-         voltage > pgm_read_byte(voltage_blinks + i);
-         i += 2) {}
+    while (voltage > pgm_read_byte(voltage_blinks + i))
+        i += 2;
     return pgm_read_byte(voltage_blinks + i + 1);
 }
 #else  // #ifdef BATTCHECK_VpT
 inline uint8_t battcheck() {
     // Return an int, number of "blinks", for approximate battery charge
     // Uses the table above for return values
-    uint8_t i, voltage;
-    voltage = get_voltage();
+    uint8_t voltage = get_voltage();
+    uint8_t i = 0;
     // figure out how many times to blink
-    for (i=0;
-         voltage > pgm_read_byte(voltage_blinks + i);
-         i ++) {}
+    while (voltage > pgm_read_byte(voltage_blinks + i))
+        i++;
     return i;
 }
 #endif  // BATTCHECK_VpT
