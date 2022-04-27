@@ -8,7 +8,8 @@
 #define STAR4_PIN   PB3
 #define PWM_PIN     PB1
 #define VOLTAGE_PIN PB2
-#define ADC_CHANNEL 0x01    // MUX 01 corresponds with PB2
+#define ADC_REF     0x80    // MUX[7:4] 1000 corresponds to 1.1V reference
+#define ADC_CHANNEL 0x01    // MUX[3:0] 0001 corresponds with PB2
 #define ADC_DIDR    ADC1D   // Digital input disable bit corresponding with PB2
 #define ADC_PRSCL   0x06    // clk/64
 

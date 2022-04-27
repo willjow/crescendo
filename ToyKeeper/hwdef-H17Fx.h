@@ -4,7 +4,7 @@
 /* Dr. Jones H17Fx driver layout
  *                ----
  *        Reset -|1  8|- VCC
- *          OTC -|2  7|- Voltage ADC
+ *          OTC -|2  7|- (unused)
  * PWM (7x7135) -|3  6|- PWM (1x7135)
  *          GND -|4  5|- PWM (FET)
  *                ----
@@ -23,10 +23,10 @@
 #define FET_PWM_PIN PB0     // pin 5
 #define FET_PWM_LVL OCR0A   // OCR0A is the output compare register for PB0
 
-#define ENABLE_PWM1B
+#define ENABLE_PWM1B        // macro so we know to enable pwm on OCR1B
 
-#define VOLTAGE_PIN PB2     // pin 7, voltage ADC
-#define ADC_CHANNEL 0x01    // MUX 01 corresponds with PB2
+#define ADC_REF     0x00    // MUX[7:4] 0000 corresponds to V_CC as reference
+#define ADC_CHANNEL 0x0C    // MUX[3:0] 1100 corresponds to V_BG input
 #define ADC_DIDR    ADC1D   // Digital input disable bit corresponding with PB2
 #define ADC_PRSCL   0x06    // clk/64
 

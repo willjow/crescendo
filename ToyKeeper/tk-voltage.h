@@ -53,8 +53,8 @@ inline void ADC_on_temperature() {
 inline void ADC_on() {
     // disable digital input on ADC pin to reduce power consumption
     DIDR0 |= (1 << ADC_DIDR);
-    // 1.1v reference, left-adjust, ADC1/PB2
-    ADMUX  = (1 << V_REF) | (1 << ADLAR) | ADC_CHANNEL;
+    // left-adjust, set ADC reference/input channel
+    ADMUX  = (1 << ADLAR) | ADC_REF | ADC_CHANNEL;
     // enable, start, prescale
     ADCSRA = (1 << ADEN ) | (1 << ADSC ) | ADC_PRSCL;
 }
