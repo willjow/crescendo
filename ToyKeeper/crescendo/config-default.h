@@ -24,7 +24,7 @@
 
 // Pick your driver type:
 //#define FET_7135_LAYOUT
-#define H17FX_LAYOUT
+//#define H17FX_LAYOUT
 //#define NANJG_LAYOUT
 //#define TRIPLEDOWN_LAYOUT
 
@@ -34,7 +34,7 @@
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
 
-//#define VOLTAGE_MON            // Comment out to disable LVP and battcheck
+#define VOLTAGE_MON            // Comment out to disable LVP and battcheck
 //#define THERMAL_REGULATION     // Comment out to disable thermal regulation
 #define MAX_THERM_CEIL 70      // Highest allowed temperature ceiling
 #define DEFAULT_THERM_CEIL 50  // Temperature limit when unconfigured

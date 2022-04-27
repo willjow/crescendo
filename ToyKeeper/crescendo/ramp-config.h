@@ -18,6 +18,9 @@
 #ifndef RAMP_CONFIG_H
 #define RAMP_CONFIG_H
 
+#ifndef RAMP_DEFINED
+#define RAMP_DEFINED
+
 // FET-only or Convoy red driver
 // ../../bin/level_calc.py 1 64 7135 1 0.25 1000
 //#define RAMP_CH1   1,1,1,1,1,2,2,2,2,3,3,4,5,5,6,7,8,9,10,11,13,14,16,18,20,22,24,26,29,32,34,38,41,44,48,51,55,60,64,68,73,78,84,89,95,101,107,113,120,127,134,142,150,158,166,175,184,193,202,212,222,233,244,255
@@ -75,4 +78,5 @@
 // Max 1x7135
 #define CH0_MAX 80
 
-#endif
+#endif  // RAMP_DEFINED
+#endif  // RAMP_CONFIG_H

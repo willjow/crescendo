@@ -45,14 +45,21 @@
 // User-configurable options
 #include "config-default.h"
 
+// Specific settings/overrides for known driver types
+// config file name (set it here or define it at the gcc command line)
+//#define CONFIGFILE cfg-blf-q8.h
+
+#include "tk.h"
+#include incfile(CONFIGFILE)
+
 // Ramp config
 #include "ramp-config.h"
 
-// Also, assign I/O pins in this file:
-#include "tk-attiny.h"
-
 // Calibrate voltage and OTC in this file:
 #include "tk-calibration.h"
+
+// Also, assign I/O pins in this file:
+#include "tk-attiny.h"
 
 /*
  * =========================================================================

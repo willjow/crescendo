@@ -1,5 +1,8 @@
 #ifndef TK_CALIBRATION_H
 #define TK_CALIBRATION_H
+
+#ifndef CALIBRATION_DEFINED
+#define CALIBRATION_DEFINED
 /*
  * Attiny calibration header.
  * This allows using a single set of hardcoded values across multiple projects.
@@ -51,15 +54,6 @@
 #define ADC_21     74
 #define ADC_20     69
 
-#define ADC_100p   ADC_42  // the ADC value for 100% full (resting)
-#define ADC_75p    ADC_40  // the ADC value for 75% full (resting)
-#define ADC_50p    ADC_38  // the ADC value for 50% full (resting)
-#define ADC_25p    ADC_35  // the ADC value for 25% full (resting)
-#define ADC_0p     ADC_30  // the ADC value for 0% full (resting)
-#define ADC_LOW    ADC_30  // When do we start ramping down
-#define ADC_CRIT   ADC_27  // When do we shut the light off
-
-
 /********************** Offtime capacitor calibration ********************/
 // Values are between 1 and 255, and can be measured with offtime-cap.c
 // See battcheck/otc-readings.txt for reference values.
@@ -75,9 +69,17 @@
 #else
 // The OTC value 1.0s after being disconnected from power
 // Anything higher than this is a short press, lower is a long press
-//#define CAP_SHORT           115
-#define CAP_SHORT           10  // H17Fx sample
+#define CAP_SHORT           115
 #endif
 
+#endif  // CALIBRATION_DEFINED
+
+#define ADC_100p   ADC_42  // the ADC value for 100% full (resting)
+#define ADC_75p    ADC_40  // the ADC value for 75% full (resting)
+#define ADC_50p    ADC_38  // the ADC value for 50% full (resting)
+#define ADC_25p    ADC_35  // the ADC value for 25% full (resting)
+#define ADC_0p     ADC_30  // the ADC value for 0% full (resting)
+#define ADC_LOW    ADC_30  // When do we start ramping down
+#define ADC_CRIT   ADC_27  // When do we shut the light off
 
 #endif  // TK_CALIBRATION_H
