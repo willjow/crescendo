@@ -105,8 +105,11 @@ void ramp_mode() {
     // the appropriate variables
     mode_id = STEADY_IDX;
     next_mode_id = RAMP_IDX;
+    #ifdef THERMAL_REGULATION
     target_level = ramp_level;
     #endif
+    #endif
+
     #ifdef BLINK_AT_TOP
     if (ramp_dir == 1) {
         set_level(0);
@@ -120,7 +123,9 @@ void ramp_mode() {
 void steady_mode() {
     // normal flashlight mode
     set_level(ramp_level);
+    #ifdef THERMAL_REGULATION
     target_level = ramp_level;
+    #endif
 
     // Wait for user to tap again to advance to the next mode
     //next_mode_id = DISABLE_MODE_OVERRIDE;
@@ -134,7 +139,9 @@ void steady_mode() {
 void turbo_mode() {
     // turbo is special because it's easier to handle that way
     set_level(MAX_LEVEL);
+    #ifdef THERMAL_REGULATION
     target_level = MAX_LEVEL;
+    #endif
 
     // Wait for user to tap again to advance to the next mode
     //next_mode_id = DISABLE_MODE_OVERRIDE;

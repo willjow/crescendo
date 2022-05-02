@@ -1,6 +1,7 @@
 #ifndef THERMAL_REGULATION_H
 #define THERMAL_REGULATION_H
 
+uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t therm_ceil = DEFAULT_THERM_CEIL;
 
 int16_t current_temperature();

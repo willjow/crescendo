@@ -49,7 +49,6 @@ volatile uint8_t next_mode_id __attribute__ ((section (".noinit"))) __attribute_
 volatile uint8_t ramp_level __attribute__ ((section (".noinit"))) __attribute__ ((used));
 volatile int8_t ramp_dir __attribute__ ((section (".noinit"))) __attribute__ ((used));
 
-uint8_t target_level;  // ramp level before thermal stepdown
 uint8_t actual_level;  // last ramp level activated
 
 // Maximum number of modes; modes will mapped to ints via enum starting

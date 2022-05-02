@@ -54,7 +54,9 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
                 }
             }
             set_level(ramp_level);
+            #ifdef THERMAL_REGULATION
             target_level = ramp_level;
+            #endif
             //save_state_wl();  // we didn't actually change the mode
             *lowbatt_cnt = 0;
             // Wait before lowering the level again
