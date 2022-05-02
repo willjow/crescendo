@@ -28,6 +28,7 @@
 #define NEED_ADC_10bit
 #define get_temperature read_adc_10bit
 #else
+#define NEED_ADC_8bit
 #define get_temperature read_adc_8bit
 #endif
 
@@ -49,22 +50,37 @@ inline void ADC_on_temperature() {
 #endif  // TEMPERATURE_MON
 
 #ifdef VOLTAGE_MON
+#ifdef VCC_REF
+#define NEED_ADC_10bit
+#define get_voltage read_adc_10bit
+#define ADC_MAX 0x0000  // ADC values are decreasing so "max" is actually min
+#define VOLTAGE_TYPE uint16_t
+#else  // #ifdef VCC_REF
 #define NEED_ADC_8bit
+#define get_voltage read_adc_8bit
+#define ADC_MAX 0xFF
+#define VOLTAGE_TYPE uint8_t
+#endif  // #ifdef VCC_REF
+
 inline void ADC_on() {
     // disable digital input on ADC pin to reduce power consumption
     DIDR0 |= (1 << ADC_DIDR);
+    #ifdef VCC_REF
+    // right-adjust, set ADC reference/input channel
+    ADMUX  = (0 << ADLAR) | ADC_REF | ADC_CHANNEL;
+    #else
     // left-adjust, set ADC reference/input channel
     ADMUX  = (1 << ADLAR) | ADC_REF | ADC_CHANNEL;
+    #endif
     // enable, start, prescale
     ADCSRA = (1 << ADEN ) | (1 << ADSC ) | ADC_PRSCL;
 }
 
-#define get_voltage read_adc_8bit
-#else
+#else  // #ifdef VOLTAGE_MON
 inline void ADC_off() {
     ADCSRA &= ~(1<<7); //ADC off
 }
-#endif
+#endif // #ifdef VOLTAGE_MON
 
 #ifdef NEED_ADC_8bit
 uint8_t read_adc_8bit() {
@@ -92,19 +108,19 @@ uint16_t read_adc_10bit() {
 #endif
 
 #ifdef USE_BATTCHECK
-#ifdef BATTCHECK_4bars
-PROGMEM const uint8_t voltage_blinks[] = {
+// TODO(willjow): Subtract an appropriate offset from the raw 10-bit adc values
+// such that the range from 2.5V to 4.4V is still captured. Then we can keep
+// `voltage_blinks[]` as a `uint8_t` array.
+PROGMEM const VOLTAGE_TYPE voltage_blinks[] = {
+#if defined(BATTCHECK_4bars)
                // 0 blinks for less than 1%
     ADC_0p,    // 1 blink  for 1%-25%
     ADC_25p,   // 2 blinks for 25%-50%
     ADC_50p,   // 3 blinks for 50%-75%
     ADC_75p,   // 4 blinks for 75%-100%
     ADC_100p,  // 5 blinks for >100%
-    255,       // Ceiling, don't remove  (6 blinks means "error")
-};
-#endif  // BATTCHECK_4bars
-#ifdef BATTCHECK_8bars
-PROGMEM const uint8_t voltage_blinks[] = {
+    ADC_MAX,   // Ceiling, don't remove  (6 blinks means "error")
+#elif defined(BATTCHECK_8bars)
                // 0 blinks for less than 1%
     ADC_30,    // 1 blink  for 1%-12.5%
     ADC_33,    // 2 blinks for 12.5%-25%
@@ -115,60 +131,64 @@ PROGMEM const uint8_t voltage_blinks[] = {
     ADC_40,    // 7 blinks for 75%-87.5%
     ADC_41,    // 8 blinks for 87.5%-100%
     ADC_42,    // 9 blinks for >100%
-    255,       // Ceiling, don't remove  (10 blinks means "error")
-};
-#endif  // BATTCHECK_8bars
-#ifdef BATTCHECK_VpT
-PROGMEM const uint8_t voltage_blinks[] = {
+    ADC_MAX,   // Ceiling, don't remove  (10 blinks means "error")
+#elif defined(BATTCHECK_VpT)
     // 0 blinks for (shouldn't happen)
-    ADC_25,(2<<5)+5,
-    ADC_26,(2<<5)+6,
-    ADC_27,(2<<5)+7,
-    ADC_28,(2<<5)+8,
-    ADC_29,(2<<5)+9,
-    ADC_30,(3<<5)+0,
-    ADC_31,(3<<5)+1,
-    ADC_32,(3<<5)+2,
-    ADC_33,(3<<5)+3,
-    ADC_34,(3<<5)+4,
-    ADC_35,(3<<5)+5,
-    ADC_36,(3<<5)+6,
-    ADC_37,(3<<5)+7,
-    ADC_38,(3<<5)+8,
-    ADC_39,(3<<5)+9,
-    ADC_40,(4<<5)+0,
-    ADC_41,(4<<5)+1,
-    ADC_42,(4<<5)+2,
-    ADC_43,(4<<5)+3,
-    ADC_44,(4<<5)+4,
-    255,   (1<<5)+1,  // Ceiling, don't remove
+    ADC_25,  (2<<5)+5,
+    ADC_26,  (2<<5)+6,
+    ADC_27,  (2<<5)+7,
+    ADC_28,  (2<<5)+8,
+    ADC_29,  (2<<5)+9,
+    ADC_30,  (3<<5)+0,
+    ADC_31,  (3<<5)+1,
+    ADC_32,  (3<<5)+2,
+    ADC_33,  (3<<5)+3,
+    ADC_34,  (3<<5)+4,
+    ADC_35,  (3<<5)+5,
+    ADC_36,  (3<<5)+6,
+    ADC_37,  (3<<5)+7,
+    ADC_38,  (3<<5)+8,
+    ADC_39,  (3<<5)+9,
+    ADC_40,  (4<<5)+0,
+    ADC_41,  (4<<5)+1,
+    ADC_42,  (4<<5)+2,
+    ADC_43,  (4<<5)+3,
+    ADC_44,  (4<<5)+4,
+    ADC_MAX, (1<<5)+1,  // Ceiling, don't remove
+#endif
 };
+
+#ifdef BATTCHECK_VpT
 inline uint8_t battcheck() {
     // Return an composite int, number of "blinks", for approximate battery charge
+    // (rounded down)
     // Uses the table above for return values
     // Return value is 3 bits of whole volts and 5 bits of tenths-of-a-volt
-    uint8_t voltage = get_voltage();
-    uint8_t i = 0;
+    VOLTAGE_TYPE voltage = get_voltage();
+    uint8_t i = 2;
     // figure out how many times to blink
-    #ifdef VCC_REF
     // With V_CC as reference and 1.1V V_BG as input, ADC values are decreasing
     // as voltage increases
-    while (voltage < pgm_read_byte(voltage_blinks + i))
+    #ifdef VCC_REF
+    while (voltage < pgm_read_word(voltage_blinks + i))
+        i += 2;
+    return pgm_read_word(voltage_blinks + i - 1);
     #else
     while (voltage > pgm_read_byte(voltage_blinks + i))
-    #endif
         i += 2;
-    return pgm_read_byte(voltage_blinks + i + 1);
+    return pgm_read_byte(voltage_blinks + i - 1);
+    #endif
 }
 #else  // #ifdef BATTCHECK_VpT
 inline uint8_t battcheck() {
     // Return an int, number of "blinks", for approximate battery charge
+    // (rounded up)
     // Uses the table above for return values
-    uint8_t voltage = get_voltage();
+    VOLTAGE_TYPE voltage = get_voltage();
     uint8_t i = 0;
     // figure out how many times to blink
     #ifdef VCC_REF
-    while (voltage < pgm_read_byte(voltage_blinks + i))
+    while (voltage < pgm_read_word(voltage_blinks + i))
     #else
     while (voltage > pgm_read_byte(voltage_blinks + i))
     #endif
