@@ -444,10 +444,10 @@ int main(void)
                                 first_temp_reading, first_loop, &loop_count);
             first_temp_reading = 0;
         }
+        loop_count++;
         #endif
 
         fast_presses = 0;
         first_loop = 0;
-        loop_count++;
     }
 }
