@@ -223,7 +223,7 @@ int main(void)
     hw_setup();
 
     #ifdef MEMORY
-    uint8_t mode_override = 0;
+    volatile uint8_t mode_override = 0;
     #endif
 
     #if defined(MEMORY_WL) || defined(CONFIG_MODE)
@@ -292,10 +292,10 @@ int main(void)
     uint8_t overheat_count = 0;
     uint8_t underheat_count = 0;
     uint8_t first_temp_reading = 1;
-    #endif
-    uint8_t first_loop = 1;
     uint8_t loop_count = 0;
-    mode_num_e mode;
+    #endif
+    volatile uint8_t first_loop = 1;
+    volatile mode_num_e mode;
     while (1) {
         if (mode_id < (sizeof(mode_cycle) / sizeof(mode_cycle[0])))
             mode = mode_cycle[mode_id];
