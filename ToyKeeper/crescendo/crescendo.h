@@ -20,6 +20,7 @@
 
 #include <avr/pgmspace.h>
 
+#define USE_BLINK_NUM
 /*
  * global variables
  */
@@ -63,7 +64,7 @@ typedef enum mode_num {
     RAMP_E = MAX_MODES,
     STEADY_E,
     TURBO_E,
-#ifdef USE_BATTCHECK
+#ifdef BATTCHECK
     BATTCHECK_E,
 #endif
 #ifdef GOODNIGHT
@@ -118,7 +119,7 @@ const mode_num_e mode_cycle[] = {
     RAMP_E,
     STEADY_E,
     TURBO_E,
-#ifdef USE_BATTCHECK
+#ifdef BATTCHECK
     BATTCHECK_E,
 #endif
 #ifdef GOODNIGHT

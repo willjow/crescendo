@@ -3,6 +3,7 @@
 
 #ifndef CALIBRATION_DEFINED
 #define CALIBRATION_DEFINED
+
 /*
  * Attiny calibration header.
  * This allows using a single set of hardcoded values across multiple projects.

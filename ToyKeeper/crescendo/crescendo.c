@@ -284,7 +284,7 @@ int main(void)
     ADC_off();
     #endif
 
-    #ifdef VOLTAGE_MON
+    #ifdef VOLTAGE_PROTECTION
     uint8_t lowbatt_cnt = 0;
     #endif
     #ifdef THERMAL_REGULATION
@@ -350,21 +350,15 @@ int main(void)
                 turbo_mode();
         }
 
-        #ifdef STROBE
-        else if (mode == STROBE_E) {
-            tactical_strobe();
+        #ifdef BATTCHECK
+        else if (mode == BATTCHECK_E) {
+            battcheck_mode();
         }
         #endif
 
-        #ifdef POLICE_STROBE
-        else if (mode == POLICE_STROBE_E) {
-            police_strobe();
-        }
-        #endif
-
-        #ifdef RANDOM_STROBE
-        else if (mode == RANDOM_STROBE_E) {
-            random_strobe();
+        #ifdef GOODNIGHT
+        else if (mode == GOODNIGHT_E) {
+            goodnight_mode();
         }
         #endif
 
@@ -377,6 +371,24 @@ int main(void)
         #ifdef SOS
         else if (mode == SOS_E) {
             SOS_mode();
+        }
+        #endif
+
+        #ifdef RANDOM_STROBE
+        else if (mode == RANDOM_STROBE_E) {
+            random_strobe();
+        }
+        #endif
+
+        #ifdef POLICE_STROBE
+        else if (mode == POLICE_STROBE_E) {
+            police_strobe();
+        }
+        #endif
+
+        #ifdef STROBE
+        else if (mode == STROBE_E) {
+            tactical_strobe();
         }
         #endif
 
@@ -416,20 +428,8 @@ int main(void)
         }
         #endif
 
-        #ifdef BATTCHECK
-        else if (mode == BATTCHECK_E) {
-            battcheck_mode();
-        }
-        #endif
-
-        #ifdef GOODNIGHT
-        else if (mode == GOODNIGHT_E) {
-            goodnight_mode();
-        }
-        #endif
-
         /* ==== Protection/Cleanup ========================================= */
-        #ifdef VOLTAGE_MON
+        #ifdef VOLTAGE_PROTECTION
         monitor_voltage(mode, &lowbatt_cnt);
         #endif
 

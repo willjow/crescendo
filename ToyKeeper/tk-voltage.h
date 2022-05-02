@@ -107,7 +107,7 @@ uint16_t read_adc_10bit() {
 }
 #endif
 
-#ifdef USE_BATTCHECK
+#ifdef BATTCHECK
 // TODO(willjow): Subtract an appropriate offset from the raw 10-bit adc values
 // such that the range from 2.5V to 4.4V is still captured. Then we can keep
 // `voltage_blinks[]` as a `uint8_t` array.
@@ -196,7 +196,7 @@ inline uint8_t battcheck() {
     return i;
 }
 #endif  // BATTCHECK_VpT
-#endif
+#endif  // BATTCHECK
 
 
 #endif  // TK_VOLTAGE_H

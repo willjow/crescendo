@@ -34,7 +34,7 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
 }
 
 #ifdef USE_BLINK_NUM
-void blink_num(uint8_t num) {
+void blink_num(uint16_t num) {
     uint8_t hundreds = num / 100;
     num = num % 100;
     uint8_t tens = num / 10;

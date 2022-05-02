@@ -34,21 +34,10 @@
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
 
-// Use V_CC as the reference voltage and V_BG (1.1V internal) as the input for
-// voltage adc measurements (not compatible with ATtiny13).
-//
-// Comment out to use V_BG as the reference voltage and one of the mcu pins as
-// the input (specified in hwdef file).
-#define VCC_REF
-
-#define VOLTAGE_MON            // Comment out to disable LVP and battcheck
-//#define THERMAL_REGULATION     // Comment out to disable thermal regulation
-#define MAX_THERM_CEIL 70      // Highest allowed temperature ceiling
-#define DEFAULT_THERM_CEIL 50  // Temperature limit when unconfigured
-
-// How many ms should it take to ramp all the way up?
-// (recommended values 2000 to 5000 depending on personal preference)
-#define RAMP_TIME  4000
+//#define VOLTAGE_PROTECTION    // Enable low voltage protection
+//#define THERMAL_REGULATION    // Enable thermal regulation
+#define MAX_THERM_CEIL 70       // Highest allowed temperature ceiling
+#define DEFAULT_THERM_CEIL 50   // Temperature limit when unconfigured
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
@@ -57,22 +46,9 @@
 // (recommended values 250 to 750)
 #define INPUT_WAIT_TIME 333
 
-// Enable battery indicator mode?
-#ifdef VOLTAGE_MON
-#define USE_BATTCHECK
-#endif
-// Choose a battery indicator style
-//#define BATTCHECK_4bars  // up to 4 blinks
-//#define BATTCHECK_8bars  // up to 8 blinks
-#define BATTCHECK_VpT      // Volts + tenths
-
-// output to use for blinks on battery check (and other modes)
-#define BLINK_BRIGHTNESS    (MAX_LEVEL / 4)
-// 4ms units per normal-speed blink
-#define BLINK_SPEED         (1000 / 4)
-#define BLINK_ONTIME        (BLINK_SPEED * 2 / 12)
-#define BLINK_OFFTIME       (BLINK_SPEED * 3 / 12)
-#define BLINK_SPACE         (BLINK_SPEED * 8 / 12)
+// How many ms should it take to ramp all the way up?
+// (recommended values 2000 to 5000 depending on personal preference)
+#define RAMP_TIME  4000
 
 /*
  * Uncomment this if you want the ramp to stop when it reaches maximum
@@ -86,11 +62,6 @@
 // Uncomment this if you want it to blink when it reaches maximum
 #define BLINK_AT_TOP
 
-// Enabled Modes
-#ifdef VOLTAGE_MON
-#define BATTCHECK
-#endif
-
 //#define RAMP_MEMORY           // memorize ramp level
 //#define MODE_MEMORY           // memorize mode
 //#define MEMTOGGLE             // runtime toggle for memory
@@ -98,13 +69,33 @@
 #define MANUAL_LEVEL CH0_MAX    // manual (as in hard-code it yourself...)
                                 // ramp memory level
 
-#ifdef THERMAL_REGULATION
-#define THERM_CALIBRATION_MODE  // let user configure temperature limit
-#endif
+// output to use for blinks on battery check (and other modes)
+#define BLINK_BRIGHTNESS    (MAX_LEVEL / 4)
+// 4ms units per normal-speed blink
+#define BLINK_SPEED         (1000 / 4)
+#define BLINK_ONTIME        (BLINK_SPEED * 2 / 12)
+#define BLINK_OFFTIME       (BLINK_SPEED * 3 / 12)
+#define BLINK_SPACE         (BLINK_SPEED * 8 / 12)
+
+
+/* ==== Enabled Modes ====================================================== */
+#define BATTCHECK               // Enable battery indicator mode
+// Choose a battery indicator style
+//#define BATTCHECK_4bars       // up to 4 blinks
+//#define BATTCHECK_8bars       // up to 8 blinks
+#define BATTCHECK_VpT           // Volts + tenths
 
 #define BIKING_MODE             // steady on with pulses at 1Hz
 #define FULL_BIKING_MODE        // comment out to use minimal version
                                 // instead (decreases program size)
+
+#ifdef THERMAL_REGULATION
+#define THERM_CALIBRATION_MODE  // let user configure temperature limit
+#endif
+
+//#define SOS                   // distress signal
+//#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
+//#define GOODNIGHT             // hour-long ramp down then poweroff
 
 //#define TACTICAL_STROBES      // Required for any of the tactical strobes
 //#define STROBE                // Simple tactical strobe
@@ -118,9 +109,10 @@
 //#define PARTY_VARSTROBE1      // variable-speed party strobe (slow)
 //#define PARTY_VARSTROBE2      // variable-speed party strobe (fast)
 
-//#define SOS                   // distress signal
-//#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
-//#define GOODNIGHT             // hour-long ramp down then poweroff
+/* ==== Helper Macros ====================================================== */
+#if defined(VOLTAGE_PROTECTION) || defined(BATTCHECK)
+#define VOLTAGE_MON
+#endif
 
 #if defined(OFFTIM2) || defined(OFFTIM3)
 #define OFFTIME

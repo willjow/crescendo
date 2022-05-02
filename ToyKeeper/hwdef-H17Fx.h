@@ -25,6 +25,7 @@
 
 #define ENABLE_PWM1B        // macro so we know to enable pwm on OCR1B
 
+#define VCC_REF             // macro so we know we're using VCC as reference
 #define ADC_REF     0x00    // MUX[7:4] 0000 corresponds to V_CC as reference
 #define ADC_CHANNEL 0x0C    // MUX[3:0] 1100 corresponds to V_BG input
 #define ADC_DIDR    ADC1D   // Digital input disable bit corresponding with PB2

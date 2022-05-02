@@ -1,6 +1,7 @@
 #ifndef VOLTAGE_MONITOR_C
 #define VOLTAGE_MONITOR_C
 
+#ifdef BATTCHECK
 void battcheck_mode() {
     #ifdef BATTCHECK_VpT
     // blink out volts and tenths
@@ -10,21 +11,23 @@ void battcheck_mode() {
     blink(volts, BLINK_ONTIME, BLINK_OFFTIME);
     _delay_4ms(BLINK_SPACE);
     blink(tenths, BLINK_ONTIME, BLINK_OFFTIME);
-    #else  // ifdef BATTCHECK_VpT
+    #else
     // blink zero to five times to show voltage
     // (or zero to nine times, if 8-bar mode)
     // (~0%, ~25%, ~50%, ~75%, ~100%, >100%)
     blink(battcheck(), BLINK_ONTIME, BLINK_OFFTIME);
-    #endif  // ifdef BATTCHECK_VpT
+    #endif
     // wait between readouts
     _delay_s();
 }
+#endif
 
+#ifdef VOLTAGE_PROTECTION
 void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
     //if (ADCSRA & (1 << ADIF)) {  // if a voltage reading is ready
     {  // nope, always execute
         //uint8_t voltage = ADCH;  // get the waiting value
-        uint8_t voltage = get_voltage();  // get a new value, first is unreliable
+        VOLTAGE_TYPE voltage = get_voltage();  // get a new value, first is unreliable
         // See if voltage is lower than what we were looking for
         if (voltage < ADC_LOW) {
             (*lowbatt_cnt)++;
@@ -63,5 +66,6 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
         //ADCSRA |= (1 << ADSC);
     }
 }
+#endif
 
 #endif
