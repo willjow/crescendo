@@ -356,6 +356,8 @@ int main(void)
 
         #ifdef BATTCHECK
         else if (mode == BATTCHECK_E) {
+            if (first_loop)
+                _delay_input();
             battcheck_mode();
         }
         #endif
