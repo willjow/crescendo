@@ -343,11 +343,15 @@ int main(void)
         else if (mode == STEADY_E) {
             if (first_loop)
                 steady_mode();
+            else
+                _delay_s();  // wait between voltage/temperature checks
         }
 
         else if (mode == TURBO_E) {
             if (first_loop)
                 turbo_mode();
+            else
+                _delay_s();  // wait between voltage/temperature checks
         }
 
         #ifdef BATTCHECK
