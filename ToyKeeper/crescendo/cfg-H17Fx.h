@@ -1,35 +1,34 @@
 // ATTINY: 25
 #include "hwdef-H17Fx.h"
 
-
 #define CALIBRATION_DEFINED
 /********************** Voltage ADC calibration **************************/
 // the ADC values we expect for specific voltages
-#define ADC_44     194
-#define ADC_43     189
-#define ADC_42     184
-#define ADC_41     178
-#define ADC_40     173
-#define ADC_39     168
-#define ADC_38     163
-#define ADC_37     158
-#define ADC_36     152
-#define ADC_35     147
-#define ADC_34     142
-#define ADC_33     137
-#define ADC_32     131
-#define ADC_31     126
-#define ADC_30     121
-#define ADC_29     116
-#define ADC_28     111
-#define ADC_27     105
-#define ADC_26     100
-#define ADC_25     95
-#define ADC_24     90
-#define ADC_23     84
-#define ADC_22     79
-#define ADC_21     74
-#define ADC_20     69
+#define ADC_44     278
+#define ADC_43     284
+#define ADC_42     290
+#define ADC_41     297
+#define ADC_40     304
+#define ADC_39     311
+#define ADC_38     318
+#define ADC_37     326
+#define ADC_36     335
+#define ADC_35     344
+#define ADC_34     353
+#define ADC_33     363
+#define ADC_32     374
+#define ADC_31     385
+#define ADC_30     397
+#define ADC_29     410
+#define ADC_28     424
+#define ADC_27     439
+#define ADC_26     455
+#define ADC_25     473
+#define ADC_24     491
+#define ADC_23     512
+#define ADC_22     534
+#define ADC_21     558
+#define ADC_20     585
 
 /********************** Offtime capacitor calibration ********************/
 #define CAP_SHORT 10
