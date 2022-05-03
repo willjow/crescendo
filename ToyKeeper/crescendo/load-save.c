@@ -42,7 +42,7 @@ void save_state() {
 }
 #endif
 
-#if defined(MEMORY_WL) || defined(CONFIG_MODE)
+#if defined(CONFIG_MODE) || defined(MEMORY_WL)
 void restore_state() {
     uint8_t eep;
     #ifdef MEMTOGGLE

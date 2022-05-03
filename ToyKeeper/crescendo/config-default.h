@@ -36,12 +36,18 @@
 
 #define VOLTAGE_PROTECTION          // Enable low voltage protection
 #define THERMAL_REGULATION          // Enable thermal regulation
-#define MAX_THERM_CEIL 70           // Highest allowed temperature ceiling
+
+#define MAX_THERM_CEIL 100          // Highest allowed temperature ceiling
+                                    // (this needs to be significantly higher
+                                    // than expected in case the temp sensor
+                                    // needs significant calibration)
+
 #define DEFAULT_THERM_CEIL 50       // Temperature limit when unconfigured
                                     // Change the value after calibration and
                                     // disable THERM_CALIBRATION_MODE to save
                                     // program space
-//#define THERM_CALIBRATION_MODE    // let user configure temperature limit
+
+#define THERM_CALIBRATION_MODE      // let user configure temperature limit
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on

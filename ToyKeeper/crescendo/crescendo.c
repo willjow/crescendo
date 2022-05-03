@@ -445,9 +445,15 @@ int main(void)
             || (mode == THERM_CALIBRATION_MODE_E)
             #endif
             ) {
-            monitor_temperature(mode, temperatures,
-                                &overheat_count, &underheat_count,
-                                first_temp_reading, first_loop, &loop_count);
+            monitor_temperature(
+                mode,
+                temperatures,
+                &overheat_count,
+                &underheat_count,
+                first_temp_reading,
+                first_loop,
+                &loop_count
+            );
             first_temp_reading = 0;
         }
         loop_count++;

@@ -22,12 +22,15 @@ int16_t current_temperature() {
 }
 
 #define THERM_HISTORY_SIZE 8
-inline void monitor_temperature(uint8_t mode,
-                                uint8_t *temperatures,
-                                uint8_t *overheat_count,
-                                uint8_t *underheat_count,
-                                uint8_t first_temp_reading,
-                                uint8_t first_loop, uint8_t *loop_count) {
+inline void monitor_temperature(
+    uint8_t mode,
+    uint8_t *temperatures,
+    uint8_t *overheat_count,
+    uint8_t *underheat_count,
+    uint8_t first_temp_reading,
+    uint8_t first_loop,
+    uint8_t *loop_count
+) {
     // how far ahead should we predict?
     #define THERM_PREDICTION_STRENGTH 4
     // how proportional should the adjustments be?
@@ -67,7 +70,6 @@ inline void monitor_temperature(uint8_t mode,
     #ifdef THERM_CALIBRATION_MODE
     // never step down in thermal calibration mode
     else if (mode == THERM_CALIBRATION_MODE_E) {
-        // TODO: let user set max limit?
         if (first_loop) {
             // Blink out the current temperature limit.
             // Theoretically the user can just set/check this once and then
