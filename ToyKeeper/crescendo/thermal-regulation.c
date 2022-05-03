@@ -91,10 +91,7 @@ inline void monitor_temperature(
         //tempCeil = projected >> 2;
         // less aggressive prediction
         therm_ceil = (temperature + (diff<<(THERM_PREDICTION_STRENGTH-1))) >> 2;
-        // Don't let user exceed maximum limit
-        if (therm_ceil > MAX_THERM_CEIL) {
-            therm_ceil = MAX_THERM_CEIL;
-        }
+
         // save state periodically (but not too often)
         if (*loop_count > 3)
         {

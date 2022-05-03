@@ -56,7 +56,7 @@ void restore_state() {
     #ifdef THERM_CALIBRATION_MODE
     // load therm_ceil
     eep = eeprom_read_byte((uint8_t *)EEP_THERM_CEIL);
-    if ((eep > 0) && (eep < MAX_THERM_CEIL)) {
+    if (eep > 0) {
         therm_ceil = eep;
     }
     #endif

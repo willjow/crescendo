@@ -35,12 +35,8 @@
 #define OFFTIM2     // offtime capacitor: short/long presses
 
 #define VOLTAGE_PROTECTION          // Enable low voltage protection
-#define THERMAL_REGULATION          // Enable thermal regulation
 
-#define MAX_THERM_CEIL 100          // Highest allowed temperature ceiling
-                                    // (this needs to be significantly higher
-                                    // than expected in case the temp sensor
-                                    // needs significant calibration)
+#define THERMAL_REGULATION          // Enable thermal regulation
 
 #define DEFAULT_THERM_CEIL 50       // Temperature limit when unconfigured
                                     // Change the value after calibration and
