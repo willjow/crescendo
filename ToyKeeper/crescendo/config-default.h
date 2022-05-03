@@ -129,7 +129,6 @@
 #endif
 
 #if defined(THERM_CALIBRATION_MODE)
-// blink out the temperature limit
 #define USE_BLINK_NUM
 #endif
 
