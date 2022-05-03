@@ -67,9 +67,16 @@ inline void monitor_temperature(uint8_t mode,
     #ifdef THERM_CALIBRATION_MODE
     // never step down in thermal calibration mode
     else if (mode == THERM_CALIBRATION_MODE_E) {
+        // TODO: let user set max limit?
         if (first_loop) {
-            // TODO: blink out current temperature limit
-            // let user set default or max limit?
+            // Blink out the current temperature limit.
+            // Theoretically the user can just set/check this once and then
+            // hard code the value/disable thermal calibration mode to save
+            // some program space.
+            _delay_input();
+            blink_num(therm_ceil);
+            buzz();  // opportunity to cancel before doing anything
+
             therm_ceil = DEFAULT_THERM_CEIL;
             set_level(MAX_LEVEL/4);
             save_state();

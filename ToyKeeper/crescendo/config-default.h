@@ -34,10 +34,14 @@
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
 
-#define VOLTAGE_PROTECTION      // Enable low voltage protection
-//#define THERMAL_REGULATION    // Enable thermal regulation
-#define MAX_THERM_CEIL 70       // Highest allowed temperature ceiling
-#define DEFAULT_THERM_CEIL 50   // Temperature limit when unconfigured
+#define VOLTAGE_PROTECTION          // Enable low voltage protection
+#define THERMAL_REGULATION          // Enable thermal regulation
+#define MAX_THERM_CEIL 70           // Highest allowed temperature ceiling
+#define DEFAULT_THERM_CEIL 50       // Temperature limit when unconfigured
+                                    // Change the value after calibration and
+                                    // disable THERM_CALIBRATION_MODE to save
+                                    // program space
+//#define THERM_CALIBRATION_MODE    // let user configure temperature limit
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
@@ -89,10 +93,6 @@
 #define FULL_BIKING_MODE        // comment out to use minimal version
                                 // instead (decreases program size)
 
-#ifdef THERMAL_REGULATION
-#define THERM_CALIBRATION_MODE  // let user configure temperature limit
-#endif
-
 //#define SOS                   // distress signal
 //#define HEART_BEACON          // 1Hz heartbeat-pattern beacon
 //#define GOODNIGHT             // hour-long ramp down then poweroff
@@ -124,6 +124,11 @@
 
 #if defined(MEMORY_WL) || defined(MANUAL_LEVEL)
 #define MEMORY
+#endif
+
+#if defined(THERM_CALIBRATION_MODE)
+// blink out the temperature limit
+#define USE_BLINK_NUM
 #endif
 
 #if defined(MEMTOGGLE) || defined(THERM_CALIBRATION_MODE)

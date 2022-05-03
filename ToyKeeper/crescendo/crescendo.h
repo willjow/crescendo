@@ -20,7 +20,6 @@
 
 #include <avr/pgmspace.h>
 
-#define USE_BLINK_NUM
 /*
  * global variables
  */
