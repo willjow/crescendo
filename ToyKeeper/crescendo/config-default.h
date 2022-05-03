@@ -43,7 +43,7 @@
                                     // disable THERM_CALIBRATION_MODE to save
                                     // program space
 
-#define THERM_CALIBRATION_MODE      // let user configure temperature limit
+//#define THERM_CALIBRATION_MODE    // let user configure temperature limit
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
