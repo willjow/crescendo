@@ -34,7 +34,7 @@
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
 
-//#define VOLTAGE_PROTECTION    // Enable low voltage protection
+#define VOLTAGE_PROTECTION      // Enable low voltage protection
 //#define THERMAL_REGULATION    // Enable thermal regulation
 #define MAX_THERM_CEIL 70       // Highest allowed temperature ceiling
 #define DEFAULT_THERM_CEIL 50   // Temperature limit when unconfigured

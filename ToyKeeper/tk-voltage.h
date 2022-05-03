@@ -49,7 +49,9 @@ inline void ADC_on_temperature() {
 }
 #endif  // TEMPERATURE_MON
 
+
 #ifdef VOLTAGE_MON
+
 #ifdef VCC_REF
 #define NEED_ADC_10bit
 #define get_voltage read_adc_10bit

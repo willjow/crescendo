@@ -29,11 +29,15 @@ void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
         //uint8_t voltage = ADCH;  // get the waiting value
         VOLTAGE_TYPE voltage = get_voltage();  // get a new value, first is unreliable
         // See if voltage is lower than what we were looking for
-        if (voltage < ADC_LOW) {
+        #ifdef VCC_REF
+        if (voltage > ADC_LOW)
+        #else
+        if (voltage < ADC_LOW)
+        #endif
             (*lowbatt_cnt)++;
-        } else {
+        else
             *lowbatt_cnt = 0;
-        }
+
         // See if it's been low for a while, and maybe step down
         if (*lowbatt_cnt >= 8) {
             // DEBUG: blink on step-down:
