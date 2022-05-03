@@ -444,7 +444,7 @@ int main(void)
             #ifdef THERM_CALIBRATION_MODE
             || (mode == THERM_CALIBRATION_MODE_E)
             #endif
-            ) {
+        ) {
             monitor_temperature(
                 mode,
                 temperatures,
