@@ -43,7 +43,7 @@
                                     // disable THERM_CALIBRATION_MODE to save
                                     // program space
 
-//#define THERM_CALIBRATION_MODE    // let user configure temperature limit
+#define THERM_CALIBRATION_MODE      // let user configure temperature limit
 
 // How long to wait at ramp ends, and
 // how long the user has to continue multi-taps after the light comes on
@@ -91,8 +91,8 @@
 //#define BATTCHECK_8bars       // up to 8 blinks
 #define BATTCHECK_VpT           // Volts + tenths
 
-#define BIKING_MODE             // steady on with pulses at 1Hz
-#define FULL_BIKING_MODE        // comment out to use minimal version
+//#define BIKING_MODE           // steady on with pulses at 1Hz
+//#define FULL_BIKING_MODE      // comment out to use minimal version
                                 // instead (decreases program size)
 
 //#define SOS                   // distress signal
