@@ -2,6 +2,10 @@ TODO
 ----
 
 [debug]
+  - occasionaly, the ramp level will be set to 0 after a fast press
+    - cannot reliably reproduce, and rarely happens to begin with
+    - possibly related to low voltage protection/thermal regulation? didn't
+      observe before enabling these
   - occasionally, very weird things will break
     - most likely the same issue as here:
       https://budgetlightforum.com/comment/1100942#comment-1100942
