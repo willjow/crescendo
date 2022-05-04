@@ -370,7 +370,7 @@ int main(void)
 
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE_E) {
-            biking_mode(ramp_level);
+            biking_mode(actual_level);
         }
         #endif
 
