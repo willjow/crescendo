@@ -48,7 +48,5 @@
 // Max 1x7135
 #define CH0_MAX 80
 
-#ifdef DEFAULT_THERM_CEIL
 #undef DEFAULT_THERM_CEIL
-#endif
 #define DEFAULT_THERM_CEIL 90
