@@ -52,6 +52,9 @@
 #include "tk.h"
 #include incfile(CONFIGFILE)
 
+// Helper macros related to config
+#include "helper-macros.h"
+
 // Ramp config
 #include "ramp-config.h"
 
