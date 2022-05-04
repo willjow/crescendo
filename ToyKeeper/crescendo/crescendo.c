@@ -376,7 +376,7 @@ int main(void)
 
         #ifdef SOS
         else if (mode == SOS_E) {
-            SOS_mode();
+            SOS_mode(actual_level);
         }
         #endif
 
