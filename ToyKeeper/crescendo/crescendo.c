@@ -373,13 +373,13 @@ int main(void)
 
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE_E) {
-            biking_mode(actual_level);
+            biking_mode(ramp_level);
         }
         #endif
 
         #ifdef SOS
         else if (mode == SOS_E) {
-            SOS_mode(actual_level);
+            SOS_mode(ramp_level);
         }
         #endif
 

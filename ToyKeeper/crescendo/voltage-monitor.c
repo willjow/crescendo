@@ -8,14 +8,14 @@ void battcheck_mode() {
     uint8_t result = battcheck();
     uint8_t volts = result >> 5;
     uint8_t tenths = result & 0b00011111;
-    blink(volts, BLINK_ONTIME, BLINK_OFFTIME, actual_level);
+    blink(volts, BLINK_ONTIME, BLINK_OFFTIME, ramp_level);
     _delay_4ms(BLINK_SPACE);
-    blink(tenths, BLINK_ONTIME, BLINK_OFFTIME, actual_level);
+    blink(tenths, BLINK_ONTIME, BLINK_OFFTIME, ramp_level);
     #else
     // blink zero to five times to show voltage
     // (or zero to nine times, if 8-bar mode)
     // (~0%, ~25%, ~50%, ~75%, ~100%, >100%)
-    blink(battcheck(), BLINK_ONTIME, BLINK_OFFTIME, actual_level);
+    blink(battcheck(), BLINK_ONTIME, BLINK_OFFTIME, ramp_level);
     #endif
     // wait between readouts
     _delay_s();
