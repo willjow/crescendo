@@ -18,7 +18,7 @@ void _delay_input() {
     _delay_4ms(INPUT_WAIT_TIME / 4);
 }
 
-void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
+void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms, uint8_t level) {
     if (!val) {
         // "zero" val gets a single short blink
         on_4ms = 2;
@@ -26,7 +26,7 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms) {
     }
 
     for (; val>0; val--) {
-        set_level(BLINK_BRIGHTNESS);
+        set_level(level);
         _delay_4ms(on_4ms);
         set_level(0);
         _delay_4ms(off_4ms);
@@ -41,14 +41,14 @@ void blink_num(uint16_t num) {
     num = num % 10;
 
     if (hundreds) {
-        blink(hundreds, BLINK_ONTIME, BLINK_OFFTIME);
+        blink(hundreds, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
         _delay_4ms(BLINK_SPACE);
     }
     if (hundreds || tens) {
-        blink(tens, BLINK_ONTIME, BLINK_OFFTIME);
+        blink(tens, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
         _delay_4ms(BLINK_SPACE);
     }
-    blink(num, BLINK_ONTIME, BLINK_OFFTIME);
+    blink(num, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
     _delay_4ms(BLINK_SPACE);
 }
 #endif
