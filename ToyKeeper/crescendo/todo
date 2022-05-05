@@ -14,6 +14,7 @@ TODO
       should be lost
 
 [features]
+  - experiment with pulse frequency modulation
   - make thermal regulation smoother
   - update manual to reflect any changes
   - add support for off-time capacitor or off-time sleep mode to distinguish
