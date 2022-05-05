@@ -35,21 +35,19 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms, uint8_t level) {
 
 #ifdef USE_BLINK_NUM
 void blink_num(uint16_t num) {
-    uint8_t hundreds = num / 100;
-    num = num % 100;
-    uint8_t tens = num / 10;
-    num = num % 10;
-
-    if (hundreds) {
-        blink(hundreds, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
-        _delay_4ms(BLINK_SPACE);
+    // we can keep this around because we only ever access relevant indexes
+    static uint8_t digits[5];
+    uint8_t i = 5;
+    while (num) {
+        digits[i - 1] = num % 10;
+        num /= 10;
+        i--;
     }
-    if (hundreds || tens) {
-        blink(tens, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
+    while (i < 5) {
+        blink(digits[i], BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
         _delay_4ms(BLINK_SPACE);
+        i++;
     }
-    blink(num, BLINK_ONTIME, BLINK_OFFTIME, BLINK_BRIGHTNESS);
-    _delay_4ms(BLINK_SPACE);
 }
 #endif
 
