@@ -54,9 +54,9 @@ void restore_state() {
     #endif
 
     #ifdef THERM_CALIBRATION_MODE
-    // load therm_ceil
+    // load therm_ceil if configured
     eep = eeprom_read_byte((uint8_t *)EEP_THERM_CEIL);
-    if (eep > 0) {
+    if (eep != 0xff) {
         therm_ceil = eep;
     }
     #endif
