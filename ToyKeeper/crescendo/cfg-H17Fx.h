@@ -31,7 +31,11 @@
 #define ADC_20     585
 
 /********************** Offtime capacitor calibration ********************/
-#define CAP_SHORT 10
+#define CAP_SHORT_ONE_S 10    // ~1s
+#define CAP_SHORT_HALF_S 45   // ~1/2s
+#define CAP_SHORT_THIRD_S 90  // ~1/3s
+
+#define CAP_SHORT CAP_SHORT_HALF_S
 
 
 #define RAMP_DEFINED
