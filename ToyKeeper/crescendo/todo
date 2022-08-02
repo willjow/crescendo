@@ -14,9 +14,19 @@ TODO
       should be lost
 
 [features]
-  - experiment with pulse frequency modulation
+  - add support for convoy 5A linear fet driver
+
+  - add config variable for setting the ramp ceiling level to be different from
+    the turbo level
+      - should be pretty simple to just make this stop at the second-to-last
+        ramp index instead of the last, and then treat the last as turbo
+      - or, this could be the default behavior?
+          - always reserve last index of ramp config for turbo
   - make thermal regulation smoother
+  - experiment with pulse frequency modulation
   - update manual to reflect any changes
+
+[old]
   - add support for off-time capacitor or off-time sleep mode to distinguish
     between long and short presses
       - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
