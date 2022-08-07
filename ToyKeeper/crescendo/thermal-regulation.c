@@ -21,7 +21,6 @@ int16_t current_temperature() {
     return temp;
 }
 
-#define THERM_HISTORY_SIZE 8
 inline void monitor_temperature(
     uint8_t mode,
     uint8_t *temperatures,
@@ -44,6 +43,8 @@ inline void monitor_temperature(
     #define THERM_CEIL (therm_ceil<<2)
     // acceptable temperature window size in C
     #define THERM_WINDOW_SIZE 8
+    // number of history steps
+    #define THERM_HISTORY_SIZE 8
 
     int16_t temperature = current_temperature();
     int16_t projected;  // Fight the future!

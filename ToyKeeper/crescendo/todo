@@ -23,6 +23,11 @@ TODO
       - or, this could be the default behavior?
           - always reserve last index of ramp config for turbo
   - make thermal regulation smoother
+      - main differences between this and anduril code are
+          1. decreasing the absolute value of the "offset" (difference from
+             thermal ceiling) by 3
+          2. adjusting to the regulated level one unit at a time instead of all
+             at once
   - experiment with pulse frequency modulation
   - update manual to reflect any changes
 
