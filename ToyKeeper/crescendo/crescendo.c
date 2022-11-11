@@ -257,13 +257,13 @@ int main(void)
         #endif
     } else {
         // Fast press, go to the next mode
-        // We don't care what the fast_presses value is as long as it's over 15
         //
-        // (This will wrap after pressing the button 255, but I think it's
-        // probably fine to not handle this as there's no real reason to
+        // For config mode, we don't care what the fast_presses value is as
+        // long as it's over 15
+        //
+        // (This will wrap after pressing the button 255 times, but I think
+        // it's probably fine to not handle this as there's no real reason to
         // "accidentally" press the button that many times...)
-        //
-        // if (fast_presses <= 15)
         fast_presses++;
         next_mode();  // Will handle wrap arounds
         #ifdef MEMORY_WL
@@ -344,95 +344,123 @@ int main(void)
         }
 
         else if (mode == STEADY_E) {
-            if (first_loop)
+            if (first_loop) {
                 steady_mode();
-            else
+                delay_set_next_mode(RAMP_IDX);
+            } else {
                 _delay_s();  // wait between voltage/temperature checks
+            }
         }
 
         else if (mode == TURBO_E) {
-            if (first_loop)
+            if (first_loop) {
                 turbo_mode();
-            else
+                delay_set_next_mode(STEADY_IDX);
+            } else {
                 _delay_s();  // wait between voltage/temperature checks
+            }
         }
 
         #ifdef BATTCHECK
         else if (mode == BATTCHECK_E) {
             if (first_loop)
-                _delay_input();
+                delay_set_next_mode(STEADY_IDX);
             battcheck_mode();
         }
         #endif
 
         #ifdef GOODNIGHT
         else if (mode == GOODNIGHT_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             goodnight_mode();
         }
         #endif
 
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             biking_mode(ramp_level);
         }
         #endif
 
         #ifdef SOS
         else if (mode == SOS_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             SOS_mode(ramp_level);
         }
         #endif
 
         #ifdef RANDOM_STROBE
         else if (mode == RANDOM_STROBE_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             random_strobe();
         }
         #endif
 
         #ifdef POLICE_STROBE
         else if (mode == POLICE_STROBE_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             police_strobe();
         }
         #endif
 
         #ifdef STROBE
         else if (mode == STROBE_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             tactical_strobe();
         }
         #endif
 
         #ifdef HEART_BEACON
         else if (mode == HEART_BEACON_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             heart_beacon_mode();
         }
         #endif
 
         #ifdef PARTY_STROBE12
         else if (mode == PARTY_STROBE12_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             party_strobe_12();
         }
         #endif
 
         #ifdef PARTY_STROBE24
         else if (mode == PARTY_STROBE24_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             party_strobe_24();
         }
         #endif
 
         #ifdef PARTY_STROBE60
         else if (mode == PARTY_STROBE60_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             party_strobe_60();
         }
         #endif
 
         #ifdef PARTY_VARSTROBE1
         else if (mode == PARTY_VARSTROBE1_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             party_varstrobe_1();
         }
         #endif
 
         #ifdef PARTY_VARSTROBE2
         else if (mode == PARTY_VARSTROBE2_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
             party_varstrobe_2();
         }
         #endif

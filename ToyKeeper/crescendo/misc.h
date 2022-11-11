@@ -10,6 +10,7 @@ void blink(uint8_t val, uint8_t on_4ms, uint8_t off_4ms, uint8_t level);
 #ifdef USE_BLINK_NUM
 void blink_num(uint16_t num);
 #endif
+void delay_set_next_mode(uint8_t mode_id);
 void next_mode();
 
 #endif

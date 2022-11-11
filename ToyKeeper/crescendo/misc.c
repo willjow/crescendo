@@ -51,12 +51,19 @@ void blink_num(uint16_t num) {
 }
 #endif
 
+void delay_set_next_mode(uint8_t mode_id) {
+    // During this delay period, a fast press should go to the next mode
+    _delay_input();
+    // After this delay, a fast press should go to ramp
+    next_mode_id = mode_id;
+}
+
 void next_mode() {
     // allow an override, if it exists; mostly only useful for setting
     // RAMP_IDX, STEADY_IDX, or TURBO_IDX because the other mode indexes aren't
     // really known until compile time
     //
-    // `mode_nums` is defined such that mode indexes should be
+    // `mode_num` is defined such that mode indexes should be
     // (mode num) - MAX_MODES, but ideally we don't rely on that
     //
     // ------------------------
@@ -69,7 +76,7 @@ void next_mode() {
     //          mode = mode_id;
     //
     // at the beginning of the main loop, so we can still override arbitrarily
-    // by setting `mode_id` to an `enum mode_nums` instead of an index of
+    // by setting `mode_id` to an `enum mode_num` instead of an index of
     // `mode_cycle[]`.
     if (next_mode_id == DISABLE_MODE_OVERRIDE) {
         mode_id += 1;

@@ -126,14 +126,6 @@ void steady_mode() {
     #ifdef THERMAL_REGULATION
     target_level = ramp_level;
     #endif
-
-    // Wait for user to tap again to advance to the next mode
-    //next_mode_id = DISABLE_MODE_OVERRIDE;
-    _delay_input();
-    // After a delay, assume user wants to adjust ramp
-    // instead of going to next mode (unless they're
-    // tapping rapidly, in which case we should advance to turbo)
-    next_mode_id = RAMP_IDX;
 }
 
 void turbo_mode() {
@@ -142,15 +134,6 @@ void turbo_mode() {
     #ifdef THERMAL_REGULATION
     target_level = MAX_LEVEL;
     #endif
-
-    // Wait for user to tap again to advance to the next mode
-    //next_mode_id = DISABLE_MODE_OVERRIDE;
-    _delay_input();
-    // go back to the previously-memorized level
-    // if the user taps after a delay,
-    // instead of advancing to blinkies
-    // (allows something similar to "momentary" turbo)
-    next_mode_id = STEADY_IDX;
 }
 
 #endif
