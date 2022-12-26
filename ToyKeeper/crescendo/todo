@@ -2,7 +2,10 @@ TODO
 ----
 
 [debug]
-  - occasionaly, the ramp level will be set to 0 after a fast press
+  - fix occasional strobing of ram
+    - starts strobing between lower level and high, before eventually
+      stabilizing and ramping down from the high level
+  - occasionally, the ramp level will be set to 0 after a fast press
     - cannot reliably reproduce, and rarely happens to begin with
     - possibly related to low voltage protection/thermal regulation? didn't
       observe before enabling these
@@ -13,31 +16,34 @@ TODO
       mode, in which case the mcu will still be on and no memory integrity
       should be lost
 
-[features]
+
+[first-priority features]
+  - round battcheck to nearest 0.05V instead of floored to next 0.1V?
+    - just need to check for whether upper or lower bound is closer
+    - actually maybe this is not worth the space
+      - just do it anyway and hide it behind a preprocessor guard
+  - refactor voltage and thermal regulation to rate-limit based off of
+    watchdog timer instead of delay functions
+    - hide this behind a preprocessor guard for using the watchdog timer
+      because this will probably take a lot of space to implement
   - add support for convoy 5A linear fet driver
 
-  - add config variable for setting the ramp ceiling level to be different from
-    the turbo level
-      - should be pretty simple to just make this stop at the second-to-last
-        ramp index instead of the last, and then treat the last as turbo
-      - or, this could be the default behavior?
-          - always reserve last index of ramp config for turbo
-  - make thermal regulation smoother
-      - main differences between this and anduril code are
-          1. decreasing the absolute value of the "offset" (difference from
-             thermal ceiling) by 3
-          2. adjusting to the regulated level one unit at a time instead of all
-             at once
+
+[second-priority features]
+  - add support for off time sleep mode
+    - maybe not necessarily worth the resources because this doesn't use any
+      concept of "medium" presses
   - experiment with pulse frequency modulation
   - update manual to reflect any changes
+
 
 [old]
   - add support for off-time capacitor or off-time sleep mode to distinguish
     between long and short presses
-      - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
-      - the above reports that relying on SRAM decay is not a reliable
-        long-term solution...
-      - my current understanding is that the flipping of bits after power is
-        disconnected is essentially due to noise, but I'm unsure why this
-        property of the SRAM should change over time... more reading is
-        required
+    - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
+    - the above reports that relying on SRAM decay is not a reliable
+      long-term solution...
+    - my current understanding is that the flipping of bits after power is
+      disconnected is essentially due to noise, but I'm unsure why this
+      property of the SRAM should change over time... more reading is
+      required
