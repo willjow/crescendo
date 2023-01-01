@@ -302,8 +302,10 @@ int main(void)
     while (1) {
         if (mode_id < mode_cycle_length)
             mode = mode_cycle[mode_id];
-        else
+        else if (RAMP_E <= mode_id && mode_id < INVALID_MODE_MIN_E)
             mode = mode_id;
+        else
+            mode = STEADY_E; // fallback for invalid `mode_id`
 
         #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)
         // make sure a voltage reading has started, for LVP purposes
