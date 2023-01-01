@@ -107,8 +107,10 @@ typedef enum mode_num {
 #ifdef THERM_CALIBRATION_MODE
     THERM_CALIBRATION_MODE_E,
 #endif
-    NUM_MODES_E
+    INVALID_MODE_MIN_E
 } mode_num_e;
+
+const uint8_t num_modes = INVALID_MODE_MIN_E - MAX_MODES;
 
 #define RAMP_IDX 0
 #define STEADY_IDX 1
