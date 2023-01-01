@@ -77,7 +77,7 @@ void ramp_mode() {
     // if we got through the delay, assume normal operation
     // (not trying to double-tap or triple-tap)
     // (next mode should be normal)
-    next_mode_id = DISABLE_MODE_OVERRIDE;
+    next_mode_id = NEXT_MODE_IN_CYCLE;
     // ramp up on single tap
     // (cancel earlier preemptive reversal)
     if (fast_presses == 1) {

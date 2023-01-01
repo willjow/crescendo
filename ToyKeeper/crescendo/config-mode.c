@@ -25,7 +25,7 @@ void toggle(uint8_t *var, uint8_t num) {
 
 void config_mode() {
     mode_id = STEADY_IDX;
-    next_mode_id = DISABLE_MODE_OVERRIDE;
+    next_mode_id = NEXT_MODE_IN_CYCLE;
 
     uint8_t dummy = 0;
     uint8_t t = 0;
@@ -40,7 +40,7 @@ void config_mode() {
     // Enter temperature calibration mode?
     next_mode_id = THERM_CALIBRATION_MODE_E;
     toggle(&dummy, ++t);  // doesn't actually set anything; just for visuals
-    next_mode_id = DISABLE_MODE_OVERRIDE;
+    next_mode_id = NEXT_MODE_IN_CYCLE;
     #endif
 }
 

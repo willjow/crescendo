@@ -78,7 +78,7 @@ void next_mode() {
     // at the beginning of the main loop, so we can still override arbitrarily
     // by setting `mode_id` to an `enum mode_num` instead of an index of
     // `mode_cycle[]`.
-    if (next_mode_id == DISABLE_MODE_OVERRIDE) {
+    if (next_mode_id == NEXT_MODE_IN_CYCLE) {
         mode_id += 1;
         if (mode_id >= (sizeof(mode_cycle) / sizeof(mode_cycle[0]))) {
             // Wrap around to steady mode, not ramp
@@ -86,7 +86,7 @@ void next_mode() {
         }
     } else {
         mode_id = next_mode_id;
-        next_mode_id = DISABLE_MODE_OVERRIDE;
+        next_mode_id = NEXT_MODE_IN_CYCLE;
     }
 }
 

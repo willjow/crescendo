@@ -244,7 +244,7 @@ int main(void)
         // ... or reset to the first mode
         fast_presses = 0;
         mode_id = RAMP_IDX;
-        next_mode_id = DISABLE_MODE_OVERRIDE;
+        next_mode_id = NEXT_MODE_IN_CYCLE;
         ramp_level = 1;
         ramp_dir = 1;
         #ifdef MEMORY

@@ -54,9 +54,9 @@ uint8_t actual_level;  // last ramp level activated
 // at MAX_MODES. An equally large range should be reserved for indexes into the
 // mode_cycle array (starting at 0 of course). We also need to reserve one
 // value (currently 255) to serve as the indicator that mode overrides should
-// be ignored.
+// be ignored and we should instead just advance to the next mode in the cycle.
 #define MAX_MODES 127
-#define DISABLE_MODE_OVERRIDE 255
+#define NEXT_MODE_IN_CYCLE 255
 
 typedef enum mode_num {
     RAMP_E = MAX_MODES,
