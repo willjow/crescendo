@@ -92,9 +92,8 @@ void ramp_mode() {
         _delay_4ms(RAMP_TIME/RAMP_SIZE/4);
         if (
             ((ramp_dir > 0) && (ramp_level >= MAX_LEVEL))
-            ||
-            ((ramp_dir < 0) && (ramp_level <= 1))
-            )
+            || ((ramp_dir < 0) && (ramp_level <= 1))
+        )
             break;
         ramp_level += ramp_dir;
     }
