@@ -160,6 +160,8 @@ const mode_num_e mode_cycle[] = {
 #endif
 };
 
+const uint8_t mode_cycle_length = sizeof(mode_cycle) / sizeof(mode_cycle[0]);
+
 // Modes (gets set when the light starts up based on saved config values)
 PROGMEM const uint8_t ramp_ch1[]  = { RAMP_CH1 };
 #ifdef RAMP_CH2

@@ -300,7 +300,7 @@ int main(void)
     volatile uint8_t first_loop = 1;
     volatile mode_num_e mode;
     while (1) {
-        if (mode_id < (sizeof(mode_cycle) / sizeof(mode_cycle[0])))
+        if (mode_id < mode_cycle_length)
             mode = mode_cycle[mode_id];
         else
             mode = mode_id;

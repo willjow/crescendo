@@ -80,7 +80,7 @@ void next_mode() {
     // `mode_cycle[]`.
     if (next_mode_id == NEXT_MODE_IN_CYCLE) {
         mode_id += 1;
-        if (mode_id >= (sizeof(mode_cycle) / sizeof(mode_cycle[0]))) {
+        if (mode_id >= mode_cycle_length) {
             // Wrap around to steady mode, not ramp
             mode_id = STEADY_IDX;
         }
