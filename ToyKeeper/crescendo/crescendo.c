@@ -216,6 +216,40 @@ inline void hw_setup() {
     #endif
 }
 
+// Just in case (SRAM could have partially decayed).
+// We can't really do anything about:
+//  * `long_press`
+//  * `fast_presses`
+inline void validate_noinits() {
+    // `mode_id`, `next_mode_id`
+    // We should reset these together because corruption in either one would
+    // invalidate normal operation w.r.t. the other.
+    if (
+        !(
+            (mode_id < mode_cycle_length)
+            // If `mode_id` has been overridden to a `mode_num_e`, then the
+            // next mode would be `STEADY_E` anyway as per `next_mode()`
+            //|| (RAMP_E <= mode_id && mode_id < INVALID_MODE_MIN_E)
+        )
+        || !(
+            (next_mode_id < mode_cycle_length)
+            || (RAMP_E <= next_mode_id && next_mode_id < INVALID_MODE_MIN_E)
+            || (next_mode_id == NEXT_MODE_IN_CYCLE)
+        )
+    ) {
+        // We don't need to bother setting `mode_id` because it will be set to
+        // steady immediately afterward in `next_mode()` if we override via
+        // `next_mode_id`
+        next_mode_id = STEADY_IDX;
+    }
+
+    // `ramp_level`:
+    ramp_level = (0 < ramp_level && ramp_level <= MAX_LEVEL) ? ramp_level : 1;
+
+    // `ramp_dir`:
+    ramp_dir = (ramp_dir == 1) ? 1 : -1;
+}
+
 int main(void)
 {
     #ifdef OFFTIME
@@ -257,15 +291,17 @@ int main(void)
         #endif
     } else {
         // Fast press, go to the next mode
-        //
-        // For config mode, we don't care what the fast_presses value is as
-        // long as it's over 15
+        validate_noinits();
+        next_mode();  // Will handle wrap arounds
+
+        // For config mode, we only care whether the `fast_presses` value is
+        // over 15
         //
         // (This will wrap after pressing the button 255 times, but I think
         // it's probably fine to not handle this as there's no real reason to
         // "accidentally" press the button that many times...)
         fast_presses++;
-        next_mode();  // Will handle wrap arounds
+
         #ifdef MEMORY_WL
         save_state_wl();
         #endif
@@ -302,10 +338,8 @@ int main(void)
     while (1) {
         if (mode_id < mode_cycle_length)
             mode = mode_cycle[mode_id];
-        else if (RAMP_E <= mode_id && mode_id < INVALID_MODE_MIN_E)
-            mode = mode_id;
         else
-            mode = STEADY_E; // fallback for invalid `mode_id`
+            mode = mode_id;
 
         #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)
         // make sure a voltage reading has started, for LVP purposes

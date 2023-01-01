@@ -86,8 +86,6 @@ void ramp_mode() {
     // don't want this confusing us any more
     fast_presses = 0;
 
-    // Just in case (SRAM could have partially decayed)
-    //ramp_dir = (ramp_dir == 1) ? 1 : -1;
     // Do the actual ramp
     while (1) {
         set_level(ramp_level);
