@@ -12,6 +12,9 @@ TODO
 
 [first-priority features]
   * add support for convoy 5A linear fet driver
+    - add flashyhedgehog's shenanigans for calculating PWM output
+      - or don't, and just make sure output can be set properly
+    - add hwdef and config
   * add support for off time sleep mode
     - maybe not necessarily worth the resources because this UI doesn't use any
       concept of "medium" presses
