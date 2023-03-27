@@ -355,11 +355,6 @@ int main(void)
         else
             mode = mode_id;
 
-        #if defined(VOLTAGE_MON) && defined(THERMAL_REGULATION)
-        // make sure a voltage reading has started, for LVP purposes
-        ADC_on();
-        #endif
-
         /* ==== Special Modes ============================================== */
         if (0) {}
 
