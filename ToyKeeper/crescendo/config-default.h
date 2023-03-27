@@ -29,7 +29,7 @@
 //#define TRIPLEDOWN_LAYOUT
 
 // Offtime method
-// (uncomment all to use SRAM trick)
+// (comment out all to use SRAM trick)
 // TODO: OFFTIM3 is not currently supported
 //#define OFFTIM3   // offtime capacitor: short/medium/long presses
 #define OFFTIM2     // offtime capacitor: short/long presses
