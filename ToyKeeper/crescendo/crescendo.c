@@ -516,11 +516,7 @@ int main(void)
         #endif
 
         #ifdef THERMAL_REGULATION
-        if ((mode == STEADY_E) || (mode == TURBO_E)
-            #ifdef THERM_CALIBRATION_MODE
-            || (mode == THERM_CALIBRATION_MODE_E)
-            #endif
-        ) {
+        if (mode != RAMP_E) {
             monitor_temperature(
                 mode,
                 temperatures,
