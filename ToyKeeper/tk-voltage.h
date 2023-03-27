@@ -113,9 +113,7 @@ uint16_t read_adc_10bit() {
 #endif
 
 #ifdef BATTCHECK
-// TODO(willjow): Subtract an appropriate offset from the raw 10-bit adc values
-// such that the range from 2.5V to 4.4V is still captured. Then we can keep
-// `voltage_blinks[]` as a `uint8_t` array.
+// Store calibrated ADC reference values and number of blinks in the same array
 PROGMEM const VOLTAGE_TYPE voltage_blinks[] = {
 #if defined(BATTCHECK_4bars)
                // 0 blinks for less than 1%
@@ -138,7 +136,7 @@ PROGMEM const VOLTAGE_TYPE voltage_blinks[] = {
     ADC_42,    // 9 blinks for >100%
     ADC_MAX,   // Ceiling, don't remove  (10 blinks means "error")
 #elif defined(BATTCHECK_VpT)
-    // 0 blinks for (shouldn't happen)
+    // 0 blinks for ... (shouldn't happen)
     ADC_25,  (2<<5)+5,
     ADC_26,  (2<<5)+6,
     ADC_27,  (2<<5)+7,
