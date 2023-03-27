@@ -8,17 +8,17 @@ int16_t current_temperature() {
     ADC_on_temperature();
     // average a few values; temperature is noisy
     // (use some of the noise as extra precision, ish)
-    uint16_t temp = 0;
+    uint16_t temperature = 0;
     uint8_t i;
     get_temperature();
     for (i = 0; i < 8; i++) {
-        temp += get_temperature();
+        temperature += get_temperature();
         _delay_4ms(1);
     }
     // convert 12.3 fixed-point to 13.2 fixed-point
     // ... and center it at 0 C
-    temp = (temp >> 1) - (TEMP_ORIGIN << 2);
-    return temp;
+    temperature = (temperature >> 1) - (TEMP_ORIGIN << 2);
+    return temperature;
 }
 
 inline void monitor_temperature(
