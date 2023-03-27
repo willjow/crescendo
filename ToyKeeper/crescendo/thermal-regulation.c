@@ -64,6 +64,9 @@ inline void monitor_temperature(
     // Number of history steps
     #define THERM_HISTORY_SIZE 8
 
+    // Make sure to use the appropriate level variable
+    uint8_t *current_level = (mode == STEADY_E) ? &ramp_level : &actual_level;
+
     int16_t temperature = current_temperature();
     int16_t projected;  // Fight the future!
     int16_t diff;
@@ -133,7 +136,7 @@ inline void monitor_temperature(
             // how far above the ceiling?
             int16_t exceed = (projected - THERM_CEIL) >> THERM_DIFF_ATTENUATION;
             if (exceed < 1) { exceed = 1; }
-            uint8_t stepdown = actual_level - exceed;
+            uint8_t stepdown = *current_level - exceed;
             // never go under the floor; zombies in the cellar
             if (stepdown < THERM_FLOOR) {
                 stepdown = THERM_FLOOR;
@@ -144,8 +147,9 @@ inline void monitor_temperature(
                 stepdown = target_level;
             }
             // really, don't try to regulate below the floor
-            if (actual_level > THERM_FLOOR) {
-                set_level(stepdown);
+            if (*current_level > THERM_FLOOR) {
+                // ramp to stepdown level
+                ramp(current_level, stepdown);
             }
         }
         else {
@@ -159,8 +163,9 @@ inline void monitor_temperature(
             if (*underheat_count > (THERM_LOWPASS / 2)) {
                 *underheat_count = 0;
                 // never go above the user's requested level
-                if (actual_level < target_level) {
-                    set_level(actual_level + 1);  // step up slowly
+                if (*current_level < target_level) {
+                    // step up slowly
+                    ramp(current_level, *current_level + 1);
                 }
             } else {
                 (*underheat_count)++;
