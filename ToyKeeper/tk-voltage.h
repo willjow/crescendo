@@ -83,7 +83,7 @@ inline void ADC_on() {
 
 #else  // #ifdef VOLTAGE_MON
 inline void ADC_off() {
-    ADCSRA &= ~(1<<7); //ADC off
+    ADCSRA &= ~(1 << ADEN); //ADC off
 }
 #endif // #ifdef VOLTAGE_MON
 
@@ -91,9 +91,14 @@ inline void ADC_off() {
 uint8_t read_adc_8bit() {
     // Start conversion
     ADCSRA |= (1 << ADSC);
+
     // Wait for completion
     while (ADCSRA & (1 << ADSC));
-    // Send back the result
+
+    // clear ADIF flag, else only first reading works
+    ADCSRA |= (1 << ADIF);
+
+    // bits will be in the proper place if left-adjusted with ADLAR=1
     return ADCH;
 }
 #endif
@@ -102,13 +107,15 @@ uint8_t read_adc_8bit() {
 uint16_t read_adc_10bit() {
     // Start conversion
     ADCSRA |= (1 << ADSC);
+
     // Wait for completion
     while (ADCSRA & (1 << ADSC));
-    // Send back the result
-    //return (ADCH<<8) | (ADCL);  // ADLAR=0
-    //return (ADCH<<2) | (ADCL>>6);  // ADLAR=1
-    ADCSRA |= 0x10;  // clear ADIF flag, else only first reading works
-    return ADC;  // ADLAR=0
+
+    // clear ADIF flag, else only first reading works
+    ADCSRA |= (1 << ADIF);
+
+    // bits will be in the proper places if right-adjusted with ADLAR=0
+    return ADC;
 }
 #endif
 
