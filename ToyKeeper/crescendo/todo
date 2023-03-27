@@ -11,10 +11,10 @@ TODO
 
 
 [first-priority features]
-  * refactor voltage and thermal regulation to rate-limit based off of
-    watchdog timer instead of delay functions
-    - hide this behind a preprocessor guard for using the watchdog timer
-      because this will probably take a lot of space to implement
+  * refactor thermal regulation to ramp down instead of just doing set-level
+    - reconcile between `actual_level` and `target_level`
+        - it seems like these are probably trying to do similar things, and
+          it might be that neither is actually doing what it intends
   * add support for convoy 5A linear fet driver
   * add support for off time sleep mode
     - maybe not necessarily worth the resources because this UI doesn't use any
