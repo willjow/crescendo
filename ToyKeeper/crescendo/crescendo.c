@@ -381,7 +381,6 @@ int main(void)
         #endif
 
         /* ==== Normal Modes =============================================== */
-        // smooth ramp mode, lets user select any output level
         if (0) {}
 
         else if (mode == RAMP_E) {
@@ -405,6 +404,10 @@ int main(void)
                 _delay_s();  // wait between voltage/temperature checks
             }
         }
+
+        /* ==== Extra Modes ================================================ */
+        // These will take some arbitrary amount of time to return to the
+        // main loop
 
         #ifdef BATTCHECK
         else if (mode == BATTCHECK_E) {
