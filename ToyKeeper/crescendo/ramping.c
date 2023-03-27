@@ -57,6 +57,19 @@ void set_level(uint8_t level) {
     }
 }
 
+void ramp(int8_t step, uint8_t target) {
+    while (1) {
+        set_level(ramp_level);
+        _delay_4ms(RAMP_TIME / RAMP_SIZE / 4);
+        if (
+            ((step > 0) && (ramp_level >= target))
+            || ((step < 0) && (ramp_level <= target))
+        )
+            return;
+        ramp_level += step;
+    }
+}
+
 void ramp_mode() {
     set_level(ramp_level);  // turn light on
 
@@ -87,16 +100,11 @@ void ramp_mode() {
     fast_presses = 0;
 
     // Do the actual ramp
-    while (1) {
-        set_level(ramp_level);
-        _delay_4ms(RAMP_TIME/RAMP_SIZE/4);
-        if (
-            ((ramp_dir > 0) && (ramp_level >= MAX_LEVEL))
-            || ((ramp_dir < 0) && (ramp_level <= 1))
-        )
-            break;
-        ramp_level += ramp_dir;
-    }
+    if (ramp_dir > 0)
+        ramp(1, MAX_LEVEL);
+    else
+        ramp(-1, 1);
+
     #ifdef STOP_AT_ENDS
     // go to steady mode; not the first loop anymore so we need to manually set
     // the appropriate variables

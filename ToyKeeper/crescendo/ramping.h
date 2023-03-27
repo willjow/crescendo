@@ -12,6 +12,7 @@ void set_output(uint8_t pwm1);
 #endif
 
 void set_level(uint8_t level);
+void ramp(int8_t step, uint8_t target);
 void ramp_mode();
 void steady_mode();
 void turbo_mode();

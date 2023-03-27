@@ -49,7 +49,7 @@ volatile uint8_t next_mode_id __attribute__ ((section (".noinit"))) __attribute_
 volatile int8_t ramp_dir __attribute__ ((section (".noinit"))) __attribute__ ((used));
 volatile uint8_t ramp_level __attribute__ ((section (".noinit"))) __attribute__ ((used));
 
-uint8_t actual_level;  // last ramp level activated
+uint8_t actual_level;  // last level activated through `set_level`
 
 // Maximum number of modes; modes will mapped to ints via enum starting
 // at MAX_MODES. An equally large range should be reserved for indexes into the
