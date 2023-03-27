@@ -11,13 +11,13 @@ int16_t current_temperature() {
     uint16_t temp = 0;
     uint8_t i;
     get_temperature();
-    for(i=0; i<8; i++) {
+    for (i = 0; i < 8; i++) {
         temp += get_temperature();
         _delay_4ms(1);
     }
     // convert 12.3 fixed-point to 13.2 fixed-point
     // ... and center it at 0 C
-    temp = (temp>>1) - (TEMP_ORIGIN<<2);
+    temp = (temp >> 1) - (TEMP_ORIGIN << 2);
     return temp;
 }
 
@@ -37,10 +37,10 @@ inline void monitor_temperature(
     // how low is the lowpass filter?
     #define THERM_LOWPASS 8
     // lowest ramp level; never go below this (sanity check)
-    #define THERM_FLOOR (MAX_LEVEL/4)
+    #define THERM_FLOOR (MAX_LEVEL / 4)
     // highest temperature allowed
     // (convert configured value to 13.2 fixed-point)
-    #define THERM_CEIL (therm_ceil<<2)
+    #define THERM_CEIL (therm_ceil << 2)
     // acceptable temperature window size in C
     #define THERM_WINDOW_SIZE 8
     // number of history steps
@@ -52,19 +52,19 @@ inline void monitor_temperature(
 
     // initial setup, only once
     if (first_temp_reading) {
-        for (uint8_t t=0; t<THERM_HISTORY_SIZE; t++)
+        for (uint8_t t = 0; t < THERM_HISTORY_SIZE; t++)
             temperatures[t] = temperature;
     }
 
     // rotate measurements and add a new one
-    for(uint8_t t=0; t<THERM_HISTORY_SIZE-1; t++) {
-        temperatures[t] = temperatures[t+1];
+    for (uint8_t t = 0; t < (THERM_HISTORY_SIZE - 1); t++) {
+        temperatures[t] = temperatures[t + 1];
     }
-    temperatures[THERM_HISTORY_SIZE-1] = temperature;
+    temperatures[THERM_HISTORY_SIZE - 1] = temperature;
 
     // guess what the temp will be several seconds in the future
     diff = temperature - temperatures[0];
-    projected = temperature + (diff<<THERM_PREDICTION_STRENGTH);
+    projected = temperature + (diff << THERM_PREDICTION_STRENGTH);
 
     if (0) {} // placeholder
 
@@ -73,15 +73,16 @@ inline void monitor_temperature(
     else if (mode == THERM_CALIBRATION_MODE_E) {
         if (first_loop) {
             // Blink out the current temperature limit.
-            // Theoretically the user can just set/check this once and then
-            // hard code the value/disable thermal calibration mode to save
-            // some program space.
+            //
+            // The user should just set/check this once and then hard code the
+            // value into `DEFAULT_THERM_CEIL` and disable thermal calibration
+            // mode to save some program space.
             _delay_input();
             blink_num(therm_ceil);
             buzz();  // opportunity to cancel before doing anything
 
             therm_ceil = DEFAULT_THERM_CEIL;
-            set_level(MAX_LEVEL/4);
+            set_level(MAX_LEVEL / 4);
             save_state();
             _delay_s();
             _delay_s();
@@ -91,7 +92,7 @@ inline void monitor_temperature(
         // use the current temperature as the new ceiling value
         //tempCeil = projected >> 2;
         // less aggressive prediction
-        therm_ceil = (temperature + (diff<<(THERM_PREDICTION_STRENGTH-1))) >> 2;
+        therm_ceil = (temperature + (diff << (THERM_PREDICTION_STRENGTH - 1))) >> 2;
 
         // save state periodically (but not too often)
         if (*loop_count > 3)
@@ -135,8 +136,8 @@ inline void monitor_temperature(
     else {  // not too hot
         *overheat_count = 0;  // we're definitely not too hot
         // too cold?  step back up?
-        if (projected < (THERM_CEIL - (THERM_WINDOW_SIZE<<2))) {
-            if (*underheat_count > (THERM_LOWPASS/2)) {
+        if (projected < (THERM_CEIL - (THERM_WINDOW_SIZE << 2))) {
+            if (*underheat_count > (THERM_LOWPASS / 2)) {
                 *underheat_count = 0;
                 // never go above the user's requested level
                 if (actual_level < target_level) {
