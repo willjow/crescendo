@@ -26,10 +26,11 @@ TODO
   * round battcheck to nearest 0.05V instead of floored to next 0.1V?
     - just need to check for whether upper or lower bound is closer
     - actually maybe this is not worth the space
-      - just do it anyway and hide it behind a preprocessor guard
+      - just do it anyway and hide it behind a preprocessor guard?
   * experiment with pulse frequency modulation
   * update manual to reflect any changes
 
+--------------------------------------------------------------------------------
 
 [old]
   * add support for off-time capacitor or off-time sleep mode to distinguish
