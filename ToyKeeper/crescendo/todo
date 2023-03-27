@@ -11,16 +11,16 @@ TODO
 
 
 [first-priority features]
-  * add support for off time sleep mode
-    - maybe not necessarily worth the resources because this UI doesn't use any
-      concept of "medium" presses
-    - OTOH, this guarantees that we don't lose SRAM integrity because the MCU
-      will be powered at all relevant times
   * refactor voltage and thermal regulation to rate-limit based off of
     watchdog timer instead of delay functions
     - hide this behind a preprocessor guard for using the watchdog timer
       because this will probably take a lot of space to implement
   * add support for convoy 5A linear fet driver
+  * add support for off time sleep mode
+    - maybe not necessarily worth the resources because this UI doesn't use any
+      concept of "medium" presses
+    - OTOH, this guarantees that we don't lose SRAM integrity because the MCU
+      will be powered at all relevant times
 
 
 [second-priority features]
