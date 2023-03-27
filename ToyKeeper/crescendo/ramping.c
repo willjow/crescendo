@@ -57,7 +57,8 @@ void set_level(uint8_t level) {
     }
 }
 
-void ramp(int8_t step, uint8_t target) {
+void ramp_to(uint8_t target) {
+    int8_t step = (target > ramp_level) ? 1 : -1;
     while (1) {
         set_level(ramp_level);
         _delay_4ms(RAMP_TIME / RAMP_SIZE / 4);
@@ -101,9 +102,9 @@ void ramp_mode() {
 
     // Do the actual ramp
     if (ramp_dir > 0)
-        ramp(1, MAX_LEVEL);
+        ramp_to(MAX_LEVEL);
     else
-        ramp(-1, 1);
+        ramp_to(1);
 
     #ifdef STOP_AT_ENDS
     // go to steady mode; not the first loop anymore so we need to manually set
