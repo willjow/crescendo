@@ -2,43 +2,38 @@ TODO
 ----
 
 [debug]
-  - fix occasional strobing of ram
-    - starts strobing between lower level and high, before eventually
-      stabilizing and ramping down from the high level
-  - occasionally, the ramp level will be set to 0 after a fast press
-    - cannot reliably reproduce, and rarely happens to begin with
-    - possibly related to low voltage protection/thermal regulation? didn't
-      observe before enabling these
-  - occasionally, very weird things will break
+  * occasionally, very weird things will break
     - most likely the same issue as here:
       https://budgetlightforum.com/comment/1100942#comment-1100942
     - looks like maybe the only guaranteed fix is to implement off-time sleep
-      mode, in which case the mcu will still be on and no memory integrity
+      mode, in which case the MCU will still be on and no memory integrity
       should be lost
 
 
 [first-priority features]
-  - round battcheck to nearest 0.05V instead of floored to next 0.1V?
-    - just need to check for whether upper or lower bound is closer
-    - actually maybe this is not worth the space
-      - just do it anyway and hide it behind a preprocessor guard
-  - refactor voltage and thermal regulation to rate-limit based off of
+  * add support for off time sleep mode
+    - maybe not necessarily worth the resources because this UI doesn't use any
+      concept of "medium" presses
+    - OTOH, this guarantees that we don't lose SRAM integrity because the MCU
+      will be powered at all relevant times
+  * refactor voltage and thermal regulation to rate-limit based off of
     watchdog timer instead of delay functions
     - hide this behind a preprocessor guard for using the watchdog timer
       because this will probably take a lot of space to implement
-  - add support for convoy 5A linear fet driver
+  * add support for convoy 5A linear fet driver
 
 
 [second-priority features]
-  - add support for off time sleep mode
-    - maybe not necessarily worth the resources because this doesn't use any
-      concept of "medium" presses
-  - experiment with pulse frequency modulation
-  - update manual to reflect any changes
+  * round battcheck to nearest 0.05V instead of floored to next 0.1V?
+    - just need to check for whether upper or lower bound is closer
+    - actually maybe this is not worth the space
+      - just do it anyway and hide it behind a preprocessor guard
+  * experiment with pulse frequency modulation
+  * update manual to reflect any changes
 
 
 [old]
-  - add support for off-time capacitor or off-time sleep mode to distinguish
+  * add support for off-time capacitor or off-time sleep mode to distinguish
     between long and short presses
     - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
     - the above reports that relying on SRAM decay is not a reliable
