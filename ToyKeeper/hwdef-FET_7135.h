@@ -2,12 +2,12 @@
 #define HWDEF_FET_7135_H
 
 /* FET + 7135 driver layout
- *           ----
- *   Reset -|1  8|- VCC
- *     OTC -|2  7|- Voltage ADC
- *  Star 3 -|3  6|- PWM (FET)
- *     GND -|4  5|- PWM (1x7135)
- *           ----
+ *           --_--
+ *   Reset -|1   8|- VCC
+ *     OTC -|2   7|- Voltage ADC
+ *  Star 3 -|3   6|- PWM (FET)
+ *     GND -|4   5|- PWM (1x7135)
+ *           -----
  */
 
 #define STAR2_PIN   PB0     // If this pin isn't used for ALT_PWM

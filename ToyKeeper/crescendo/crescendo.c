@@ -191,6 +191,20 @@
 
 
 inline void hw_setup() {
+    #ifdef UNUSED_PB
+    // Enable internal pull-up for floating pins
+    const uint8_t unused_pb[UNUSED_PB_COUNT] = { UNUSED_PB };
+    for (uint8_t i = 0; i < UNUSED_PB_COUNT; i++)
+        PORTB |= (1 << unused_pb[i]);
+    #endif
+
+    #ifdef UNUSED_DIDR
+    // Disable digital input buffer for floating pins
+    const uint8_t unused_didr[UNUSED_DIDR_COUNT] = { UNUSED_DIDR };
+    for (uint8_t i = 0; i < UNUSED_DIDR_COUNT; i++)
+        DIDR0 |= (1 << unused_didr[i]);
+    #endif
+
     // Set PWM pin to output
     DDRB |= (1 << PWM_PIN);     // enable main channel
     #ifdef RAMP_CH2

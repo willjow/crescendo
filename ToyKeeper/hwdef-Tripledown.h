@@ -2,15 +2,13 @@
 #define HWDEF_TRIPLEDOWN_H
 
 /* Tripledown driver layout
- *             ----
- *     Reset -|1  8|- VCC
- *       OTC -|2  7|- Voltage ADC
- * PWM (FET) -|3  6|- PWM (6x7135)
- *       GND -|4  5|- PWM (1x7135)
- *             ----
+ *             --_--
+ *     Reset -|1   8|- VCC
+ *       OTC -|2   7|- Voltage ADC
+ * PWM (FET) -|3   6|- PWM (6x7135)
+ *       GND -|4   5|- PWM (1x7135)
+ *             -----
  */
-
-#define STAR2_PIN   PB0     // If this pin isn't used for ALT_PWM
 
 #define CAP_PIN     PB3     // pin 2, OTC
 #define CAP_CHANNEL 0x03    // MUX 03 corresponds with PB3 (Star 4)

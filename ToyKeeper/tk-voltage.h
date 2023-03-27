@@ -65,8 +65,11 @@ inline void ADC_on_temperature() {
 #endif  // #ifdef VCC_REF
 
 inline void ADC_on() {
+    #ifdef ADC_DIDR
     // disable digital input on ADC pin to reduce power consumption
     DIDR0 |= (1 << ADC_DIDR);
+    #endif
+
     #ifdef VCC_REF
     // right-adjust, set ADC reference/input channel
     ADMUX  = (0 << ADLAR) | ADC_REF | ADC_CHANNEL;
