@@ -3,11 +3,10 @@
 
 #include "thermal-regulation.h"
 
-#define TEMP_ORIGIN 275  // roughly 0 C or 32 F (ish)
+#define TEMP_ORIGIN 273  // roughly 0 C or 32 F (ish)
 int16_t current_temperature() {
     ADC_on_temperature();
-    // average a few values; temperature is noisy
-    // (use some of the noise as extra precision, ish)
+    // take multiple measurements; temperature is noisy
     uint16_t temperature = 0;
     uint8_t i;
     get_temperature();
@@ -15,8 +14,16 @@ int16_t current_temperature() {
         temperature += get_temperature();
         _delay_4ms(1);
     }
-    // convert 12.3 fixed-point to 13.2 fixed-point
-    // ... and center it at 0 C
+
+    // Right-adjusted temperature should be roughly 1 LSB per degree
+    // Celsius. We can interpret the sum of 8 of these as Q12.3 fixed point (the
+    // old LSB has effectively been shifted 3 bits over).
+    //
+    // Instead of shifting 3 bits back over to divide by 8, we can keep these
+    // extra bits around for some more (noisy) precision.
+    //
+    // We want to make sure we still have headroom to do arithmetic with these
+    // values, so we convert from Q12.3 fixed point to Q13.2 fixed point.
     temperature = (temperature >> 1) - (TEMP_ORIGIN << 2);
     return temperature;
 }
@@ -30,20 +37,31 @@ inline void monitor_temperature(
     uint8_t first_loop,
     uint8_t *loop_count
 ) {
-    // how far ahead should we predict?
+    // How far ahead should we predict?
+    // This will be applied as a left bit shift for instruction efficiency, in Q13.2
+    // space. The effective difference in Celsius would be
+    // 2^{THERM_PREDICTION_STRENGTH - 2}
     #define THERM_PREDICTION_STRENGTH 4
-    // how proportional should the adjustments be?
+
+    // How proportional should the adjustments be?
+    // As with `THERM_PREDICTION_STRENGTH`, this will be applied as a right bit
+    // shift in Q13.2 space.
     #define THERM_DIFF_ATTENUATION 4
-    // how low is the lowpass filter?
+
+    // How low is the lowpass filter?
     #define THERM_LOWPASS 8
-    // lowest ramp level; never go below this (sanity check)
+
+    // Lowest ramp level; never go below this (sanity check)
     #define THERM_FLOOR (MAX_LEVEL / 4)
-    // highest temperature allowed
-    // (convert configured value to 13.2 fixed-point)
+
+    // Highest temperature allowed
+    // (convert configured Celsius value to Q13.2 fixed-point)
     #define THERM_CEIL (therm_ceil << 2)
-    // acceptable temperature window size in C
+
+    // Acceptable temperature window size in Celsius
     #define THERM_WINDOW_SIZE 8
-    // number of history steps
+
+    // Number of history steps
     #define THERM_HISTORY_SIZE 8
 
     int16_t temperature = current_temperature();
@@ -62,7 +80,8 @@ inline void monitor_temperature(
     }
     temperatures[THERM_HISTORY_SIZE - 1] = temperature;
 
-    // guess what the temp will be several seconds in the future
+    // guess what the temp will be `THERM_HISTORY_SIZE` steps in the future if
+    // it continues to increase at roughly the same rate
     diff = temperature - temperatures[0];
     projected = temperature + (diff << THERM_PREDICTION_STRENGTH);
 
@@ -86,21 +105,21 @@ inline void monitor_temperature(
             save_state();
             _delay_s();
             _delay_s();
-            // turn power up all the way for calibration purposes
+            // Turn power up all the way for calibration purposes
             set_level(MAX_LEVEL);
         }
-        // use the current temperature as the new ceiling value
-        //tempCeil = projected >> 2;
-        // less aggressive prediction
+        // Use the current temperature as the new ceiling value; making sure to
+        // convert from Q13.2 back to Celsius.
+        // (Also, use less aggressive prediction.)
         therm_ceil = (temperature + (diff << (THERM_PREDICTION_STRENGTH - 1))) >> 2;
 
-        // save state periodically (but not too often)
+        // Save state periodically (but not too often)
         if (*loop_count > 3)
         {
             *loop_count = 0;
             save_state();
         }
-        // don't repeat for a little while
+        // Don't repeat for a little while
         _delay_input();
     }
     #endif

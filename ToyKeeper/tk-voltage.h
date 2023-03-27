@@ -35,12 +35,12 @@
 inline void ADC_on_temperature() {
     // TODO: (?) enable ADC Noise Reduction Mode, Section 17.7 on page 128
     //       (apparently can only read while the CPU is in idle mode though)
-    // select ADC4 by writing 0b00001111 to ADMUX
-    // 1.1v reference, left-adjust, ADC4
     #ifdef TEMP_10bit
-    ADMUX  = (1 << V_REF) | (0 << ADLAR) | TEMP_CHANNEL;
+    // right-adjust, set 1.1V internal reference, input channel
+    ADMUX  = (0 << ADLAR) | (1 << V_REF) | TEMP_CHANNEL;
     #else
-    ADMUX  = (1 << V_REF) | (1 << ADLAR) | TEMP_CHANNEL;
+    // left-adjust, set 1.1V internal reference, input channel
+    ADMUX  = (1 << ADLAR) | (1 << V_REF) | TEMP_CHANNEL;
     #endif
     // disable digital input on ADC pin to reduce power consumption
     //DIDR0 |= (1 << TEMP_DIDR);
