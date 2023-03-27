@@ -414,19 +414,11 @@ int main(void)
         }
         #endif
 
-        #ifdef GOODNIGHT
-        else if (mode == GOODNIGHT_E) {
-            if (first_loop)
-                delay_set_next_mode(STEADY_IDX);
-            goodnight_mode();
-        }
-        #endif
-
         #ifdef BIKING_MODE
         else if (mode == BIKING_MODE_E) {
             if (first_loop)
                 delay_set_next_mode(STEADY_IDX);
-            biking_mode(ramp_level);
+            biking_mode();
         }
         #endif
 
@@ -434,7 +426,15 @@ int main(void)
         else if (mode == SOS_E) {
             if (first_loop)
                 delay_set_next_mode(STEADY_IDX);
-            SOS_mode(ramp_level);
+            SOS_mode();
+        }
+        #endif
+
+        #ifdef GOODNIGHT
+        else if (mode == GOODNIGHT_E) {
+            if (first_loop)
+                delay_set_next_mode(STEADY_IDX);
+            goodnight_mode();
         }
         #endif
 

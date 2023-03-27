@@ -4,7 +4,9 @@
 #include "biking-mode.h"
 
 #define MAX_BIKING_LEVEL (MAX_LEVEL / 3 * 2)
-void biking_mode(uint8_t steady_level) {
+void biking_mode() {
+    uint8_t steady_level = ramp_level;
+
     if (steady_level > MAX_BIKING_LEVEL)
         steady_level = MAX_BIKING_LEVEL;
 

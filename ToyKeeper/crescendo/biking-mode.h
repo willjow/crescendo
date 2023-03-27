@@ -2,6 +2,6 @@
 #define BIKING_MODE_H
 
 // 2-level stutter beacon for biking and such
-void biking_mode(uint8_t steady_level);
+void biking_mode();
 
 #endif
