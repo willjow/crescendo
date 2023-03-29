@@ -1,14 +1,6 @@
 TODO
 ----
 
-### debug
-  * occasionally, very weird things will break
-    - most likely the same issue as here:
-      https://budgetlightforum.com/comment/1100942#comment-1100942
-    - looks like maybe the only guaranteed fix is to implement off-time sleep
-      mode, in which case the MCU will still be on and no memory integrity
-      should be lost
-
 
 ### first-priority features
   * add support for convoy 5A linear fet driver
@@ -35,7 +27,18 @@ TODO
 
   * update manual to reflect any changes
 
+
 --------------------------------------------------------------------------------
+
+
+### debug
+  * occasionally, very weird things will break
+    - most likely the same issue as here:
+      https://budgetlightforum.com/comment/1100942#comment-1100942
+    - looks like maybe the only guaranteed fix is to implement off-time sleep
+      mode, in which case the MCU will still be on and no memory integrity
+      should be lost
+
 
 ### old
   * add support for off-time capacitor or off-time sleep mode to distinguish
