@@ -349,6 +349,7 @@ int main(void)
     #endif
     volatile uint8_t first_loop = 1;
     volatile mode_num_e mode;
+
     while (1) {
         if (mode_id < mode_cycle_length)
             mode = mode_cycle[mode_id];
@@ -513,7 +514,7 @@ int main(void)
         }
         #endif
 
-        /* ==== Protection/Cleanup ========================================= */
+        /* ==== Protection ================================================= */
         #ifdef VOLTAGE_PROTECTION
         monitor_voltage(mode, &lowbatt_cnt);
         #endif
@@ -534,6 +535,7 @@ int main(void)
         loop_count++;
         #endif
 
+        /* ==== Cleanup ==================================================== */
         fast_presses = 0;
         first_loop = 0;
     }
