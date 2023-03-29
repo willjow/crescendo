@@ -264,8 +264,7 @@ inline void validate_noinits() {
     ramp_dir = (ramp_dir == 1) ? 1 : -1;
 }
 
-int main(void)
-{
+int main(void) {
     #ifdef OFFTIME
     // check the OTC immediately before it has a chance to charge or discharge
     uint8_t cap_val = read_otc();  // save it for later
