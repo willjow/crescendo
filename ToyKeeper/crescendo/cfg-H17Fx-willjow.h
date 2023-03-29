@@ -4,4 +4,4 @@
 #include "cfg-willjow.h"
 
 #undef DEFAULT_THERM_CEIL
-#define DEFAULT_THERM_CEIL 90
+#define DEFAULT_THERM_CEIL 60
