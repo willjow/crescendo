@@ -24,7 +24,9 @@ void battcheck_mode() {
 
 #ifdef VOLTAGE_PROTECTION
 void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
-    // Always get a new value; the initial one is unreliable
+    // Always get a second measurement; the initial one is unreliable
+    ADC_on();
+    get_voltage();  // throw this away
     VOLTAGE_TYPE voltage = get_voltage();
 
     // See if voltage is lower than what we were looking for

@@ -6,6 +6,7 @@
 #define TEMP_ORIGIN 273  // roughly 0 C or 32 F (ish)
 int16_t current_temperature() {
     ADC_on_temperature();
+    get_temperature();  // throw this away
     // take multiple measurements; temperature is noisy
     uint16_t temperature = 0;
     uint8_t i;

@@ -23,7 +23,9 @@
 #include "tk-attiny.h"
 #include "tk-calibration.h"
 
-#if defined(TEMPERATURE_MON) || defined(THERMAL_REGULATION)
+#if defined(THERMAL_REGULATION) || defined(VOLTAGE_MON)
+
+#ifdef THERMAL_REGULATION
 #ifdef TEMP_10bit
 #define NEED_ADC_10bit
 #define get_temperature read_adc_10bit
@@ -47,11 +49,10 @@ inline void ADC_on_temperature() {
     // enable, start, prescale
     ADCSRA = (1 << ADEN ) | (1 << ADSC ) | ADC_PRSCL;
 }
-#endif  // TEMPERATURE_MON
+#endif  // #ifdef THERMAL_REGULATION
 
 
 #ifdef VOLTAGE_MON
-
 #ifdef VCC_REF
 #define NEED_ADC_10bit
 #define get_voltage read_adc_10bit
@@ -80,12 +81,13 @@ inline void ADC_on() {
     // enable, start, prescale
     ADCSRA = (1 << ADEN ) | (1 << ADSC ) | ADC_PRSCL;
 }
+#endif  // #ifdef VOLTAGE_MON
 
-#else  // #ifdef VOLTAGE_MON
+#else  // #if defined(THERMAL_REGULATION) || defined(VOLTAGE_MON)
 inline void ADC_off() {
     ADCSRA &= ~(1 << ADEN); //ADC off
 }
-#endif // #ifdef VOLTAGE_MON
+#endif  // #if defined(THERMAL_REGULATION) || defined(VOLTAGE_MON)
 
 #ifdef NEED_ADC_8bit
 uint8_t read_adc_8bit() {

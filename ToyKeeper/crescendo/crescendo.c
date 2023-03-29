@@ -328,11 +328,7 @@ int main(void) {
     #endif
 
     // Turn features on or off as needed
-    #ifdef VOLTAGE_MON
-    #ifndef THERMAL_REGULATION
-    ADC_on();
-    #endif
-    #else
+    #if !defined(VOLTAGE_MON) && !defined(THERMAL_REGULATION)
     ADC_off();
     #endif
 
