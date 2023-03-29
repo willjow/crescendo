@@ -75,7 +75,7 @@
 #define MANUAL_LEVEL CH0_MAX    // manual (as in hard-code it yourself...)
                                 // ramp memory level
 
-// output to use for blinks on battery check (and other modes)
+// output to use for blinks for menu modes
 #define BLINK_BRIGHTNESS    (MAX_LEVEL / 4)
 // 4ms units per normal-speed blink
 #define BLINK_SPEED         (1000 / 4)
