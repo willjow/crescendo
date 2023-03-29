@@ -12,9 +12,12 @@ TODO
 
 [first-priority features]
   * add support for convoy 5A linear fet driver
+    (this is probably only really worthwhile if OTSM works with this driver;
+    efficiency gains from PWM to constant current are probably not that great)
     - add flashyhedgehog's shenanigans for calculating PWM output
       - or don't, and just make sure output can be set properly
     - add hwdef and config
+
   * add support for off time sleep mode
     - maybe not necessarily worth the resources because this UI doesn't use any
       concept of "medium" presses
@@ -27,7 +30,9 @@ TODO
     - just need to check for whether upper or lower bound is closer
     - actually maybe this is not worth the space
       - just do it anyway and hide it behind a preprocessor guard?
+
   * experiment with pulse frequency modulation
+
   * update manual to reflect any changes
 
 --------------------------------------------------------------------------------
