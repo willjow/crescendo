@@ -1,7 +1,7 @@
 TODO
 ----
 
-[debug]
+### debug
   * occasionally, very weird things will break
     - most likely the same issue as here:
       https://budgetlightforum.com/comment/1100942#comment-1100942
@@ -10,7 +10,7 @@ TODO
       should be lost
 
 
-[first-priority features]
+### first-priority features
   * add support for convoy 5A linear fet driver
     (this is probably only really worthwhile if OTSM works with this driver;
     efficiency gains from PWM to constant current are probably not that great)
@@ -25,7 +25,7 @@ TODO
       will be powered at all relevant times
 
 
-[second-priority features]
+### second-priority features
   * round battcheck to nearest 0.05V instead of floored to next 0.1V?
     - just need to check for whether upper or lower bound is closer
     - actually maybe this is not worth the space
@@ -37,7 +37,7 @@ TODO
 
 --------------------------------------------------------------------------------
 
-[old]
+### old
   * add support for off-time capacitor or off-time sleep mode to distinguish
     between long and short presses
     - https://github.com/alexvanh/basic_off_time_driver/blob/master/README.md
