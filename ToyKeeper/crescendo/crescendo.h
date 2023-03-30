@@ -35,7 +35,15 @@
 // inversions after the voltage decreases below the data-retention threshold.
 //
 // NOTE: ToyKeeper empirically determined that there's no advantage of using 32
-// bits here over 8: https://budgetlightforum.com/comment/1101037#comment-1101037
+// bits here over 8:
+//
+// > Nope. No measurable difference between 8 and 32 bits worth of sample. On
+//   both, I get very clean behavior with 166ms taps and very random behavior
+//   with 175ms taps. I’ll take out the “XTREME_RANDOM_PREVENTION” code since
+//   it doesn’t help.
+//
+// https://web.archive.org/web/20230329235720/https://budgetlightforum.com/t/flashlight-firmware-repository/32545/1228
+// (Make sure to go to comment 1228, archive.org doesn't seem to jump there)
 //
 // Regardless, I'll leave this as 32 bits as long as it fits because the theory
 // remains the same.
