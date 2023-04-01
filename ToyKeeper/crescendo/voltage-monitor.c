@@ -3,6 +3,7 @@
 
 #ifdef BATTCHECK
 void battcheck_mode() {
+    setup_adc_voltage();
     #ifdef BATTCHECK_VpT
     // blink out volts and tenths
     uint8_t result = battcheck();
@@ -24,11 +25,8 @@ void battcheck_mode() {
 
 #ifdef VOLTAGE_PROTECTION
 void monitor_voltage(uint8_t mode, uint8_t *lowbatt_cnt) {
-    // Always get a second measurement; the initial one is unreliable
-    ADC_on();
-    get_voltage();  // throw this away
+    setup_adc_voltage();
     VOLTAGE_TYPE voltage = get_voltage();
-
     // See if voltage is lower than what we were looking for
     #ifdef VCC_REF
     if (voltage > ADC_LOW)

@@ -79,11 +79,11 @@
 
 #define OWN_DELAY           // Don't use stock delay functions.
 #define USE_DELAY_4MS
+#define USE_DELAY_S         // Also use _delay_s(), not just _delay_ms()
 #ifdef PARTY_STROBES
 #define USE_DELAY_MS
 #define USE_FINE_DELAY
 #endif
-#define USE_DELAY_S         // Also use _delay_s(), not just _delay_ms()
 #include "tk-delay.h"
 
 #ifdef THERMAL_REGULATION

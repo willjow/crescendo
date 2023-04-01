@@ -121,6 +121,22 @@ uint16_t read_adc_10bit() {
 }
 #endif
 
+inline void setup_adc_voltage() {
+    // Always get a second measurement afterward; the initial one is unreliable
+    ADC_on();
+    get_voltage();  // throw this away
+    _delay_4ms(1);  // the next reading will still be bad without a delay;
+                    // _NOP() doesn't seem to be enough
+}
+
+inline void setup_adc_temperature() {
+    // Always get a second measurement afterward; the initial one is unreliable
+    ADC_on_temperature();
+    get_temperature();  // throw this away
+    _delay_4ms(1);  // the next reading will still be bad without a delay;
+                    // _NOP() doesn't seem to be enough
+}
+
 #ifdef BATTCHECK
 // Store calibrated ADC reference values and number of blinks in the same array
 PROGMEM const VOLTAGE_TYPE voltage_blinks[] = {
